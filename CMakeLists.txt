@@ -19,6 +19,10 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+#       ret_label.h
+#        ret_label.cpp
+        store.h
+        store.cpp
         ${TS_FILES}
 )
 

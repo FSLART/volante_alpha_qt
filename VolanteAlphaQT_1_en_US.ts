@@ -10,12 +10,12 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="49"/>
-        <location filename="mainwindow.ui" line="101"/>
+        <location filename="mainwindow.ui" line="106"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="75"/>
+        <location filename="mainwindow.ui" line="80"/>
         <source>1</source>
         <translation type="unfinished"></translation>
     </message>

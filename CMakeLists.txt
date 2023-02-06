@@ -9,18 +9,21 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools SerialPort)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools SerialPort)
+
 
 set(TS_FILES VolanteAlphaQT_1_en_US.ts)
 
 set(PROJECT_SOURCES
+        responsive_manager.h
+        responsive_manager.cpp
+        #resp_label.h
+        #resp_label.cpp
         main.cpp
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-#       ret_label.h
-#        ret_label.cpp
         store.h
         store.cpp
         ${TS_FILES}
@@ -53,7 +56,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(VolanteAlphaQT_1 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(VolanteAlphaQT_1 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::SerialPort) 
 
 set_target_properties(VolanteAlphaQT_1 PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

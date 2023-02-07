@@ -70,7 +70,7 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>100</pointsize>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="layoutDirection">

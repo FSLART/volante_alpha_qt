@@ -1,6 +1,7 @@
 #ifndef STORE_H
 #define STORE_H
 #include <iostream>
+#include <qserialport.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,6 +11,7 @@
 #include <cstdio>
 #include <QDebug>
 #include <QSerialPort>
+#include <thread>
 #define DEFAULT_DEVICE "/dev/ttyACM0"
 /* !
         \class store
@@ -20,22 +22,21 @@
 		
 		\fields
 */
-class store{
+class store: public QObject{
+       Q_OBJECT
 	public:
-		char mudança;
 		char* dev=nullptr;
 		QSerialPort* port=nullptr;
-
-		store(char * dev);
+		void handleReadyRead();
+		void handleError(QSerialPort::SerialPortError serialPortError);
+		QByteArray serialLog;
+		QByteArray lastMessage; 
+        explicit store(char * dev=nullptr, QObject *parent = nullptr);
 		~store(); 
-
 	protected:
 		int setupSerial();
 		int closeSerial();
-
-
 };
-
 
 
 #endif // STORE_H

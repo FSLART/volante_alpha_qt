@@ -20,4 +20,12 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="store.cpp" line="66"/>
+        <source>An I/O error occurred while reading the data from port %1, error: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

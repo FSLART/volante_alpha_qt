@@ -23,8 +23,8 @@
 		\fields
 */
 class store: public QObject{
-       Q_OBJECT
-	public:
+    Q_OBJECT
+    public:
 		char* dev=nullptr;
 		QSerialPort* port=nullptr;
 		void handleReadyRead();

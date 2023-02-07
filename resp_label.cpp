@@ -1,29 +1,24 @@
 #include "resp_label.h"
+#include <qsize.h>
 
-resp_label::resp_label(bool isVertical){
+resp_label::resp_label(bool isVertical, QSize size){
+	this->dirtySize = size;
 	this->isVertical = isVertical;
-	onResize();
+
+    //on_resize();
 }
 
-void resp_label::onResize(){
+void resp_label::on_resize(QSize size){
 	float ratio=0.0f;
-	// TOOPTIMIZE: im kinda lazy, this is not the best way of doing it. It will fail miserably if theres a layout with more than one widget
-	if(!isVertical){
-		//get maximum width available
-		int max_width = this->parentWidget()->width();
-		//get current width
-		int current_width = this->width();
-		ratio = (float)max_width/(float)current_width;
-
+	if(this->isVertical){
+		ratio = (float)size.height()/(float)this->dirtySize.height();
 	}else{
-		int max_height = this->parentWidget()->height();
-		int current_height = this->height();
-		ratio = (float)max_height/(float)current_height;
-
+		ratio = (float)size.width()/(float)this->dirtySize.width();
 	}
+	
 	//set new font size
-	QFont font = this->font();
+    QFont font = this->ref->font();
 	font.setPointSizeF((qreal)font.pointSizeF()*ratio);
-	this->setFont(font);	
+    this->ref->setFont(font);
 }
 

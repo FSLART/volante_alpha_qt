@@ -18,8 +18,8 @@ set(TS_FILES VolanteAlphaQT_1_en_US.ts)
 set(PROJECT_SOURCES
         responsive_manager.h
         responsive_manager.cpp
-        #resp_label.h
-        #resp_label.cpp
+        resp_label.h
+        resp_label.cpp
         main.cpp
         mainwindow.cpp
         mainwindow.h

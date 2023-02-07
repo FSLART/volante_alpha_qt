@@ -1,4 +1,5 @@
 #include "responsive_manager.h"
+#include <qsize.h>
 
 responsive_manager::responsive_manager(){
 	//allocate list of hooks
@@ -18,10 +19,10 @@ void responsive_manager::add_hook(managed_hook* hook){
 	this->remove_hook(hook);
 	this->hooks.push_back(hook);
 }
-void responsive_manager::on_resize(){
+void responsive_manager::on_resize(QSize size){
 	//call on_resize for all hooks
 	for (managed_hook* hook : this->hooks){
-		hook->on_resize();
+        hook->on_resize(size);
 	}
 	
 

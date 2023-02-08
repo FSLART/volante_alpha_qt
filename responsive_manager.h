@@ -22,4 +22,4 @@ protected:
 
 
 
-#endif // RESPONSIVE_MANAGER_H
+#endif

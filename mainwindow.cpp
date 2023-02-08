@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <qmainwindow.h>
 #include "responsive_manager.h"
-#include "resp_label.h"
+
 static responsive_manager manager;
 
 
@@ -23,11 +23,10 @@ MainWindow::MainWindow(QWidget *parent)
         QObject *label_mudancas = this->findChild<QObject*>("label_mudancas");
         //cast it to a QLabel
         QLabel *label_mudancas_cast = qobject_cast<QLabel*>(label_mudancas);
-       auto hookMudanças = new resp_label(false, this->size());
+       //auto hookMudanças = new resp_label(false, this->size());
 	   
-       hookMudanças->ref=label_mudancas_cast;
-       manager.add_hook(hookMudanças);
-
+       //hookMudanças->ref=label_mudancas_cast;
+       //manager.add_hook(hookMudanças);
 }
 void MainWindow::resizeEvent(QResizeEvent* event){
 	this->QMainWindow::resizeEvent(event);

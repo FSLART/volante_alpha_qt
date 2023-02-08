@@ -18,7 +18,12 @@ void resp_label::on_resize(QSize size){
 	
 	//set new font size
     QFont font = this->ref->font();
+	
 	font.setPointSizeF((qreal)font.pointSizeF()*ratio);
-    this->ref->setFont(font);
+	//make shure the font does not go over bounding box
+	//undo if it goes over
+	
+
+	this->ref->setFont(font);
 }
 

@@ -31,7 +31,7 @@ store::store( char * dev, QObject *parent  ): QObject(parent){
 	//default device
 
 	if (dev == nullptr){
-        int len = sizeof(char)*strlen(DEFAULT_DEVICE);
+        int len = sizeof(char)*strlen(DEFAULT_DEVICE)+1;
         this->dev = (char*)malloc(len);
         strcpy(this->dev,DEFAULT_DEVICE);
 	}

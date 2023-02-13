@@ -17,7 +17,6 @@ public:
 	//override resizeEvent(QResizeEvent* event)
 	void resizeEvent(QResizeEvent* event) override;
     store* getStore();
-	void test ();
     ~MainWindow();
 
 private:

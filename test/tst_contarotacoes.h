@@ -2,16 +2,16 @@
 #define TST_CONTAROTACOES_H
 
 #include <QObject>
-
-class tst_contarotacoes : public QObject
+#include <QTest>
+#include <QDebug>
+#include "../src/contarotacoes.h"
+#include "../src/store.h"
+#include "../src/mainwindow.h"
+class Tst_contarotacoes : public QObject
 {
     Q_OBJECT
-public:
-    explicit tst_contarotacoes(QObject *parent = nullptr);
-
-private slots:
-	void sanityTest(); 
-
+	private slots:
+        void checkRpmChangesFromStoreToGraphicText();
 };
 
 #endif // TST_CONTAROTACOES_H

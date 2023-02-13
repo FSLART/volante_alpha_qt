@@ -1,10 +1,11 @@
 #include "tst_contarotacoes.h"
 
-tst_contarotacoes::tst_contarotacoes(QObject *parent)
-    : QObject{parent}{
-	
-}
 
-void tst_contarotacoes::sanityTest(){
-	QVERIFY(1==1);
+void Tst_contarotacoes::checkRpmChangesFromStoreToGraphicText(){
+	MainWindow ui;
+    auto s = ui.getStore();
+	s->setRpm(100);
+    int a = ui.findChild<ContaRotacoes*>("contarotacoes")->getValue();
+    QCOMPARE(a, 100);
 }
+QTEST_MAIN(Tst_contarotacoes)

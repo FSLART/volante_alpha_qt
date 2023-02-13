@@ -69,3 +69,10 @@ void ContaRotacoes::drawRotacoesText(QPainter &painter, int size, int padding=10
    painter.setFont(font);
    painter.drawText(QRect(padding,height()/6,size,fontSize), Qt::AlignCenter, QString::number(m_value));
 }
+
+int ContaRotacoes::getValue () const{
+	return m_value;
+}
+int ContaRotacoes::getMaxValue () const{
+	return m_maxValue;
+}

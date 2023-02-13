@@ -48,11 +48,12 @@ test{
     TARGET = VolanteAlphaQT_testes
 
     QT += testlib
-
+    SOURCES -= src/main.cpp
+	
     HEADERS += \
-        test/tst_contarotacoes.h
+    test/tst_contarotacoes.h
 
     SOURCES += \
-        test/tst_contarotacoes.cpp
+    test/tst_contarotacoes.cpp
 }
 

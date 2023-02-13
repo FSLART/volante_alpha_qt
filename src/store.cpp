@@ -1,8 +1,5 @@
 #include "store.h"
-#include <cstdio>
 
-#include <QCoreApplication>
-#include <qobject.h>
 
 int store::setupSerial() {
 	
@@ -14,8 +11,7 @@ int store::setupSerial() {
     serial->setParity(QSerialPort::NoParity);
     serial->setFlowControl(QSerialPort::NoFlowControl);
     if (!serial->open(QIODevice::ReadOnly)) {
-        //emit error(tr("Can't open %1, error code %2").arg(this->dev).arg(port->error()));
-        std::cout << "welp you fucked up";
+        qDebug() << "Can't open " << this->dev << ", error code" << serial->error();
         return 1;
     }
 
@@ -28,9 +24,8 @@ int store::setupSerial() {
 }
 
 store::store( char * dev, QObject *parent  ): QObject(parent){
-	//default device
-
-	if (dev == nullptr){
+    if (dev == nullptr){
+        // TODO: fix this(use a better function preferably one handled by QT)
         int len = sizeof(char)*strlen(DEFAULT_DEVICE)+1;
         this->dev = (char*)malloc(len);
         strcpy(this->dev,DEFAULT_DEVICE);

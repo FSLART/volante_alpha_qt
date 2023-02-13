@@ -26,16 +26,12 @@ RCC_DIR = build
 # Input
 HEADERS += src/contarotacoes.h \
            src/mainwindow.h \
-           src/resp_label.h \
-           src/responsive_manager.h \
            src/store.h
            
 
 SOURCES += src/contarotacoes.cpp \
            src/main.cpp \
            src/mainwindow.cpp \
-           src/resp_label.cpp \
-           src/responsive_manager.cpp \
            src/store.cpp  
 
 FORMS += src/mainwindow.ui

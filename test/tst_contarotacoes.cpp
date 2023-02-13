@@ -8,4 +8,6 @@ void Tst_contarotacoes::checkRpmChangesFromStoreToGraphicText(){
     int a = ui.findChild<ContaRotacoes*>("contarotacoes")->getValue();
     QCOMPARE(a, 100);
 }
+
+
 QTEST_MAIN(Tst_contarotacoes)

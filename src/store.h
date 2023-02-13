@@ -12,6 +12,10 @@
 #include <QDebug>
 #include <QSerialPort>
 #include <thread>
+#include <cstdio>
+#include <QCoreApplication>
+#include  <QErrorMessage>
+#include <qobject.h>
 #define DEFAULT_DEVICE "/dev/ttyACM0"
 /* !
         \class store

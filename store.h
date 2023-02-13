@@ -22,9 +22,11 @@
 		
 		\fields
 */
+
 class store: public QObject{
-    Q_OBJECT
-    public:
+    Q_OBJECT;
+    Q_PROPERTY(int  m_rotationsPerMinute READ getRpm WRITE setRpm NOTIFY rpmChanged);
+	public:
 		char* dev=nullptr;
 		QSerialPort* port=nullptr;
 		void handleReadyRead();
@@ -33,26 +35,26 @@ class store: public QObject{
 		QByteArray lastMessage; 
         explicit store(char * dev=nullptr, QObject *parent = nullptr);
 		~store();
-		
+
 		//getters and setters
 		int getRpm() const;
 		int getGearShift() const;
-		float getEngineTemperature() const;
+		int getEngineTemperature() const;
 		float getOilPressure() const;
-		float getOilTemperature() const;
+		int getOilTemperature() const;
 		float getBatteryVoltage() const;
-		float getVehicleVelocity() const;
+		int getVehicleSpeed() const;
 		int getDataLoggerStatus() const;
 		float getLambda() const;
 		int getTcSlip() const;
 		int getTcLaunch() const;
 		void setRpm(int rpm);
 		void setGearShift(int gearShift);
-		void setEngineTemperature(float engineTemperature);
+		void setEngineTemperature(int engineTemperature);
 		void setOilPressure(float oilPressure);
-		void setOilTemperature(float oilTemperature);
+		void setOilTemperature(int oilTemperature);
 		void setBatteryVoltage(float batteryVoltage);
-		void setVehicleVelocity(float vehicleVelocity);
+		void setVehicleSpeed(int vehicleVelocity);
 		void setDataLoggerStatus(int dataLoggerStatus);
 		void setLambda(float lambda);
 		void setTcSlip(int tcSlip);
@@ -62,19 +64,22 @@ class store: public QObject{
 	protected:
 		int setupSerial();
 		int closeSerial();
+	signals:
+		void rpmChanged(int newRpm, int oldRpm);
+
     private:
         int m_rotationsPerMinute;
         int m_gearShift;
-        float m_engineTemperature;
+        int m_engineTemperature;
         float m_oilPressure;
         float m_oilTemperature;
         float m_batteryVoltage;
-		float m_vehicleVelocity;
+		int m_vehicleVelocity;
 		int m_dataLoggerStatus;
 		//todo ask stuff about this
-		float m_lambda; 
-		int m_tcSlip;
-		int m_tcLaunch;
+		float m_lambdaMixtureAirFuel; 
+		int m_tractionSlip;
+		int m_tractionLaunch;
 };
 
 

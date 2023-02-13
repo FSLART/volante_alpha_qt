@@ -27,7 +27,6 @@ int store::setupSerial() {
 	return 0;	
 }
 
-
 store::store( char * dev, QObject *parent  ): QObject(parent){
 	//default device
 
@@ -76,52 +75,54 @@ int store::closeSerial(){
 
 
 //getters and setters
-int store::getRpm(){
+int store::getRpm() const{
 	return this->m_rotationsPerMinute;
 
 }
-int store::getGearShift(){
+int store::getGearShift() const{
 	return this->m_gearShift;
 }
-float store::getEngineTemperature(){
+int store::getEngineTemperature() const{
 	return this->m_engineTemperature;
 }
-float store::getOilPressure(){
+float store::getOilPressure() const{
 	return this->m_oilPressure;
 }
-float store::getOilTemperature(){
+int store::getOilTemperature() const{
 	return this->m_oilTemperature;
 }
-float store::getBatteryVoltage(){
+float store::getBatteryVoltage() const{
 	return this->m_batteryVoltage;
 }
-float store::getVehicleVelocity(){
+int store::getVehicleSpeed() const{
 	return this->m_vehicleVelocity;
 }
-int store::getDataLoggerStatus(){
+int store::getDataLoggerStatus() const{
 	return this->m_dataLoggerStatus;
 }
-float store::getLambda(){
-	return this->m_lambda;
+float store::getLambda() const{
+	return this->m_lambdaMixtureAirFuel;
 }
-int store::getTcSlip(){
-	return this->m_tcSlip;
+int store::getTcSlip() const{
+	return this->m_tractionSlip;
 
 }
-int store::getTcLaunch(){
-	return this->m_tcLaunch;
+int store::getTcLaunch() const{
+	return this->m_tractionLaunch;
 }
 void store::setRpm(int rpm){
-	if(rpm>0){
+    if(rpm>=0&& rpm !=this->m_rotationsPerMinute){
+		int oldRpm=this->m_rotationsPerMinute;
 		this->m_rotationsPerMinute=rpm;
+		emit rpmChanged(this->m_rotationsPerMinute, oldRpm);
 	}
 }
 void store::setGearShift(int gearShift){
-	if(gearShift>0){
+    if(gearShift>=0){
 		this->m_gearShift=gearShift;
 	}
 }
-void store::setEngineTemperature(float engineTemperature){
+void store::setEngineTemperature(int engineTemperature){
 	this->m_engineTemperature=engineTemperature;
 
 }
@@ -129,24 +130,24 @@ void store::setOilPressure(float oilPressure){
 	this->m_oilPressure=oilPressure;
 
 }
-void store::setOilTemperature(float oilTemperature){
+void store::setOilTemperature(int oilTemperature){
 	this->m_oilTemperature=oilTemperature;
 }
 void store::setBatteryVoltage(float batteryVoltage){
 	this->m_batteryVoltage=batteryVoltage;
 }
-void store::setVehicleVelocity(float vehicleVelocity){
+void store::setVehicleSpeed(int vehicleVelocity){
 	this->m_vehicleVelocity=vehicleVelocity;
 }
 void store::setDataLoggerStatus(int dataLoggerStatus){
 	this->m_dataLoggerStatus=dataLoggerStatus;
 }
 void store::setLambda(float lambda){
-	this->m_lambda=lambda;
+	this->m_lambdaMixtureAirFuel=lambda;
 }
 void store::setTcSlip(int tcSlip){
-	this->m_tcSlip=tcSlip;
+	this->m_tractionSlip=tcSlip;
 }
 void store::setTcLaunch(int tcLaunch){
-	this->m_tcLaunch=tcLaunch;
+	this->m_tractionLaunch=tcLaunch;
 }

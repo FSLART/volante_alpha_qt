@@ -16,11 +16,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
 	//override resizeEvent(QResizeEvent* event)
 	void resizeEvent(QResizeEvent* event) override;
-
+    store* getStore();
+	void test ();
     ~MainWindow();
 
 private:
-    store* q;
+
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

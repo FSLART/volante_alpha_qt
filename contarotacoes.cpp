@@ -1,9 +1,15 @@
 #include "contarotacoes.h"
-
+#include "mainwindow.h"
 ContaRotacoes::ContaRotacoes( QWidget *parent)
     : QWidget(parent){
-    m_value = 12000;
+    m_value=0;
+    //q is a static variable that you get from calling the static function getStore() from mainwindow
+	//find MainWindow and get the store
+	MainWindow* w = qobject_cast<MainWindow*>(parent->parent());
+
+    connect(w->getStore(),&store::rpmChanged, this, &ContaRotacoes::handleChangedValue);
 	m_maxValue=MAX_ROTATIONS_DEFAULT;
+	
 }
 void ContaRotacoes::paintEvent(QPaintEvent *event){
    //padding of the line
@@ -17,30 +23,16 @@ void ContaRotacoes::paintEvent(QPaintEvent *event){
    painter.setBrush(Qt::NoBrush); 
    drawContaRotacoes(painter, size, padding);
    drawRotacoesText(painter, size, padding);
-
-  
-
-
-   
-
-
 }
 
-
-int ContaRotacoes::maxValue() const{
-	return m_maxValue;
-}
-void ContaRotacoes::setMaxValue(int maxValue){
-	if(m_maxValue < 0){
-		m_maxValue = 0;
+void ContaRotacoes::handleChangedValue(int newValue, int oldValue){
+	// value< m_maxValue || this should be in the if for better data quality but in case of a ill fate, it might be interesting to see the values
+    if( newValue >= 0){
+		this->m_value = newValue;
+		this->update();
 	}
-	m_maxValue = maxValue;
-	emit maxValueChanged(maxValue);
+	
 }
-
-
-
-
 
 void ContaRotacoes::drawContaRotacoes(QPainter &painter, int size, int padding=10){
 
@@ -52,7 +44,7 @@ void ContaRotacoes::drawContaRotacoes(QPainter &painter, int size, int padding=1
    const int maxPhi = 270*16;
    double ratio = ((double)m_value)/((double)m_maxValue);
    
-   int currentPhi =((int)((double)(ratio)*(maxPhi-minPhi)))+minPhi;
+   int currentPhi =((int)((double)(ratio)*(maxPhi-minPhi)));
 
    painter.translate(size,0);
    painter.scale(-1.0, 1.0);

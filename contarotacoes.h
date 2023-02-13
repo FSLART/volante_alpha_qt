@@ -17,8 +17,8 @@ public:
 protected:
     void paintEvent(QPaintEvent *event) override;
 private:
-//	void drawContaRotacoes(QPainter &painter);
-//	void drawRotacoesText(QPainter &painter);
+	void drawContaRotacoes(QPainter &painter, int size, int padding);
+	void drawRotacoesText(QPainter &painter, int size, int padding);
 	int m_maxValue=MAX_ROTATIONS_DEFAULT;
 	int m_value;
 signals:

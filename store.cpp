@@ -18,12 +18,6 @@ int store::setupSerial() {
         std::cout << "welp you fucked up";
         return 1;
     }
-	
-    //connect(&m_timer, &QTimer::timeout, this, &SerialPortReader::handleTimeout);
-
-	/*while (serial->waitForReadyRead()) {
-		QByteArray serialLog=serial->readAll();
-	}*/
 
     this->port = serial;
     connect(this->port, &QSerialPort::readyRead, this, &store::handleReadyRead);
@@ -78,4 +72,81 @@ int store::closeSerial(){
 	int i =0; 
 	port->close();	
 	return i;
+}
+
+
+//getters and setters
+int store::getRpm(){
+	return this->m_rotationsPerMinute;
+
+}
+int store::getGearShift(){
+	return this->m_gearShift;
+}
+float store::getEngineTemperature(){
+	return this->m_engineTemperature;
+}
+float store::getOilPressure(){
+	return this->m_oilPressure;
+}
+float store::getOilTemperature(){
+	return this->m_oilTemperature;
+}
+float store::getBatteryVoltage(){
+	return this->m_batteryVoltage;
+}
+float store::getVehicleVelocity(){
+	return this->m_vehicleVelocity;
+}
+int store::getDataLoggerStatus(){
+	return this->m_dataLoggerStatus;
+}
+float store::getLambda(){
+	return this->m_lambda;
+}
+int store::getTcSlip(){
+	return this->m_tcSlip;
+
+}
+int store::getTcLaunch(){
+	return this->m_tcLaunch;
+}
+void store::setRpm(int rpm){
+	if(rpm>0){
+		this->m_rotationsPerMinute=rpm;
+	}
+}
+void store::setGearShift(int gearShift){
+	if(gearShift>0){
+		this->m_gearShift=gearShift;
+	}
+}
+void store::setEngineTemperature(float engineTemperature){
+	this->m_engineTemperature=engineTemperature;
+
+}
+void store::setOilPressure(float oilPressure){
+	this->m_oilPressure=oilPressure;
+
+}
+void store::setOilTemperature(float oilTemperature){
+	this->m_oilTemperature=oilTemperature;
+}
+void store::setBatteryVoltage(float batteryVoltage){
+	this->m_batteryVoltage=batteryVoltage;
+}
+void store::setVehicleVelocity(float vehicleVelocity){
+	this->m_vehicleVelocity=vehicleVelocity;
+}
+void store::setDataLoggerStatus(int dataLoggerStatus){
+	this->m_dataLoggerStatus=dataLoggerStatus;
+}
+void store::setLambda(float lambda){
+	this->m_lambda=lambda;
+}
+void store::setTcSlip(int tcSlip){
+	this->m_tcSlip=tcSlip;
+}
+void store::setTcLaunch(int tcLaunch){
+	this->m_tcLaunch=tcLaunch;
 }

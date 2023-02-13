@@ -32,10 +32,49 @@ class store: public QObject{
 		QByteArray serialLog;
 		QByteArray lastMessage; 
         explicit store(char * dev=nullptr, QObject *parent = nullptr);
-		~store(); 
+		~store();
+		
+		//getters and setters
+		int getRpm() const;
+		int getGearShift() const;
+		float getEngineTemperature() const;
+		float getOilPressure() const;
+		float getOilTemperature() const;
+		float getBatteryVoltage() const;
+		float getVehicleVelocity() const;
+		int getDataLoggerStatus() const;
+		float getLambda() const;
+		int getTcSlip() const;
+		int getTcLaunch() const;
+		void setRpm(int rpm);
+		void setGearShift(int gearShift);
+		void setEngineTemperature(float engineTemperature);
+		void setOilPressure(float oilPressure);
+		void setOilTemperature(float oilTemperature);
+		void setBatteryVoltage(float batteryVoltage);
+		void setVehicleVelocity(float vehicleVelocity);
+		void setDataLoggerStatus(int dataLoggerStatus);
+		void setLambda(float lambda);
+		void setTcSlip(int tcSlip);
+		void setTcLaunch(int tcLaunch);
+		
+
 	protected:
 		int setupSerial();
 		int closeSerial();
+    private:
+        int m_rotationsPerMinute;
+        int m_gearShift;
+        float m_engineTemperature;
+        float m_oilPressure;
+        float m_oilTemperature;
+        float m_batteryVoltage;
+		float m_vehicleVelocity;
+		int m_dataLoggerStatus;
+		//todo ask stuff about this
+		float m_lambda; 
+		int m_tcSlip;
+		int m_tcLaunch;
 };
 
 

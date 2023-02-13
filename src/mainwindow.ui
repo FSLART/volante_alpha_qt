@@ -124,7 +124,7 @@
   <customwidget>
    <class>ContaRotacoes</class>
    <extends>QWidget</extends>
-   <header>contarotacoes.h</header>
+   <header>src/contarotacoes.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

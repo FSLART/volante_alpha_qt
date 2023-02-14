@@ -37,7 +37,7 @@ store::store( char * dev, QObject *parent  ): QObject(parent){
 		this->dev = (char*)malloc(len);
 		strcpy(this->dev,dev);
 	}
-	
+
 
 	setupSerial();
 	
@@ -62,10 +62,11 @@ void store::handleReadyRead(){
 	
     if((bool)((long unsigned int)lastMessage.size() == size+sizeof(size)+sizeof(eof))&& ((bool) lastMessage[lastMessage.size()-1] == eof)){
 		parseJson();
+		//clear lastMessage()
+		lastMessage.clear();
 	}
 	
-	//clear lastMessage()
-	lastMessage.clear();
+	
 
 }
 void store::handleError(QSerialPort::SerialPortError serialPortError)

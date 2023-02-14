@@ -1,5 +1,5 @@
 #include "contarotacoes.h"
-#include "mainwindow.h"
+
 ContaRotacoes::ContaRotacoes( QWidget *parent)
     : QWidget(parent){
     m_value=0;

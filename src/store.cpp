@@ -1,5 +1,6 @@
 #include "store.h"
-
+#include <cstdint>
+using json = nlohmann::json;
 
 int store::setupSerial() {
 	
@@ -30,6 +31,13 @@ store::store( char * dev, QObject *parent  ): QObject(parent){
         this->dev = (char*)malloc(len);
         strcpy(this->dev,DEFAULT_DEVICE);
 	}
+	//copy dev to this->dev
+	else{
+		int len = sizeof(char)*strlen(dev)+1;
+		this->dev = (char*)malloc(len);
+		strcpy(this->dev,dev);
+	}
+	
 
 	setupSerial();
 	
@@ -44,9 +52,21 @@ store::~store(){
 
 
 void store::handleReadyRead(){
-	lastMessage=port->readAll(); 
-	qDebug()<< lastMessage; 
-	serialLog.append(lastMessage);
+	bufferMessage=port->readAll(); 
+	serialLog.append(bufferMessage);
+
+	//can be optimized using pointers or even a variable as a "bookmark" wether a int or pointer 
+	lastMessage.append(bufferMessage);
+	uint32_t size = (int)lastMessage[0] | (int)lastMessage[1] << 8 | (int)lastMessage[2] << 16 | (int)lastMessage[3] << 24;
+	int8_t eof = 0x00;
+	
+    if((bool)((long unsigned int)lastMessage.size() == size+sizeof(size)+sizeof(eof))&& ((bool) lastMessage[lastMessage.size()-1] == eof)){
+		parseJson();
+	}
+	
+	//clear lastMessage()
+	lastMessage.clear();
+
 }
 void store::handleError(QSerialPort::SerialPortError serialPortError)
 {
@@ -59,7 +79,11 @@ void store::handleError(QSerialPort::SerialPortError serialPortError)
         QCoreApplication::exit(1);
     }
 }
+void store::parseJson(){
+	json j = json::from_bson(lastMessage);
+	std::cout << std::setw(2) << j << std::endl;
 
+}
 
 int store::closeSerial(){
 	// TODO: Error handling?
@@ -67,8 +91,6 @@ int store::closeSerial(){
 	port->close();	
 	return i;
 }
-
-
 //getters and setters
 int store::getRpm() const{
 	return this->m_rotationsPerMinute;

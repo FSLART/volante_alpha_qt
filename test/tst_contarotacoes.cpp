@@ -10,4 +10,4 @@ void Tst_contarotacoes::checkRpmChangesFromStoreToGraphicText(){
 }
 
 
-QTEST_MAIN(Tst_contarotacoes)
+//QTEST_MAIN(Tst_contarotacoes)

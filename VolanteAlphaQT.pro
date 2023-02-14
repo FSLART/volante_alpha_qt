@@ -47,9 +47,12 @@ test{
     SOURCES -= src/main.cpp
 	
     HEADERS += \
-    test/tst_contarotacoes.h
+    test/tst_contarotacoes.h \
+	test/tst_serialport.h
+
 
     SOURCES += \
-    test/tst_contarotacoes.cpp
+    test/tst_contarotacoes.cpp \
+	test/tst_serialport.cpp
 }
 

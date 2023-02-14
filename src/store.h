@@ -1,7 +1,6 @@
 #ifndef STORE_H
 #define STORE_H
 #include <iostream>
-#include <qserialport.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,8 +13,10 @@
 #include <thread>
 #include <cstdio>
 #include <QCoreApplication>
-#include  <QErrorMessage>
+#include <QErrorMessage>
 #include <qobject.h>
+#include <nlohmann/json.hpp>
+
 #define DEFAULT_DEVICE "/dev/ttyACM0"
 /* !
         \class store
@@ -36,10 +37,13 @@ class store: public QObject{
 		void handleReadyRead();
 		void handleError(QSerialPort::SerialPortError serialPortError);
 		QByteArray serialLog;
-		QByteArray lastMessage; 
+		QByteArray lastMessage;
+		QByteArray bufferMessage;
+
+		void parseJson();
         explicit store(char * dev=nullptr, QObject *parent = nullptr);
 		~store();
-
+		
 		//getters and setters
 		int getRpm() const;
 		int getGearShift() const;
@@ -63,8 +67,6 @@ class store: public QObject{
 		void setLambda(float lambda);
 		void setTcSlip(int tcSlip);
 		void setTcLaunch(int tcLaunch);
-		
-
 	protected:
 		int setupSerial();
 		int closeSerial();

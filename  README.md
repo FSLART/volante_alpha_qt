@@ -43,6 +43,19 @@ ATENÇÃO
 
 Se mudares a linha e tua responsabilidade mudares as alterações de volta antes de fazeres um commit. O .pro nao deve ser ignorado pois causa a que toda a gente tenha de manualmente criar o ficheiro. Ignorar isto pode causar problemas futuros.
 
+# Dependencias
+
+Vais precisar do standard c++ stuff, Clang, make, etc... nao vou listar isto porque probs ja os tens instalados, e o que importa sao as versões //TODO: adicionar versoes relevantes :P
+
+QT 6.0+
+O software foi desenvolvido em 6.2.1
+QSerialPort 6.0+
+Terás de usar uma versão correspondente a acima
+
+Para o BSON irás precisar de uma livraria json mais especificamente desta especificação:
+https://github.com/nlohmann/json
+Poderás usar a seguinte package com o pacman ``nlohmann-json`` foi usada a versão nlohmann-json-3.11.2-1-any para o desenvolvimento
+
 # Manutenção do README
 
 Se notares que o .readme está bastante desatualizado e pertences à equipa deves chatear uma pessoa apropriada. A partida no futuro existerá um manual tanto para utilizadores como para developers.

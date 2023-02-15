@@ -20,7 +20,7 @@ store* MainWindow::getStore(){
     return store_ref;
 }
 MainWindow::~MainWindow(){
-    
+    store_ref->~store(); 
     delete ui;
 }
 

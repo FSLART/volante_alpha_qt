@@ -17,7 +17,7 @@
 #include <qobject.h>
 #include <nlohmann/json.hpp>
 
-#define DEFAULT_DEVICE "/dev/ttyACM0"
+#define DEFAULT_DEVICE "/tmp/banana"
 /* !
         \class store
         \brief Basicamente uma store contendo as vários dados necessários a serem transmitidos ou representados graficamente

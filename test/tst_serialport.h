@@ -17,6 +17,7 @@ class Tst_serialport : public QObject
     private slots:
         void sanityCheck();
 		void checkSendMessage();
+		void storeMessage();
         void closeHandle();
 };
 #endif // TST_SERIALPORT_H

@@ -1,5 +1,6 @@
 #include "store.h"
 #include <cstdint>
+#include <QFile>
 using json = nlohmann::json;
 
 int store::setupSerial() {
@@ -36,30 +37,50 @@ store::store( QString dev, QObject *parent  ): QObject(parent){
 	
 }
 void store::forceRead(qint64 len){
+	while (port->bytesAvailable() < len) {
+		if (!port->waitForReadyRead(1000)) {
+			qDebug() << QObject::tr("Wait read error %1")
+						.arg(port->errorString());
+			return;
+		}
+		
+	}
     port->read(bufferMessage.data(), len);
 }
 //destructor for store 
 
 
 void store::handleReadyRead(){
-	bufferMessage=port->readAll(); 
-	serialLog.append(bufferMessage);
+    qDebug() << "FIRED";
+    bufferMessage=port->readAll();
+    port->read(bufferMessage.data(), 10);
+
+        serialLog.append(bufferMessage);
+    //disconnect(this->port, &QSerialPort::readyRead, this, &store::handleReadyRead);
 
 	//can be optimized using pointers or even a variable as a "bookmark" wether a int or pointer 
 	lastMessage.append(bufferMessage);
-	uint32_t size = (int)lastMessage[0] | (int)lastMessage[1] << 8 | (int)lastMessage[2] << 16 | (int)lastMessage[3] << 24;
+    /*uint32_t size = (int)lastMessage[0] | (int)lastMessage[1] << 8 | (int)lastMessage[2] << 16 | (int)lastMessage[3] << 24;
 	int8_t eof = 0x00;
 	
     if((bool)((long unsigned int)lastMessage.size() == size+sizeof(size)+sizeof(eof))&& ((bool) lastMessage[lastMessage.size()-1] == eof)){
 		parseJson();
 		//clear lastMessage()
 		lastMessage.clear();
-	}
+    }*/
 	
 	
 
 }
 store::~store(){
+	//print to a file serial log
+	//close serial port
+    QFile file("serialLog.txt");
+    if (file.open(QIODevice::WriteOnly)) {
+        file.write(serialLog);
+        file.close();
+    }
+
 	closeSerial();
 }
 
@@ -75,8 +96,11 @@ void store::handleError(QSerialPort::SerialPortError serialPortError)
     }
 }
 void store::parseJson(){
-	json j = json::from_bson(lastMessage);
-	std::cout << std::setw(2) << j << std::endl;
+    json j = json::from_bson(lastMessage);
+	//read element "rpm"
+	if(j.contains("rpm")){
+		this->setRpm(j["rpm"]);
+	}
 
 }
 

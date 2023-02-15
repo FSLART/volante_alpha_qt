@@ -12,10 +12,7 @@ class Tst_serialport : public QObject
 {
     Q_OBJECT
     private:
-		QString banana;
-		QString tango;
-		void launchSocat();
-		__pid_t pid;
+        QProcess socat;
         store * _store;
     private slots:
         void sanityCheck();

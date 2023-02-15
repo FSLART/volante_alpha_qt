@@ -11,7 +11,7 @@ int store::setupSerial() {
     serial->setStopBits(QSerialPort::OneStop);
     serial->setParity(QSerialPort::NoParity);
     serial->setFlowControl(QSerialPort::NoFlowControl);
-    if (!serial->open(QIODevice::ReadOnly)) {
+    if (!serial->open(QIODevice::ReadWrite)) {
         qDebug() << "Can't open " << this->dev << ", error code" << serial->error();
         return 1;
     }
@@ -24,31 +24,21 @@ int store::setupSerial() {
 	return 0;	
 }
 
-store::store( char * dev, QObject *parent  ): QObject(parent){
-    if (dev == nullptr){
-        // TODO: fix this(use a better function preferably one handled by QT)
-        int len = sizeof(char)*strlen(DEFAULT_DEVICE)+1;
-        this->dev = (char*)malloc(len);
-        strcpy(this->dev,DEFAULT_DEVICE);
+store::store( QString dev, QObject *parent  ): QObject(parent){
+	//if Qstring dev is empty, use default device
+	if(dev.isEmpty()){
+		this->dev = DEFAULT_DEVICE;
+	}else{
+		this->dev = dev;
 	}
-	//copy dev to this->dev
-	else{
-		int len = sizeof(char)*strlen(dev)+1;
-		this->dev = (char*)malloc(len);
-		strcpy(this->dev,dev);
-	}
-
 
 	setupSerial();
 	
 }
-//destructor for store 
-store::~store(){
-	closeSerial();
-	//free up device
-	free(this->dev);
-
+void store::forceRead(qint64 len){
+    port->read(bufferMessage.data(), len);
 }
+//destructor for store 
 
 
 void store::handleReadyRead(){
@@ -69,6 +59,10 @@ void store::handleReadyRead(){
 	
 
 }
+store::~store(){
+	closeSerial();
+}
+
 void store::handleError(QSerialPort::SerialPortError serialPortError)
 {
     if (serialPortError == QSerialPort::ReadError) {

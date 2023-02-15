@@ -32,16 +32,17 @@ class store: public QObject{
     Q_OBJECT;
     Q_PROPERTY(int  m_rotationsPerMinute READ getRpm WRITE setRpm NOTIFY rpmChanged);
 	public:
-		char* dev=nullptr;
+        QString dev;
 		QSerialPort* port=nullptr;
 		void handleReadyRead();
+		void forceRead(qint64 len);
 		void handleError(QSerialPort::SerialPortError serialPortError);
 		QByteArray serialLog;
 		QByteArray lastMessage;
 		QByteArray bufferMessage;
 
 		void parseJson();
-        explicit store(char * dev=nullptr, QObject *parent = nullptr);
+        explicit store(QString dev="", QObject *parent = nullptr);
 		~store();
 		
 		//getters and setters

@@ -37,6 +37,7 @@ class store: public QObject{
 		void handleReadyRead();
 		void forceRead(qint64 len);
 		void handleError(QSerialPort::SerialPortError serialPortError);
+		
 		QByteArray serialLog;
 		QByteArray lastMessage;
 		QByteArray bufferMessage;

@@ -60,13 +60,12 @@ void Tst_serialport::storeMessage(){
 	tango.setFlowControl(QSerialPort::NoFlowControl);
 	tango.open(QIODevice::WriteOnly);
 
-	tango.write("Hello");
-	
-	 tango.waitForBytesWritten();
-	 _store->forceRead(5);
-	 tango.close();
+	tango.write("World");
+	tango.waitForBytesWritten();
+	tango.close();
+	_store->port->waitForReadyRead();
 	 QString message = _store->serialLog;
-	 QCOMPARE(message,"Hello");
+	 QCOMPARE(message,"World");
 }
 
 

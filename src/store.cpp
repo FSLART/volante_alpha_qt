@@ -49,13 +49,11 @@ void store::forceRead(qint64 len){
 }
 //destructor for store 
 
-
 void store::handleReadyRead(){
     qDebug() << "FIRED";
+	
     bufferMessage=port->readAll();
-    port->read(bufferMessage.data(), 10);
-
-        serialLog.append(bufferMessage);
+	serialLog.append(bufferMessage);
     //disconnect(this->port, &QSerialPort::readyRead, this, &store::handleReadyRead);
 
 	//can be optimized using pointers or even a variable as a "bookmark" wether a int or pointer 

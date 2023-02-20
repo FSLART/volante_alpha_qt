@@ -8,6 +8,9 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <cstdio>
+#include <cstdint>
+#include <QFile>
+#include <cstring>
 #include <QDebug>
 #include <QSerialPort>
 #include <thread>
@@ -18,6 +21,7 @@
 #include <nlohmann/json.hpp>
 
 #define DEFAULT_DEVICE "/tmp/banana"
+#define BSON_WARNING "\xFF\xFF\xFF\xFF"
 /* !
         \class store
         \brief Basicamente uma store contendo as vários dados necessários a serem transmitidos ou representados graficamente
@@ -41,8 +45,9 @@ class store: public QObject{
 		QByteArray serialLog;
 		QByteArray lastMessage;
 		QByteArray bufferMessage;
+		char * markerBSON_WARNING=nullptr; 
 
-		void parseJson();
+		void parseBson();
         explicit store(QString dev="", QObject *parent = nullptr);
 		~store();
 		

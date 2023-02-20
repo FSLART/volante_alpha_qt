@@ -18,6 +18,8 @@ class Tst_serialport : public QObject
         void sanityCheck();
 		void checkSendMessage();
 		void storeMessage();
+        void bsonTest();
         void closeHandle();
+
 };
 #endif // TST_SERIALPORT_H

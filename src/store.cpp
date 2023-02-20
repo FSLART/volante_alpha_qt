@@ -1,6 +1,6 @@
 #include "store.h"
-#include <cstdint>
-#include <QFile>
+#include <vector>
+
 using json = nlohmann::json;
 
 int store::setupSerial() {
@@ -50,19 +50,29 @@ void store::forceRead(qint64 len){
 //destructor for store 
 
 void store::handleReadyRead(){
-    qDebug() << "FIRED";
+    //qDebug() << "FIRED";
 	
     bufferMessage=port->readAll();
-	serialLog.append(bufferMessage);
-    //disconnect(this->port, &QSerialPort::readyRead, this, &store::handleReadyRead);
-
+    serialLog.append(bufferMessage);
 	//can be optimized using pointers or even a variable as a "bookmark" wether a int or pointer 
 	lastMessage.append(bufferMessage);
-    /*uint32_t size = (int)lastMessage[0] | (int)lastMessage[1] << 8 | (int)lastMessage[2] << 16 | (int)lastMessage[3] << 24;
-	int8_t eof = 0x00;
+
+	//regex BSON_WARNING value in bufferMessage if its found set markerBSON_WARNING to the first character after BSON_WARNING
+    QString* temp = new QString(bufferMessage);
+	if(temp->contains(BSON_WARNING)){
+		//lastMessage starts at lastMessage size - ((lenght of buffer - index of BSON_WARNING) + length of BSON_WARNING)
+		const int bson_len = strlen(BSON_WARNING);
+		// TODO: apparently the premeditated way doesnt work, and i just hit it with a hammer to work, im to tired to think and i will likely forget this on review CHECK THIS... ELSE IT WILL PROPAGATE STUPID DOODOO
+		int marcador = lastMessage.size() - (bufferMessage.size() - bufferMessage.indexOf(BSON_WARNING)) + bson_len;
+		lastMessage=lastMessage.mid(marcador);
+		//qDebug() << "BSON WARNING FOUND";
+	 	parseBson();
+		lastMessage.clear();
+    }
+
 	
-    if((bool)((long unsigned int)lastMessage.size() == size+sizeof(size)+sizeof(eof))&& ((bool) lastMessage[lastMessage.size()-1] == eof)){
-		parseJson();
+    /*if((bool)((long unsigned int)lastMessage.size() == size+sizeof(size)+sizeof(eof))&& ((bool) lastMessage[lastMessage.size()-1] == eof)){
+		parseBson();
 		//clear lastMessage()
 		lastMessage.clear();
     }*/
@@ -93,12 +103,20 @@ void store::handleError(QSerialPort::SerialPortError serialPortError)
         QCoreApplication::exit(1);
     }
 }
-void store::parseJson(){
-    json j = json::from_bson(lastMessage);
-	//read element "rpm"
-	if(j.contains("rpm")){
-		this->setRpm(j["rpm"]);
+void store::parseBson(){
+	try {
+        std::vector<std::uint8_t> v(lastMessage.begin(), lastMessage.end());
+
+		json j = json::from_bson(v);
+		//read element "rpm"
+		if(j.contains("rpm")){
+			this->setRpm(j["rpm"]);
+		}
+	} catch (json::parse_error& e) {
+		qDebug() << "parse error at byte " << e.byte << "\n";
+		
 	}
+    
 
 }
 

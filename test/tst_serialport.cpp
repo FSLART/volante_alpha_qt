@@ -1,5 +1,6 @@
 #include "tst_serialport.h"
 #include <cstdio>
+#include <cstring>
 #include <iostream>
 #include <regex>
 #include <sys/types.h>
@@ -50,6 +51,7 @@ void Tst_serialport::checkSendMessage(){
      QCOMPARE(message,"Hello");
 	
 }
+
 void Tst_serialport::storeMessage(){
 	_store = new store("/tmp/banana");
 	tango.setPortName("/tmp/tango");
@@ -66,6 +68,31 @@ void Tst_serialport::storeMessage(){
 	_store->port->waitForReadyRead();
 	 QString message = _store->serialLog;
 	 QCOMPARE(message,"World");
+}
+void Tst_serialport::bsonTest(){
+	_store->lastMessage.clear();
+    const  char rpm_message[] = {
+        (char)0xFF, (char)0xFF, (char)0xFF, (char)0xFF,
+        0x09, 0x00, 0x00, 0x00,
+		0x10,
+        0x72, 0x70, 0x6D, 0x00,
+        0x10, 0x27, 0x00, 0x00,
+		0x00};
+		//0E 00 00 00 10 72 70 6D 00 10 27 00 00 00
+
+    tango.setPortName("/tmp/tango");
+	tango.setBaudRate(QSerialPort::Baud115200);
+    tango.setDataBits(QSerialPort::Data8);
+	tango.setStopBits(QSerialPort::OneStop);
+	tango.setParity(QSerialPort::NoParity);
+	tango.setFlowControl(QSerialPort::NoFlowControl);
+	tango.open(QIODevice::WriteOnly);
+	tango.write(rpm_message, 18);
+	tango.waitForBytesWritten();
+	tango.close();
+	_store->port->waitForReadyRead();
+
+	QCOMPARE(_store->getRpm(),10000);
 }
 
 

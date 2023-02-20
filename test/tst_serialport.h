@@ -19,6 +19,8 @@ class Tst_serialport : public QObject
 		void checkSendMessage();
 		void storeMessage();
         void bsonTest();
+		void partitionedSlowBsonMessage();
+		void prependingTrash();
         void closeHandle();
 
 };

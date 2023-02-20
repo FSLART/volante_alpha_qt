@@ -69,14 +69,6 @@ void store::handleReadyRead(){
 	 	parseBson();
 		lastMessage.clear();
     }
-
-	
-    /*if((bool)((long unsigned int)lastMessage.size() == size+sizeof(size)+sizeof(eof))&& ((bool) lastMessage[lastMessage.size()-1] == eof)){
-		parseBson();
-		//clear lastMessage()
-		lastMessage.clear();
-    }*/
-	
 	
 
 }

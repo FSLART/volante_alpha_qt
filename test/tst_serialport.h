@@ -14,6 +14,7 @@ class Tst_serialport : public QObject
     private:
         QProcess socat;
         store * _store;
+		void tangoWriteSetup();
     private slots:
         void sanityCheck();
 		void checkSendMessage();

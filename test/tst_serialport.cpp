@@ -22,15 +22,7 @@ void Tst_serialport::sanityCheck(){
 	_store->~store();
 }
 void Tst_serialport::checkSendMessage(){
-
-    tango.setPortName("/tmp/tango");
-    tango.setBaudRate(QSerialPort::Baud115200);
-    tango.setDataBits(QSerialPort::Data8);
-    tango.setStopBits(QSerialPort::OneStop);
-    tango.setParity(QSerialPort::NoParity);
-    tango.setFlowControl(QSerialPort::NoFlowControl);
-    tango.open(QIODevice::WriteOnly);
-
+	tangoWriteSetup();
 	tango.write("Hello");
 	
      tango.waitForBytesWritten();
@@ -54,13 +46,7 @@ void Tst_serialport::checkSendMessage(){
 
 void Tst_serialport::storeMessage(){
 	_store = new store("/tmp/banana");
-	tango.setPortName("/tmp/tango");
-	tango.setBaudRate(QSerialPort::Baud115200);
-	tango.setDataBits(QSerialPort::Data8);
-	tango.setStopBits(QSerialPort::OneStop);
-	tango.setParity(QSerialPort::NoParity);
-	tango.setFlowControl(QSerialPort::NoFlowControl);
-	tango.open(QIODevice::WriteOnly);
+	tangoWriteSetup();
 
 	tango.write("World");
 	tango.waitForBytesWritten();
@@ -79,14 +65,8 @@ void Tst_serialport::bsonTest(){
         0x10, 0x27, 0x00, 0x00,
 		0x00};
 		//0E 00 00 00 10 72 70 6D 00 10 27 00 00 00
+	tangoWriteSetup();
 
-    tango.setPortName("/tmp/tango");
-	tango.setBaudRate(QSerialPort::Baud115200);
-    tango.setDataBits(QSerialPort::Data8);
-	tango.setStopBits(QSerialPort::OneStop);
-	tango.setParity(QSerialPort::NoParity);
-	tango.setFlowControl(QSerialPort::NoFlowControl);
-	tango.open(QIODevice::WriteOnly);
 	tango.write(rpm_message, 18);
 	tango.waitForBytesWritten();
 	tango.close();
@@ -107,13 +87,7 @@ void Tst_serialport::partitionedSlowBsonMessage(){
 		0x00};
 		//0E 00 00 00 10 72 70 6D 00 10 27 00 00 00
 
-	tango.setPortName("/tmp/tango");
-	tango.setBaudRate(QSerialPort::Baud115200);
-	tango.setDataBits(QSerialPort::Data8);
-	tango.setStopBits(QSerialPort::OneStop);
-	tango.setParity(QSerialPort::NoParity);
-	tango.setFlowControl(QSerialPort::NoFlowControl);
-	tango.open(QIODevice::WriteOnly);
+	tangoWriteSetup();
 	int count =0; 
 	do {
 		tango.write(rpm_message+count,3); 
@@ -135,14 +109,8 @@ void Tst_serialport::prependingTrash(){
         0x10, 0x27, 0x00, 0x00,
 		0x00};
 		//0E 00 00 00 10 72 70 6D 00 10 27 00 00 00
+	tangoWriteSetup();
 
-    tango.setPortName("/tmp/tango");
-	tango.setBaudRate(QSerialPort::Baud115200);
-    tango.setDataBits(QSerialPort::Data8);
-	tango.setStopBits(QSerialPort::OneStop);
-	tango.setParity(QSerialPort::NoParity);
-	tango.setFlowControl(QSerialPort::NoFlowControl);
-	tango.open(QIODevice::WriteOnly);
 	//random amount from 0 to 1000
 	int random = qrand() % 1000;
 	for(int i = 0; i < random; i++){
@@ -165,3 +133,16 @@ void Tst_serialport::closeHandle(){
 	_store->~store();
 }
 QTEST_MAIN(Tst_serialport)
+
+//functions
+
+void Tst_serialport::tangoWriteSetup(){
+	tango.setPortName("/tmp/tango");
+	tango.setBaudRate(QSerialPort::Baud115200);
+	tango.setDataBits(QSerialPort::Data8);
+	tango.setStopBits(QSerialPort::OneStop);
+	tango.setParity(QSerialPort::NoParity);
+	tango.setFlowControl(QSerialPort::NoFlowControl);
+	tango.open(QIODevice::WriteOnly);
+
+}

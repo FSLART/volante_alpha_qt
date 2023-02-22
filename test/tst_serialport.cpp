@@ -1,19 +1,19 @@
 #include "tst_serialport.h"
-#include <cstdio>
-#include <cstring>
-#include <iostream>
-#include <regex>
-#include <sys/types.h>
-#include <signal.h>
-#include <unistd.h>
-#include <fstream>
-#include <QSerialPort>
+
 
 using namespace std;
    QSerialPort tango;
+
+   const  char rpm_message[] = {
+        (char)0xFF, (char)0xFF, (char)0xFF, (char)0xFF,
+        0x09, 0x00, 0x00, 0x00,
+		0x10,
+        0x72, 0x70, 0x6D, 0x00,
+        0x10, 0x27, 0x00, 0x00,
+		0x00};
 void Tst_serialport::sanityCheck(){
-     // raw,echo=0,b115200
-    socat.startDetached("socat -d -d -d -d pty,raw,echo=0,b115200,link=/tmp/banana,  pty,raw,echo=0,b115200,link=/tmp/tango");
+     //-d -d -d -d
+    socat.startDetached("socat pty,raw,echo=0,b115200,link=/tmp/banana,  pty,raw,echo=0,b115200,link=/tmp/tango");
     sleep(2);
 
     _store = new store("/tmp/banana");
@@ -57,14 +57,8 @@ void Tst_serialport::storeMessage(){
 }
 void Tst_serialport::bsonTest(){
 	_store->lastMessage.clear();
-    const  char rpm_message[] = {
-        (char)0xFF, (char)0xFF, (char)0xFF, (char)0xFF,
-        0x09, 0x00, 0x00, 0x00,
-		0x10,
-        0x72, 0x70, 0x6D, 0x00,
-        0x10, 0x27, 0x00, 0x00,
-		0x00};
-		//0E 00 00 00 10 72 70 6D 00 10 27 00 00 00
+    _store->setRpm(0);
+
 	tangoWriteSetup();
 
 	tango.write(rpm_message, 18);
@@ -78,15 +72,7 @@ void Tst_serialport::bsonTest(){
 void Tst_serialport::partitionedSlowBsonMessage(){
 	qDebug() << "This test checks if the message still works if it comes in parts, simulating a slower transmitting device, as such it will take a few seconds to run";
 	_store->lastMessage.clear();
-	const  char rpm_message[] = {
-		(char)0xFF, (char)0xFF, (char)0xFF, (char)0xFF,
-		0x09, 0x00, 0x00, 0x00,
-		0x10,
-		0x72, 0x70, 0x6D, 0x00,
-		0x10, 0x27, 0x00, 0x00,
-		0x00};
-		//0E 00 00 00 10 72 70 6D 00 10 27 00 00 00
-
+	_store->setRpm(0);
 	tangoWriteSetup();
 	int count =0; 
 	do {
@@ -101,22 +87,15 @@ void Tst_serialport::partitionedSlowBsonMessage(){
 }
 void Tst_serialport::prependingTrash(){
 	_store->lastMessage.clear();
-	const  char rpm_message[] = {
-        (char)0xFF, (char)0xFF, (char)0xFF, (char)0xFF,
-        0x09, 0x00, 0x00, 0x00,
-		0x10,
-        0x72, 0x70, 0x6D, 0x00,
-        0x10, 0x27, 0x00, 0x00,
-		0x00};
-		//0E 00 00 00 10 72 70 6D 00 10 27 00 00 00
+	_store->setRpm(0);
 	tangoWriteSetup();
 
 	//random amount from 0 to 1000
-	int random = qrand() % 1000;
+	int random = randomInt(0,1000);
 	for(int i = 0; i < random; i++){
 		//write a random byte from 0 to 255
 		//the chance of landing 0xFF 4 times in a row is 1/256^4 or 1/65536, which is very unlikely, theres also a chance of landing an ff prepending the actual message 
-		tango.putChar((char)qrand() % 255);
+		tango.putChar((char)randomInt(0,255));
 		tango.waitForBytesWritten();
 	}
 	tango.write(rpm_message, 18);
@@ -127,6 +106,30 @@ void Tst_serialport::prependingTrash(){
 	QCOMPARE(_store->getRpm(),10000);
 		
 }
+
+void Tst_serialport::suffixingTrash(){
+	_store->lastMessage.clear();
+	_store->setRpm(0);
+	tangoWriteSetup();
+
+	//random amount from 0 to 1000
+	
+	tango.write(rpm_message, 18);
+	int random = randomInt(0,1000);
+	for(int i = 0; i < random; i++){
+		//write a random byte from 0 to 255
+		//the chance of landing 0xFF 4 times in a row is 1/256^4 or 1/65536, which is very unlikely, theres also a chance of landing an ff prepending the actual message 
+		tango.putChar((char)randomInt(0,255));
+		tango.waitForBytesWritten();
+	}
+	tango.waitForBytesWritten();
+	tango.close();
+	_store->port->waitForReadyRead();
+
+	QCOMPARE(_store->getRpm(),10000);
+		
+}
+
 void Tst_serialport::closeHandle(){
 	
     socat.close();
@@ -145,4 +148,8 @@ void Tst_serialport::tangoWriteSetup(){
 	tango.setFlowControl(QSerialPort::NoFlowControl);
 	tango.open(QIODevice::WriteOnly);
 
+}
+int Tst_serialport::randomInt(int offset=0, int n=255){
+	QRandomGenerator a = QRandomGenerator::securelySeeded();
+	return a.bounded(n)+offset;
 }

@@ -56,25 +56,27 @@ void store::handleReadyRead(){
 	lastMessage.append(bufferMessage);
 
 	//regex BSON_WARNING value in bufferMessage if its found set markerBSON_WARNING to the first character after BSON_WARNING
-    QString* temp = new QString(bufferMessage);
+    QString* temp = new QString(lastMessage);
 	if(temp->contains(BSON_WARNING)){
 		//lastMessage starts at lastMessage size - ((lenght of buffer - index of BSON_WARNING) + length of BSON_WARNING)
 		const int bson_len = strlen(BSON_WARNING);
 		// TODO: apparently the premeditated way doesnt work, and i just hit it with a hammer to work, im to tired to think and i will likely forget this on review CHECK THIS... ELSE IT WILL PROPAGATE STUPID DOODOO
-		int marcador = lastMessage.size() - (bufferMessage.size() - bufferMessage.indexOf(BSON_WARNING)) + bson_len;
-		lastMessage=lastMessage.mid(marcador);
+		int marcador = lastMessage.indexOf(BSON_WARNING) + bson_len;
+		auto shrinked=lastMessage.mid(marcador);
 		//get the first 4 bytes of the lastMessage and convert to int
 		
-       // int length = lastMessage[0] | lastMessage[1] << 8| lastMessage[2] <<16| lastMessage[3]<<24;
-		//get the next length bytes from serial and parse them
+        int length = shrinked[0] | shrinked[1] << 8| shrinked[2] <<16| shrinked[3]<<24;
+        if(shrinked.size() < length+5){
+			qDebug() << "BSON WARNING FOUND BUT NOT ENOUGH BYTES";
+			return;
+		}
 		
-        auto shrinked = lastMessage.mid(0, 14);
+        shrinked = shrinked.mid(0, length+5);
 
-		//qDebug() << "BSON WARNING FOUND";
 		std::vector<std::uint8_t> v(shrinked.begin(),shrinked.end());
 
 	 	parseBson(v);
-		lastMessage=lastMessage.mid(14);
+        lastMessage=lastMessage.mid(length+5);
     }
 	
 
@@ -114,8 +116,11 @@ void store::parseBson(std::vector<std::uint8_t> v){
 		}
 	} catch (json::parse_error& e) {
         qDebug() << "parse error at byte " << e.byte << "\n";
-        bufferMessage.clear();
-		
+        qDebug() << "message: " << v << "\n";
+        qDebug() << v.size();
+        //lastMessage.clear();
+
+
 	}
     
 

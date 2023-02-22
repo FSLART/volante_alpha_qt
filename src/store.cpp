@@ -66,17 +66,17 @@ void store::handleReadyRead(){
 		//get the first 4 bytes of the lastMessage and convert to int
 		
         int length = shrinked[0] | shrinked[1] << 8| shrinked[2] <<16| shrinked[3]<<24;
-        if(shrinked.size() < length+5){
+        if(shrinked.size() < length){
 			qDebug() << "BSON WARNING FOUND BUT NOT ENOUGH BYTES";
 			return;
 		}
 		
-        shrinked = shrinked.mid(0, length+5);
+        shrinked = shrinked.mid(0, length);
 
 		std::vector<std::uint8_t> v(shrinked.begin(),shrinked.end());
 
 	 	parseBson(v);
-        lastMessage=lastMessage.mid(length+5);
+        lastMessage=lastMessage.mid(length);
     }
 	
 

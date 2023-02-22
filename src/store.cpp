@@ -2,7 +2,6 @@
 #include <vector>
 
 using json = nlohmann::json;
-
 int store::setupSerial() {
 	
     QSerialPort* serial= new QSerialPort();
@@ -50,8 +49,7 @@ void store::forceRead(qint64 len){
 //destructor for store 
 
 void store::handleReadyRead(){
-    //qDebug() << "FIRED";
-	
+
     bufferMessage=port->readAll();
     serialLog.append(bufferMessage);
 	//can be optimized using pointers or even a variable as a "bookmark" wether a int or pointer 
@@ -65,9 +63,18 @@ void store::handleReadyRead(){
 		// TODO: apparently the premeditated way doesnt work, and i just hit it with a hammer to work, im to tired to think and i will likely forget this on review CHECK THIS... ELSE IT WILL PROPAGATE STUPID DOODOO
 		int marcador = lastMessage.size() - (bufferMessage.size() - bufferMessage.indexOf(BSON_WARNING)) + bson_len;
 		lastMessage=lastMessage.mid(marcador);
+		//get the first 4 bytes of the lastMessage and convert to int
+		
+       // int length = lastMessage[0] | lastMessage[1] << 8| lastMessage[2] <<16| lastMessage[3]<<24;
+		//get the next length bytes from serial and parse them
+		
+        auto shrinked = lastMessage.mid(0, 14);
+
 		//qDebug() << "BSON WARNING FOUND";
-	 	parseBson();
-		lastMessage.clear();
+		std::vector<std::uint8_t> v(shrinked.begin(),shrinked.end());
+
+	 	parseBson(v);
+		lastMessage=lastMessage.mid(14);
     }
 	
 
@@ -95,17 +102,19 @@ void store::handleError(QSerialPort::SerialPortError serialPortError)
         QCoreApplication::exit(1);
     }
 }
-void store::parseBson(){
+void store::parseBson(std::vector<std::uint8_t> v){
+    qDebug()<< "Parsing Incoming BSON";
 	try {
-        std::vector<std::uint8_t> v(lastMessage.begin(), lastMessage.end());
+        
 
-		json j = json::from_bson(v);
+        json j = json::from_bson(v);
 		//read element "rpm"
-		if(j.contains("rpm")){
-			this->setRpm(j["rpm"]);
+        if(j.contains("rpm")){
+            this->setRpm(j["rpm"]);
 		}
 	} catch (json::parse_error& e) {
-		qDebug() << "parse error at byte " << e.byte << "\n";
+        qDebug() << "parse error at byte " << e.byte << "\n";
+        bufferMessage.clear();
 		
 	}
     

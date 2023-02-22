@@ -20,7 +20,7 @@
 #include <qobject.h>
 #include <nlohmann/json.hpp>
 
-#define DEFAULT_DEVICE "/tmp/banana"
+#define DEFAULT_DEVICE "/dev/ttyACM0"
 #define BSON_WARNING "\xFF\xFF\xFF\xFF"
 /* !
         \class store
@@ -47,7 +47,7 @@ class store: public QObject{
 		QByteArray bufferMessage;
 		char * markerBSON_WARNING=nullptr; 
 
-		void parseBson();
+		void parseBson(std::vector<std::uint8_t> v);
         explicit store(QString dev="", QObject *parent = nullptr);
 		~store();
 		

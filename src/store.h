@@ -48,6 +48,7 @@ class store: public QObject{
 		char * markerBSON_WARNING=nullptr; 
 
 		void parseBson(std::vector<std::uint8_t> v);
+		void bsonMining();
         explicit store(QString dev="", QObject *parent = nullptr);
 		~store();
 		

@@ -58,28 +58,37 @@ void store::handleReadyRead(){
 	//regex BSON_WARNING value in bufferMessage if its found set markerBSON_WARNING to the first character after BSON_WARNING
     QString* temp = new QString(lastMessage);
 	if(temp->contains(BSON_WARNING)){
-		//lastMessage starts at lastMessage size - ((lenght of buffer - index of BSON_WARNING) + length of BSON_WARNING)
-		const int bson_len = strlen(BSON_WARNING);
-		// TODO: apparently the premeditated way doesnt work, and i just hit it with a hammer to work, im to tired to think and i will likely forget this on review CHECK THIS... ELSE IT WILL PROPAGATE STUPID DOODOO
-		int marcador = lastMessage.indexOf(BSON_WARNING) + bson_len;
-		auto shrinked=lastMessage.mid(marcador);
-		//get the first 4 bytes of the lastMessage and convert to int
-		
-        int length = shrinked[0] | shrinked[1] << 8| shrinked[2] <<16| shrinked[3]<<24;
-        if(shrinked.size() < length){
-			qDebug() << "BSON WARNING FOUND BUT NOT ENOUGH BYTES";
-			return;
-		}
-		
-        shrinked = shrinked.mid(0, length);
-
-		std::vector<std::uint8_t> v(shrinked.begin(),shrinked.end());
-
-	 	parseBson(v);
-        lastMessage=lastMessage.mid(length);
+		bsonMining();
     }
 	
 
+}
+void store::bsonMining(){
+	//lastMessage starts at lastMessage size - ((lenght of buffer - index of BSON_WARNING) + length of BSON_WARNING)
+	const int bson_len = strlen(BSON_WARNING);
+	//im assuming a minimum of 9 due to warning=4, document size = 4, EOF =1, sum of them all is 9
+    if(lastMessage.size()<=9 || lastMessage.indexOf(BSON_WARNING)==-1){
+
+		return;
+	}
+	// TODO: apparently the premeditated way doesnt work, and i just hit it with a hammer to work, im to tired to think and i will likely forget this on review CHECK THIS... ELSE IT WILL PROPAGATE STUPID DOODOO
+	int marcador = lastMessage.indexOf(BSON_WARNING) + bson_len;
+	auto shrinked=lastMessage.mid(marcador);
+	//get the first 4 bytes of the lastMessage and convert to int
+	
+	int length = shrinked[0] | shrinked[1] << 8| shrinked[2] <<16| shrinked[3]<<24;
+	if(shrinked.size() < length){
+		qDebug() << "BSON WARNING FOUND BUT NOT ENOUGH BYTES";
+		return;
+	}
+	
+	shrinked = shrinked.mid(0, length);
+
+	std::vector<std::uint8_t> v(shrinked.begin(),shrinked.end());
+
+	parseBson(v);
+	lastMessage=lastMessage.mid(marcador+length);
+	return bsonMining();
 }
 store::~store(){
 	//print to a file serial log
@@ -112,7 +121,9 @@ void store::parseBson(std::vector<std::uint8_t> v){
         json j = json::from_bson(v);
 		//read element "rpm"
         if(j.contains("rpm")){
-            this->setRpm(j["rpm"]);
+            
+			this->setRpm(j["rpm"]);
+			qDebug() << "RPM: " << this->getRpm();
 		}
 	} catch (json::parse_error& e) {
         qDebug() << "parse error at byte " << e.byte << "\n";

@@ -25,11 +25,13 @@ RCC_DIR = build
 
 # Input
 HEADERS += src/contarotacoes.h \
+           src/contamudancas.h \
            src/mainwindow.h \
            src/store.h
            
 
 SOURCES += src/contarotacoes.cpp \
+           src/contamudancas.cpp \
            src/main.cpp \
            src/mainwindow.cpp \
            src/store.cpp  

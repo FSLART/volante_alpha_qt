@@ -34,6 +34,7 @@ class Tst_serialport : public QObject
 		void partitionedSlowBsonMessage();
 		void prependingTrash();
 		void suffixingTrash();
+		void updatingRPM();
         void closeHandle();
 
 };

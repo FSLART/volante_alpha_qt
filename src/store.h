@@ -80,6 +80,7 @@ class store: public QObject{
 		int closeSerial();
 	signals:
 		void rpmChanged(int newRpm, int oldRpm);
+		void gearShiftChanged(int newGearShift, int oldGearShift);
 
     private:
         int m_rotationsPerMinute;

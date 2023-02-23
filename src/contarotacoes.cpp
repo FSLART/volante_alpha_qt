@@ -2,7 +2,8 @@
 
 ContaRotacoes::ContaRotacoes( QWidget *parent)
     : QWidget(parent){
-    m_value=1000;
+    m_value=0;
+
     //q is a static variable that you get from calling the static function getStore() from mainwindow
 	//find MainWindow and get the store
 	MainWindow* w = qobject_cast<MainWindow*>(parent->parent());

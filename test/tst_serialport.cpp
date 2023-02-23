@@ -129,6 +129,33 @@ void Tst_serialport::suffixingTrash(){
 	QCOMPARE(_store->getRpm(),10000);
 		
 }
+void Tst_serialport::updatingRPM(){
+	_store->lastMessage.clear();
+	_store->setRpm(0);
+	tangoWriteSetup();
+
+	tango.write(rpm_message, 18);
+	tango.waitForBytesWritten();
+	tango.close();
+	_store->port->waitForReadyRead();
+
+	QCOMPARE(_store->getRpm(),10000);
+	_store->setRpm(0);
+	tangoWriteSetup();
+	char *rpm_message2 = (char*)malloc(18);
+	memcpy(rpm_message2,rpm_message,18);
+	int a = randomInt(0, 10000);
+	rpm_message2[10] = (char)(a >> 8);
+	rpm_message2[11] = (char)(a & 0xFF);
+	
+
+	tango.write(rpm_message2, 18);
+	tango.waitForBytesWritten();
+	tango.close();
+	_store->port->waitForReadyRead();
+
+	QCOMPARE(_store->getRpm(),a);
+}
 
 void Tst_serialport::closeHandle(){
 	

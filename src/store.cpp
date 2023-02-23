@@ -187,8 +187,10 @@ void store::setRpm(int rpm){
 	}
 }
 void store::setGearShift(int gearShift){
-    if(gearShift>=0){
+    if(gearShift>=0&& gearShift !=this->m_gearShift){
+		int oldGearShift=this->m_gearShift;
 		this->m_gearShift=gearShift;
+		emit gearShiftChanged(this->m_gearShift, oldGearShift);
 	}
 }
 void store::setEngineTemperature(int engineTemperature){

@@ -13,6 +13,7 @@ int store::setupSerial() {
     serial->setFlowControl(QSerialPort::NoFlowControl);
     if (!serial->open(QIODevice::ReadWrite)) {
         qDebug() << "Can't open " << this->dev << ", error code" << serial->error();
+		serialLog.append("||Can't open " + this->dev + ", error code" + serial->error()+"||");
         return 1;
     }
 
@@ -93,13 +94,18 @@ void store::bsonMining(){
 store::~store(){
 	//print to a file serial log
 	//close serial port
-    QFile file("serialLog.txt");
-    if (file.open(QIODevice::WriteOnly)) {
-        file.write(serialLog);
-        file.close();
-    }
+	try{
+		closeSerial();
 
-	closeSerial();
+		QFile file("serialLog.txt");
+		if (file.open(QIODevice::WriteOnly)) {
+			file.write(serialLog);
+			file.close();
+			}
+	}catch(...){
+		qDebug() << "Failed to destroy store";
+	}
+	
 }
 
 void store::handleError(QSerialPort::SerialPortError serialPortError)
@@ -139,9 +145,16 @@ void store::parseBson(std::vector<std::uint8_t> v){
 
 int store::closeSerial(){
 	// TODO: Error handling?
-	int i =0; 
-	port->close();	
-	return i;
+    try {
+        if(port->isOpen()){
+            port->close();
+        }
+     }catch(...){
+            qDebug()<< "Couldnt close the serial port";
+            return 1;
+
+    }
+    return 0;
 }
 //getters and setters
 int store::getRpm() const{

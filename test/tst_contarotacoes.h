@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTest>
 #include <QDebug>
+#include <QProcess>
 #include "../src/contarotacoes.h"
 #include "../src/store.h"
 #include "../src/mainwindow.h"

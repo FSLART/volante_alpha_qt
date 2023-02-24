@@ -5,8 +5,15 @@
 ContaMudancas::ContaMudancas( QWidget *parent)
     : ContaRotacoes(parent){
     this->m_mudanca=0;
-    MainWindow* w = qobject_cast<MainWindow*>(parent->parent());
-    connect(w->getStore(),&store::gearShiftChanged, this, &ContaMudancas::handleChangedMudanca);
+    try{
+        MainWindow* w = qobject_cast<MainWindow*>(parent->parent());
+        connect(w->getStore(),&store::gearShiftChanged, this, &ContaMudancas::handleChangedMudanca);
+    }catch(...){
+		//TODO proper notices
+		qDebug() << "Error: ContaMudancas::ContaMudancas( QWidget *parent) failed to connect to store";
+
+	}
+
 }
 
 

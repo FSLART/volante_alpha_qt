@@ -6,9 +6,14 @@ ContaRotacoes::ContaRotacoes( QWidget *parent)
 
     //q is a static variable that you get from calling the static function getStore() from mainwindow
 	//find MainWindow and get the store
-	MainWindow* w = qobject_cast<MainWindow*>(parent->parent());
+	try{
+		MainWindow* w = qobject_cast<MainWindow*>(parent->parent());
+    	connect(w->getStore(),&store::rpmChanged, this, &ContaRotacoes::handleChangedValue);
+	}catch(...){
+		//TODO proper notices
+		qDebug() << "Error: ContaRotacoes::ContaRotacoes( QWidget *parent) failed to connect to store";
 
-    connect(w->getStore(),&store::rpmChanged, this, &ContaRotacoes::handleChangedValue);
+	}
 	m_maxValue=MAX_ROTATIONS_DEFAULT;
 
 	

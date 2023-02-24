@@ -6,11 +6,11 @@
 
 static store* store_ref;
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent, QString serialDev)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow){
 
-        store_ref = new store();
+        store_ref = new store(serialDev);
     	ui->setupUi(this);
 }
 

@@ -142,11 +142,13 @@ void Tst_serialport::updatingRPM(){
 	QCOMPARE(_store->getRpm(),10000);
 	_store->setRpm(0);
 	tangoWriteSetup();
-	char *rpm_message2 = (char*)malloc(18);
+	char * rpm_message2 = new char[18];
 	memcpy(rpm_message2,rpm_message,18);
 	int a = randomInt(0, 10000);
-	rpm_message2[10] = (char)(a >> 8);
-	rpm_message2[11] = (char)(a & 0xFF);
+	rpm_message2[13]= (char)(a & 0xFF);
+	rpm_message2[14]= (char)((a >> 8) & 0xFF);
+	rpm_message2[15]= (char)((a >> 16) & 0xFF);
+	rpm_message2[16]= (char)((a >> 24) & 0xFF);
 	
 
 	tango.write(rpm_message2, 18);

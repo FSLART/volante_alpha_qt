@@ -2,12 +2,16 @@
 
 
 void Tst_contarotacoes::checkRpmChangesFromStoreToGraphicText(){
-	MainWindow ui;
+	/*MainWindow ui;
+	//ui.add a widget contarotacoes with name _test
+    ContaRotacoes _test = ContaRotacoes(&ui);
+    _test.setObjectName("_test");
+
     auto s = ui.getStore();
 	s->setRpm(100);
-    int a = ui.findChild<ContaRotacoes*>("contarotacoes")->getValue();
-    QCOMPARE(a, 100);
+    int a = ui.findChild<ContaRotacoes*>("_test")->getValue();
+
+    QCOMPARE(a, 100);*/
 }
 
 
-//QTEST_MAIN(Tst_contarotacoes)

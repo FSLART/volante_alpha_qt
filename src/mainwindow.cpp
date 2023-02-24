@@ -12,8 +12,8 @@ MainWindow::MainWindow(QWidget *parent)
 
         store_ref = new store();
     	ui->setupUi(this);
-
 }
+
 
 //with great power comes great *frickery... This function is by reference and should be used for startup stuff
 store* MainWindow::getStore(){

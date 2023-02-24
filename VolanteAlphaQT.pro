@@ -45,16 +45,29 @@ test{
 
     TARGET = VolanteAlphaQT_testes
 
+	# TODO generate args.h and args.cpp from args.ggo
+	# args.target = ../VolanteAlphaQT_1/test/args.cpp
+	
+	# args.depends = ../VolanteAlphaQT_1/test/args.h
+	# args.commands = gengetopt --input=../VolanteAlphaQT_1/test/args.ggo --output-dir=../VolanteAlphaQT_1/test -F args
+	# PRE_TARGET_DEPENDS += args
+	# GENERATED_SOURCES += $$args.target
+	# QMAKE_CLEAN += (../VolanteAlphaQT_1/test/args.cpp ../VolanteAlphaQT_1/test/args.h)
+
     QT += testlib
     SOURCES -= src/main.cpp
-	
+	SOURCES += test/main.cpp
+
     HEADERS += \
-    test/tst_contarotacoes.h \
-	test/tst_serialport.h
+        test/args.h \
+        test/tst_contarotacoes.h \
+		test/tst_serialport.h
 
-
+	
+		
     SOURCES += \
-    test/tst_contarotacoes.cpp \
-	test/tst_serialport.cpp
+        test/args.c \
+		test/tst_contarotacoes.cpp \
+		test/tst_serialport.cpp
 }
 

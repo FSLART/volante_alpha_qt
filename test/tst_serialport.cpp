@@ -162,7 +162,7 @@ void Tst_serialport::closeHandle(){
     socat.close();
 	_store->~store();
 }
-QTEST_MAIN(Tst_serialport)
+//QTEST_MAIN(Tst_serialport)
 
 //functions
 

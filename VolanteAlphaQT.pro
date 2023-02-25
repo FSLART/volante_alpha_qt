@@ -61,6 +61,7 @@ test{
     HEADERS += \
         test/args.h \
         test/tst_contarotacoes.h \
+		test/tst_contamudancas.h \
 		test/tst_serialport.h
 
 	
@@ -68,6 +69,7 @@ test{
     SOURCES += \
         test/args.c \
 		test/tst_contarotacoes.cpp \
+		test/tst_contamudancas.cpp \
 		test/tst_serialport.cpp
 }
 

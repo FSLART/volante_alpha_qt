@@ -10,6 +10,7 @@ jobs:
     uses: ./.github/workflows/buildQmake_wf.yml
     with:
       qmakeflags: "CONFIG+=test"
+      binaryfilename: VolanteAlphaQT_testes
   test-qt-desktop:
     needs: [build-qt-desktop]
     runs-on: ubuntu-latest
@@ -18,7 +19,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           run_id: ${{ needs.build-qt-desktop.runs.id }}
-          name: VolanteAlphaQT
+          name: VolanteAlphaQT_testes
           path: $GITHUB_WORKSPACE
       - name: Run tests
         run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT -platform offscreen

@@ -5,7 +5,9 @@ on:
       qmakeflags:
         required: false
         type: string
-      
+      binaryfilename:
+        required: true
+        type: string      
 jobs: 
   build:
     runs-on: ubuntu-latest
@@ -23,5 +25,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: VolanteAlphaQT
+        name: ${{ inputs.binaryfilename }}
         path: $GITHUB_WORKSPACE

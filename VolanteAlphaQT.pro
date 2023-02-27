@@ -46,7 +46,7 @@ test{
     TARGET = VolanteAlphaQT_testes
 	# run command before compiling 
 	#go to 
-	system(gengetopt --input=./test/args.ggo --output-dir=../VolanteAlphaQT_1/test -F args)
+	system(gengetopt --input=./test/args.ggo --output-dir=./test -F args)
 
     QT += testlib
     SOURCES -= src/main.cpp

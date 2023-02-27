@@ -9,22 +9,15 @@ jobs:
   install-qt-desktop:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get -y install qt6-base-dev qt5-qmake qtbase5-dev libqt6serialbus6
-  build-test:
-    needs: [install-qt-desktop]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build 
-      run: /usr/bin/qmake VolanteAlphaQT.pro CONFIG+=test && make
-  test:
-    needs: [install-qt-desktop, build-test]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Run tests
-      run: ./bin/VolanteAlphaQT_test
+      - name: Build 
+        run: /usr/bin/qmake VolanteAlphaQT.pro CONFIG+=test && make
+      - name: Run tests
+        run: ./bin/VolanteAlphaQT_test
+    
+    
 
     
     

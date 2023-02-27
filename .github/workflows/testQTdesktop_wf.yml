@@ -18,8 +18,10 @@ jobs:
       - name: Fetch artifacts from build-qt-desktop
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: ${{github.event.workflow_run.workflow_id}}
+          name: VolanteAlphaQT_testes
+          workflow: ${{ needs.build-qt-desktop.id }}
           workflow-conclusion: success
+          path: $GITHUB_WORKSPACE
       - name: Run tests
         run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT -platform offscreen
   

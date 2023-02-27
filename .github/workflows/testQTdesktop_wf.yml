@@ -20,7 +20,8 @@ jobs:
         with:
           name: VolanteAlphaQT_testes
           workflow: ${{ needs.build-qt-desktop.id }}
-          workflow-conclusion: success
+          workflow_conclusion: success 
+          search_artifacts: true
           path: $GITHUB_WORKSPACE
       - name: Run tests
         run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT -platform offscreen

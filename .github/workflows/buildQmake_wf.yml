@@ -26,4 +26,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.binaryfilename }}
-        path: $GITHUB_WORKSPACE/bin/${{ inputs.binaryfilename }}
+        path: ${{ github.workspace }}/bin/${{ inputs.binaryfilename }}
+        if-no-files-found: error

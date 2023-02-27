@@ -9,6 +9,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    #fetch latest artifact
+    - name: Fetch artifacts from install-qt-desktop
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        workflow: installQTdesktop_wf.yml
+        run_id: ${{ needs.install-qt-desktop.runs.id }}
+        name: qt6
+        path: $GITHUB_WORKSPACE
     - name: Build 
       run: /usr/bin/qmake VolanteAlphaQT.pro ${{ inputs.qmakeflags }} && make
     

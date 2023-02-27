@@ -7,17 +7,27 @@ on:
         type: string
 jobs: 
   install-qt-desktop:
+    uses: ./.github/workflows/installQTdesktop_wf.yml
+    with:
+      extras: "gengetopt socat"
+  build-qt-desktop:
+    needs: install-qt-desktop
+    uses: ./.github/workflows/buildQmake_wf.yml
+    with:
+      qmakeflags: "CONFIG+=test"
+  test-qt-desktop:
+    needs: [install-qt-desktop, build-qt-desktop]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get -y install qt6-base-dev qt5-qmake qtbase5-dev libqt6serialport6 libqt6serialport6-dev libqt5serialport5 libqt5serialport5-dev nlohmann-json3-dev gengetopt socat
-      - name: Build 
-        run: /usr/bin/qmake VolanteAlphaQT.pro CONFIG+=test && make
+      - name: Fetch artifacts from build-qt-desktop
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: buildQmake_wf.yml
+          run_id: ${{ needs.build-qt-desktop.runs.id }}
+          name: VolanteAlphaQT
+          path: $GITHUB_WORKSPACE
+      
       - name: Run tests
         run: cd $GITHUB_WORKSPACE && ./bin/VolanteAlphaQT_testes -platform offscreen
-    
-    
-
-    
+  
     

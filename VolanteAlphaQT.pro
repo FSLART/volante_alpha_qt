@@ -44,15 +44,9 @@ test{
     message(A configurar a build de testes...)
 
     TARGET = VolanteAlphaQT_testes
+	# run command before compiling 
 
-	# TODO generate args.h and args.cpp from args.ggo
-	# args.target = ../VolanteAlphaQT_1/test/args.cpp
-	
-	# args.depends = ../VolanteAlphaQT_1/test/args.h
-	# args.commands = gengetopt --input=../VolanteAlphaQT_1/test/args.ggo --output-dir=../VolanteAlphaQT_1/test -F args
-	# PRE_TARGET_DEPENDS += args
-	# GENERATED_SOURCES += $$args.target
-	# QMAKE_CLEAN += (../VolanteAlphaQT_1/test/args.cpp ../VolanteAlphaQT_1/test/args.h)
+	system(gengetopt --input=../VolanteAlphaQT_1/test/args.ggo --output-dir=../VolanteAlphaQT_1/test -F args)
 
     QT += testlib
     SOURCES -= src/main.cpp

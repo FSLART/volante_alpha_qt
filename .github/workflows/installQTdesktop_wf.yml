@@ -6,7 +6,7 @@ on:
         required: false
         type: string
 jobs: 
-  execution:
+  install-deps:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2

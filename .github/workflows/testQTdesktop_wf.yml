@@ -15,7 +15,7 @@ jobs:
       - name: Build 
         run: /usr/bin/qmake VolanteAlphaQT.pro CONFIG+=test && make
       - name: Run tests
-        run: ./bin/VolanteAlphaQT_test
+        run: ${{GITHUB_WORKSPACE}}/bin/VolanteAlphaQT_testes
     
     
 

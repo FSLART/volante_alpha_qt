@@ -19,7 +19,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           name: VolanteAlphaQT_testes
-          workflow: ${{ needs.build-qt-desktop.id }}
+          workflow: buildQmake_wf.yml
           workflow_conclusion: success 
           search_artifacts: true
           check_artifacts: true

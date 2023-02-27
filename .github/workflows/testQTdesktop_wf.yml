@@ -9,7 +9,7 @@ jobs:
   install-qt-desktop:
     uses: ./.github/workflows/installQTdesktop_wf.yml
     with:
-      extras: "qt6-qmake qtbase6-dev-tools"
+      extras: "qt5-qmake qtbase5-dev-tools"
   clone-repo: 
     uses: ./.github/workflows/cloneRepo_wf.yml
   build-test:

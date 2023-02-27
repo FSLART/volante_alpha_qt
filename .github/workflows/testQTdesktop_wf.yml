@@ -17,11 +17,9 @@ jobs:
       - name: Fetch artifacts from build-qt-desktop
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: buildQmake_wf.yml
           run_id: ${{ needs.build-qt-desktop.runs.id }}
           name: VolanteAlphaQT
           path: $GITHUB_WORKSPACE
-      
       - name: Run tests
         run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT -platform offscreen
   

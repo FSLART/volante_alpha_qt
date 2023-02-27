@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get -y install qt6-base-dev qt5-qmake qtbase5-dev libqt6serialport6 libqt6serialport6-dev libqt6serialbus6 libqt6serialbus6-dev libqt5serialport5 libqt5serialport5-dev
+        run: sudo apt-get update && sudo apt-get -y install qt6-base-dev qt5-qmake qtbase5-dev libqt6serialport6 libqt6serialport6-dev libqt5serialport5 libqt5serialport5-dev nlohmann-json-dev
       - name: Build 
         run: /usr/bin/qmake VolanteAlphaQT.pro CONFIG+=test && make
       - name: Run tests

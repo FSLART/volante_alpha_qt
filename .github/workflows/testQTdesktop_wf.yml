@@ -1,4 +1,4 @@
-name: Test the binary.
+name: testQTdesktop_wf
 on:
   workflow_call:
     inputs:
@@ -6,12 +6,7 @@ on:
         required: false
         type: string
 jobs: 
-  install-qt-desktop:
-    uses: ./.github/workflows/installQTdesktop_wf.yml
-    with:
-      extras: "gengetopt socat"
   build-qt-desktop:
-    needs: install-qt-desktop
     uses: ./.github/workflows/buildQmake_wf.yml
     with:
       qmakeflags: "CONFIG+=test"
@@ -28,6 +23,6 @@ jobs:
           path: $GITHUB_WORKSPACE
       
       - name: Run tests
-        run: cd $GITHUB_WORKSPACE && ./bin/VolanteAlphaQT_testes -platform offscreen
+        run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT -platform offscreen
   
     

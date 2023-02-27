@@ -4,21 +4,22 @@ on:
     inputs:
       qmakeflags:
         required: false
-        type: string     
+        type: string
+      
 jobs: 
   build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    #fetch latest artifact
-    - name: Fetch artifacts from install-qt-desktop
-      uses: dawidd6/action-download-artifact@v2
-      with:
-        workflow: installQTdesktop_wf.yml
-        run_id: ${{ needs.install-qt-desktop.runs.id }}
-        name: qt6
-        path: $GITHUB_WORKSPACE
-    - name: Build 
+    - name: Install Dependancies
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: qt6-base-dev qt5-qmake qtbase5-dev libqt6serialport6 libqt6serialport6-dev libqt5serialport5 libqt5serialport5-dev nlohmann-json3-dev socat gengetopt
       run: /usr/bin/qmake VolanteAlphaQT.pro ${{ inputs.qmakeflags }} && make
-    
+    # export artifact
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: VolanteAlphaQT
+        path: $GITHUB_WORKSPACE

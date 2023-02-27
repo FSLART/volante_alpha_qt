@@ -11,7 +11,7 @@ jobs:
     with:
       qmakeflags: "CONFIG+=test"
   test-qt-desktop:
-    needs: [install-qt-desktop, build-qt-desktop]
+    needs: [build-qt-desktop]
     runs-on: ubuntu-latest
     steps:
       - name: Fetch artifacts from build-qt-desktop

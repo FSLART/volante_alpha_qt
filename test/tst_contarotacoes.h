@@ -11,7 +11,7 @@
 class Tst_contarotacoes : public QObject
 {
     Q_OBJECT
-	protected slots:
+    private slots:
         void checkRpmChangesFromStoreToGraphicText();
 };
 

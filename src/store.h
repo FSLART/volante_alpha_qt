@@ -9,19 +9,35 @@
 #include <errno.h>
 #include <cstdio>
 #include <cstdint>
-#include <QFile>
 #include <cstring>
-#include <QDebug>
-#include <QSerialPort>
 #include <thread>
 #include <cstdio>
+#include <sys/types.h>
+#include <vector>
 #include <QCoreApplication>
 #include <QErrorMessage>
-#include <qobject.h>
+#include <QFile>
+#include <QDebug>
+#include <QSerialPort>
+#include <QDateTime>
+#include <QThread>
 #include <nlohmann/json.hpp>
+#if !defined __arm__ || !defined __aarch64__
+    #ifdef _WIN32
+		#define DEFAULT_DEVICE "COM3"
+    #elif defined __linux__
+		#ifdef __FSIPLEIRIA_DEPLOY__
+			#define DEFAULT_DEVICE "/dev/ttyS0"
+		#else
+			#define DEFAULT_DEVICE "/dev/ttyACM0"
+		#endif
+	#endif
+#else
+    #define DEFAULT_DEVICE "/dev/ttyS0"
+#endif
 
-#define DEFAULT_DEVICE "/dev/ttyACM0"
 #define BSON_WARNING "\xFF\xFF\xFF\xFF"
+#define LOG_MAX_RETRIES 4
 /* !
         \class store
         \brief Basicamente uma store contendo as vários dados necessários a serem transmitidos ou representados graficamente
@@ -35,7 +51,17 @@
 class store: public QObject{
     Q_OBJECT;
     Q_PROPERTY(int  m_rotationsPerMinute READ getRpm WRITE setRpm NOTIFY rpmChanged);
+
+	enum error_severity {
+		INFO=0,
+		WARNING=1,
+		MINOR=2,
+		MAJOR=3,
+		CRITICAL=100
+	};
+
 	public:
+
         QString dev;
 		QSerialPort* port=nullptr;
 		void handleReadyRead();
@@ -49,6 +75,7 @@ class store: public QObject{
 
 		void parseBson(std::vector<std::uint8_t> v);
 		void bsonMining();
+        qint64 scribeError(QString error, error_severity severity=error_severity::INFO);
         explicit store(QString dev="", QObject *parent = nullptr);
 		~store();
 		
@@ -76,13 +103,18 @@ class store: public QObject{
 		void setTcSlip(int tcSlip);
 		void setTcLaunch(int tcLaunch);
 	protected:
+        int startGeneralErrorLog(uint depth=0);
+		void stopGeneralErrorLog();
 		int setupSerial();
 		int closeSerial();
+
 	signals:
 		void rpmChanged(int newRpm, int oldRpm);
 		void gearShiftChanged(int newGearShift, int oldGearShift);
 
     private:
+
+		QFile* errorLog=nullptr;
         int m_rotationsPerMinute;
         int m_gearShift;
         int m_engineTemperature;
@@ -91,7 +123,6 @@ class store: public QObject{
         float m_batteryVoltage;
 		int m_vehicleVelocity;
 		int m_dataLoggerStatus;
-		//todo ask stuff about this
 		float m_lambdaMixtureAirFuel; 
 		int m_tractionSlip;
 		int m_tractionLaunch;

@@ -15,6 +15,7 @@ void Tst_contarotacoes::checkRpmChangesFromStoreToGraphicText(){
     auto s = ui.getStore();
 	s->setRpm(100);
     int a = ui.findChild<ContaRotacoes*>("_test")->getValue();
+    socat.terminate();
 
 
     QCOMPARE(a, 100);

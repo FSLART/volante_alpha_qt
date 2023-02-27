@@ -37,10 +37,16 @@ QString ContaMudancas::getGraphicalTextMudanca(int a){
 	switch (a) {
 		case 0:
 			return QString("N");
-
-		default:
-		//a to QString
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
 			return QString::number(a);
+		default:
+			
+			return QString("?");
 		
 	
 	}

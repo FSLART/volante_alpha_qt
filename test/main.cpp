@@ -5,11 +5,11 @@
 #include <cstdint>
 #include "args.h"
 //write me a macro that includes all .h files in the test folder
-#pragma region testincludes
+
 #include "tst_serialport.h"
 #include "tst_contarotacoes.h"
 #include "tst_contamudancas.h"
-#pragma endregion
+
 typedef struct{
 	uint32_t id;
     QString name;

@@ -1,30 +1,99 @@
 #include "store.h"
-#include <vector>
 
 using json = nlohmann::json;
 int store::setupSerial() {
 	
-    QSerialPort* serial= new QSerialPort();
-    serial->setPortName(this->dev);
-    serial->setBaudRate(QSerialPort::Baud115200);
-    serial->setDataBits(QSerialPort::Data8);
-    serial->setStopBits(QSerialPort::OneStop);
-    serial->setParity(QSerialPort::NoParity);
-    serial->setFlowControl(QSerialPort::NoFlowControl);
-    if (!serial->open(QIODevice::ReadWrite)) {
-        qDebug() << "Can't open " << this->dev << ", error code" << serial->error();
+	QSerialPort* serial= new QSerialPort();
+	serial->setPortName(this->dev);
+	serial->setBaudRate(QSerialPort::Baud115200);
+	serial->setDataBits(QSerialPort::Data8);
+	serial->setStopBits(QSerialPort::OneStop);
+	serial->setParity(QSerialPort::NoParity);
+	serial->setFlowControl(QSerialPort::NoFlowControl);
+	if (!serial->open(QIODevice::ReadWrite)) {
+		qDebug() << "Can't open " << this->dev << ", error code" << serial->error();
 		serialLog.append("||Can't open " + this->dev + ", error code" + serial->error()+"||");
-        return 1;
-    }
+		return 1;
+	}
 
-    this->port = serial;
-    connect(this->port, &QSerialPort::readyRead, this, &store::handleReadyRead);
-    connect(this->port, &QSerialPort::errorOccurred, this, &store::handleError);
+	this->port = serial;
+	connect(this->port, &QSerialPort::readyRead, this, &store::handleReadyRead);
+	connect(this->port, &QSerialPort::errorOccurred, this, &store::handleError);
 	
 
 	return 0;	
 }
+int store::startGeneralErrorLog(uint depth){
+    if(errorLog==nullptr){
+		//get todays date and time and use it as a filename
+		QDateTime now = QDateTime::currentDateTime();
+        QString dateStr = now.toString("hhmmss_dd-MM-yyyy");
+		errorLog = new QFile("errorLog_"+dateStr+".log");
+        if(errorLog->open(QIODevice::WriteOnly|QIODevice::Unbuffered)){
+            return 1;
+        }
+        return 0;
+	}
+			try {
+				if(!errorLog->isOpen()){
+					errorLog = nullptr;
+					scribeError("Apparently the error log was closed, yet the pointer was not set to nullptr.", error_severity::MAJOR);
+					if(depth>0){
+						//... Qcreator kept saying me this was possible...
+						scribeError("Something is really wrong, the depth is too big, and memory seems insane", error_severity::CRITICAL);
+					}
+					return startGeneralErrorLog(++depth);
+				}else{
+					scribeError("A request to open error log was made yet the file was already opened, Avoid multiple calls to startGeneralErrorLog", error_severity::WARNING);
+				
+				}
+			} catch (...) {
+				//TODO handle exception graphically
+				qDebug() << "An exception occurred while trying to open the error log";
+				return 1; //TODO return a more meaningful error code
+			}
+}
 
+void store::stopGeneralErrorLog(){
+	try {
+		if(errorLog->isOpen()){
+			errorLog->close();
+			errorLog=nullptr;
+		}else{
+			scribeError("A request to close error log was made yet the file was already closed, Avoid multiple calls to stopGeneralErrorLog", error_severity::WARNING);
+		}
+	} catch (...) {
+		//TODO handle exception graphically
+		qDebug() << "An exception occurred while trying to close the error log";
+	}
+}
+qint64 store::scribeError(QString error, error_severity severity){
+	qint64 ret = 0;
+	try{		
+		if(errorLog==nullptr){
+			startGeneralErrorLog();
+		}
+		//append a timestamp to the error and write it to the file
+		QDateTime now = QDateTime::currentDateTime();
+		QString dateStr = now.toString("hh:mm:ss dd-MM-yyyy");
+		error.prepend(dateStr + " |" + QString::number(severity) + "|*_");
+        ret= errorLog->write(error.toUtf8()+"|EOL|\n");
+		if (severity>=error_severity::CRITICAL){
+			//TODO handle exception graphically
+			
+			//freeze the program for 3 secs
+            this->thread()->msleep(3000);
+			
+			//its pretty much garanteed but just in case
+			assert(severity>=error_severity::CRITICAL);
+		}
+	}catch(...){
+		//TODO handle exception graphically
+		qDebug() << "An exception occurred while trying to write to the error log";
+	}
+
+	return ret;
+}
 store::store( QString dev, QObject *parent  ): QObject(parent){
 	//if Qstring dev is empty, use default device
 	if(dev.isEmpty()){
@@ -32,8 +101,10 @@ store::store( QString dev, QObject *parent  ): QObject(parent){
 	}else{
 		this->dev = dev;
 	}
-
 	setupSerial();
+    int8_t retries = LOG_MAX_RETRIES;
+    //wtf? TODO: retry system
+    startGeneralErrorLog();
 	
 }
 void store::forceRead(qint64 len){

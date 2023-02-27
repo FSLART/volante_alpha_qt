@@ -11,4 +11,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build 
-      run: qmake VolanteAlphaQT.pro {{ inputs.qmakeflags }} && make
+      run: qmake VolanteAlphaQT.pro ${{ inputs.qmakeflags }} && make

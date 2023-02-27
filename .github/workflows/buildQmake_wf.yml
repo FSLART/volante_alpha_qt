@@ -1,4 +1,4 @@
-name: Build with qmake
+name: buildQmake_wf.yml
 on: 
   workflow_call:
     inputs:

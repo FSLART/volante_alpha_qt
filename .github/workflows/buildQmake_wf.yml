@@ -9,6 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
     - name: Build 
-      run: qmake VolanteAlphaQT.pro ${{ inputs.qmakeflags }} && make
+      run: /usr/bin/qmake VolanteAlphaQT.pro ${{ inputs.qmakeflags }} && make
+    

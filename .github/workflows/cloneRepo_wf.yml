@@ -1,9 +1,0 @@
-name: Clone repo
-on: workflow_call
-jobs: 
-  clone-repo:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Clone repo
-      run: git clone https://github.com/FSIPLEIRIA/volante_alpha_qt

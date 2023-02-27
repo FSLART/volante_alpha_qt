@@ -7,18 +7,18 @@ on:
         type: string
 jobs: 
   install-qt-desktop:
-    uses: ./.github/workflows/installQTdesktop_wf.yml
-    with:
-      extras: "qt5-qmake qtbase5-dev qtbase5-dev-tools libqt5svg5-dev libqt5webenginewidgets5 libqt5webchannel5-dev qtwebengine5-dev"
-  clone-repo: 
-    uses: ./.github/workflows/cloneRepo_wf.yml
+    steps:
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get -y install qt6-base-dev qt5-qmake qtbase5-dev libqt6serialbus6
   build-test:
-    needs: [install-qt-desktop, clone-repo]
-    uses: ./.github/workflows/buildQmake_wf.yml
-    with:
-      qmakeflags: "CONFIG+=test"
+    needs: [install-qt-desktop]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build 
+      run: /usr/bin/qmake VolanteAlphaQT.pro CONFIG+=test && make
   test:
-    needs: [install-qt-desktop, clone-repo, build-test]
+    needs: [install-qt-desktop, build-test]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

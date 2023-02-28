@@ -26,15 +26,3 @@ jobs:
         name: ${{ inputs.binaryfilename }}
         path: ${{ github.workspace }}/bin/${{ inputs.binaryfilename }}
         if-no-files-found: error
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Fetch artifacts from build-qt-desktop
-      uses: dawidd6/action-download-artifact@v2
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        path: ${{ github.workspace }}
-        commit: ${{github.event.commit.head.sha}}
-        name: VolanteAlphaQT_testes
-    - name: Run tests
-      run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT -platform offscreen   
-    

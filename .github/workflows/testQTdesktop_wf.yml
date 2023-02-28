@@ -17,18 +17,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Environment Variables
-        shell: bash
-        run: |
-          ARTIFACTS_SHA=$(git rev-parse HEAD)
-          BUILD_ARTIFACTS=BuildArtifacts_${ARTIFACTS_SHA}
-          echo "ARTIFACTS_DIR=$ARTIFACTS_DIR" >> $GITHUB_ENV
       - name: Fetch artifacts from build-qt-desktop
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          workflow: Build.yml
-          name: ${{ env.BUILD_ARTIFACTS }}
+          path: ${{ github.workspace }}
+          commit: ${{github.event.commit.head.sha}}
       - name: Run tests
         run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT -platform offscreen
   

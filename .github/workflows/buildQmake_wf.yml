@@ -20,15 +20,9 @@ jobs:
         version: 1.0
     - name: Build with qmake
       run: /usr/bin/qmake VolanteAlphaQT.pro ${{ inputs.qmakeflags }} && make
-    - name: Environment Variables
-      shell: bash
-      run: |
-          ARTIFACTS_SHA=$(git rev-parse HEAD)
-          BUILD_ARTIFACTS=BuildArtifacts_${ARTIFACTS_SHA}
-          echo "ARTIFACTS_DIR=$ARTIFACTS_DIR" >> $GITHUB_ENV
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
-        name: Artifacts_${{ env.ARTIFACTS_SHA }}
+        name: ${{ inputs.binaryfilename }}
         path: ${{ github.workspace }}/bin/${{ inputs.binaryfilename }}
         if-no-files-found: error

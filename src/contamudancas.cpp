@@ -1,13 +1,15 @@
 #include "contamudancas.h"
 #include "contarotacoes.h"
 #include "mainwindow.h"
-
+#include <cmath>
+static store * store_pnt = nullptr;
 ContaMudancas::ContaMudancas( QWidget *parent)
     : ContaRotacoes(parent){
     this->m_mudanca=0;
     try{
         MainWindow* w = qobject_cast<MainWindow*>(parent->parent());
-        connect(w->getStore(),&store::gearShiftChanged, this, &ContaMudancas::handleChangedMudanca);
+        store_pnt=w->getStore();
+        connect(store_pnt,&store::gearShiftChanged, this, &ContaMudancas::handleChangedMudanca);
     }catch(...){
 		//TODO proper notices
 		qDebug() << "Error: ContaMudancas::ContaMudancas( QWidget *parent) failed to connect to store";
@@ -45,7 +47,7 @@ QString ContaMudancas::getGraphicalTextMudanca(int a){
 		case 6:
 			return QString::number(a);
 		default:
-			
+            store_pnt->scribeError("ContaMudancas::getGraphicalTextMudanca(int a) received a value out of range", store::error_severity::MINOR);
 			return QString("?");
 		
 	
@@ -57,4 +59,7 @@ void ContaMudancas::handleChangedMudanca(int newValue, int oldValue){
 		this->m_mudanca = newValue;
 		this->update();
 	}
+}
+ContaMudancas::~ContaMudancas(){
+	disconnect(store_pnt,&store::gearShiftChanged, this, &ContaMudancas::handleChangedMudanca);
 }

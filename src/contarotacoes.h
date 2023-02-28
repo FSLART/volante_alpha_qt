@@ -13,6 +13,7 @@ class ContaRotacoes : public QWidget
     Q_OBJECT	
 	public:
 		explicit ContaRotacoes( QWidget *parent = nullptr);
+		~ContaRotacoes();
 		int getValue () const;
 		int getMaxValue () const;
 	protected:

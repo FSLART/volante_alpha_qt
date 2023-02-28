@@ -10,6 +10,7 @@ class ContaMudancas : public ContaRotacoes{
     Q_OBJECT
 	public:
 		explicit ContaMudancas( QWidget *parent = nullptr);
+		~ContaMudancas();
 		void paintEvent(QPaintEvent *event) override;
 		int getVisibleMudanca();
 		QString getGraphicalTextMudanca(int a);

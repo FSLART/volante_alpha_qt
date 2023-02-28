@@ -163,8 +163,8 @@ void store::bsonMining(){
 	return bsonMining();
 }
 store::~store(){
-	//print to a file serial log
-	//close serial port
+	//make shure all slots are disconnected
+	this->disconnect();
 	try{
 		closeSerial();
 
@@ -172,7 +172,11 @@ store::~store(){
 		if (file.open(QIODevice::WriteOnly)) {
 			file.write(serialLog);
 			file.close();
-			}
+		}else{
+			scribeError("Failed to write serial log to file", error_severity::MAJOR);
+		}
+
+		stopGeneralErrorLog();
 	}catch(...){
 		qDebug() << "Failed to destroy store";
 	}

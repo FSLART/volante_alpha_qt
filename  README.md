@@ -1,4 +1,4 @@
-# Volante Alpha
+# Volante Alpha -> [![main_wf](https://github.com/FSIPLEIRIA/volante_alpha_qt/actions/workflows/main_wf.yml/badge.svg?branch=master)](https://github.com/FSIPLEIRIA/volante_alpha_qt/actions/workflows/main_wf.yml)
 
 Bem vindo!
 
@@ -55,6 +55,8 @@ Terás de usar uma versão correspondente a acima
 Para o BSON irás precisar de uma livraria json mais especificamente desta especificação:
 https://github.com/nlohmann/json
 Poderás usar a seguinte package com o pacman ``nlohmann-json`` foi usada a versão nlohmann-json-3.11.2-1-any para o desenvolvimento
+
+Para testes terás de instalar gengetopt e socat.
 
 # Manutenção do README
 

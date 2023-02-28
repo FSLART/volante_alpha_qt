@@ -1,7 +1,7 @@
 #include "tst_contamudancas.h"
 
 
-void Tst_contamudancas::checkRpmChangesFromStoreToGraphicText(){
+/*void Tst_contamudancas::checkRpmChangesFromStoreToGraphicText(){
 	//TODO find a way to solve bellow apparently it crashes violently with a permission dennied in this context
 	QProcess socat; 
 	socat.startDetached("socat pty,raw,echo=0,b115200,link=/tmp/banana,  pty,raw,echo=0,b115200,link=/tmp/tango");
@@ -15,10 +15,9 @@ void Tst_contamudancas::checkRpmChangesFromStoreToGraphicText(){
 	s->setRpm(100);
     int a = ui.findChild<ContaMudancas*>("_test")->getValue();
     socat.terminate();
-
-
+	
     QCOMPARE(a, 100);
-}
+}*/
 void Tst_contamudancas::checkMudancaChangesFromStore(){
 	//TODO find a way to solve bellow apparently it crashes violently with a permission dennied in this context
 	QProcess socat; 
@@ -33,7 +32,6 @@ void Tst_contamudancas::checkMudancaChangesFromStore(){
 	s->setGearShift(1);
     int a = ui.findChild<ContaMudancas*>("_test")->getVisibleMudanca();
     socat.terminate();
-
 	QCOMPARE(a, 1);
 }
 
@@ -50,8 +48,30 @@ void Tst_contamudancas::checkGearShiftEncoding(){
         QCOMPARE(_test.getGraphicalTextMudanca(i),QString::number(i));
 	}
     socat.terminate();
-
 }
 
+void Tst_contamudancas::checkErrorLogging(){
+	QProcess socat;
+    socat.startDetached("socat pty,raw,echo=0,b115200,link=/tmp/banana,  pty,raw,echo=0,b115200,link=/tmp/tango");
+    MainWindow ui= MainWindow(nullptr,"/tmp/banana");
 
+    ContaMudancas _test = ContaMudancas(&ui);
+	_test.getGraphicalTextMudanca(1000);
+    //open the most recent file in the folder
+	QDir dir = QDir::currentPath();
+    dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+    dir.setSorting(QDir::Time);
+    QFileInfoList list = dir.entryInfoList();
+    QFile file(list.first().absoluteFilePath());
+    file.open(QIODevice::ReadOnly);
+    QTextStream in(&file);
+	QString line = in.readLine();
+	socat.terminate();
+
+	//check if it contains ContaMudancas::getGraphicalTextMudanca(int a) received a value out of range
+	qDebug() << line;
+	QVERIFY(line.contains("ContaMudancas::getGraphicalTextMudanca(int a) received a value out of range"));
+	
+
+}
 

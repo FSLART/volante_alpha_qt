@@ -1,5 +1,5 @@
 #include "contarotacoes.h"
-
+static store * store_pnt = nullptr;
 ContaRotacoes::ContaRotacoes( QWidget *parent)
     : QWidget(parent){
     m_value=0;
@@ -8,7 +8,8 @@ ContaRotacoes::ContaRotacoes( QWidget *parent)
 	//find MainWindow and get the store
 	try{
 		MainWindow* w = qobject_cast<MainWindow*>(parent->parent());
-    	connect(w->getStore(),&store::rpmChanged, this, &ContaRotacoes::handleChangedValue);
+		store_pnt=w->getStore();
+    	connect(store_pnt,&store::rpmChanged, this, &ContaRotacoes::handleChangedValue);
 	}catch(...){
 		//TODO proper notices
 		qDebug() << "Error: ContaRotacoes::ContaRotacoes( QWidget *parent) failed to connect to store";
@@ -17,6 +18,9 @@ ContaRotacoes::ContaRotacoes( QWidget *parent)
 	m_maxValue=MAX_ROTATIONS_DEFAULT;
 
 	
+}
+ContaRotacoes::~ContaRotacoes(){
+	disconnect(store_pnt,&store::rpmChanged, this, &ContaRotacoes::handleChangedValue);
 }
 void ContaRotacoes::paintEvent(QPaintEvent *event){
    //padding of the line

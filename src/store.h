@@ -52,16 +52,16 @@ class store: public QObject{
     Q_OBJECT;
     Q_PROPERTY(int  m_rotationsPerMinute READ getRpm WRITE setRpm NOTIFY rpmChanged);
 
-	enum error_severity {
-		INFO=0,
-		WARNING=1,
-		MINOR=2,
-		MAJOR=3,
-		CRITICAL=100
-	};
+
 
 	public:
-
+        enum error_severity {
+            INFO=0,
+            WARNING=1,
+            MINOR=2,
+            MAJOR=3,
+            CRITICAL=100
+        };
         QString dev;
 		QSerialPort* port=nullptr;
 		void handleReadyRead();

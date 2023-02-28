@@ -21,8 +21,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          path: ${{ github.workspace }}
-          commit: ${{github.event.commit.head.sha}}
+          workflow: ${{ github.event.workflow_run.workflow_id }}
           name: VolanteAlphaQT_testes
       - name: Run tests
         run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT -platform offscreen

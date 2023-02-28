@@ -6,4 +6,4 @@ jobs:
   test-qt-desktop:
     uses: 
       ./.github/workflows/testQTdesktop_wf.yml
-    
+    secrets: inherit

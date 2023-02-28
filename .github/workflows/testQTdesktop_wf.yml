@@ -5,6 +5,9 @@ on:
       suite: 
         required: false
         type: string
+    secrets:
+      GITHUB_TOKEN:
+        required: true
 jobs: 
   build-qt-desktop:
     uses: ./.github/workflows/buildQmake_wf.yml
@@ -18,6 +21,7 @@ jobs:
       - name: Fetch artifacts from build-qt-desktop
         uses: dawidd6/action-download-artifact@v2
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           name: VolanteAlphaQT_testes
           workflow: buildQmake_wf.yml
           workflow_conclusion: success 

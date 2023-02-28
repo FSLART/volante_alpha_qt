@@ -23,6 +23,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           path: ${{ github.workspace }}
           commit: ${{github.event.commit.head.sha}}
+          name: VolanteAlphaQT_testes
       - name: Run tests
         run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT -platform offscreen
   

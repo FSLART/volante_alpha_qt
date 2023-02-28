@@ -15,16 +15,18 @@ jobs:
     needs: [build-qt-desktop]
     runs-on: ubuntu-latest
     steps:
+      - name: Environment Variables
+        shell: bash
+        run: |
+          ARTIFACTS_SHA=$(git rev-parse HEAD)
+          BUILD_ARTIFACTS=BuildArtifacts_${ARTIFACTS_SHA}
+          echo "ARTIFACTS_DIR=$ARTIFACTS_DIR" >> $GITHUB_ENV
       - name: Fetch artifacts from build-qt-desktop
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          name: VolanteAlphaQT_testes
-          workflow: buildQmake_wf.yml
-          workflow_conclusion: success 
-          search_artifacts: true
-          check_artifacts: true
-          path: $GITHUB_WORKSPACE
+          workflow: Build.yml
+          name: ${{ env.BUILD_ARTIFACTS }}
       - name: Run tests
         run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT -platform offscreen
   

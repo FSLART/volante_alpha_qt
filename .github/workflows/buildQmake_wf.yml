@@ -18,16 +18,14 @@ jobs:
       with:
         packages: qt6-base-dev qt5-qmake qtbase5-dev libqt6serialport6 libqt6serialport6-dev libqt5serialport5 libqt5serialport5-dev nlohmann-json3-dev socat gengetopt
         version: 1.0
-
+    - name: Build with qmake
+      run: /usr/bin/qmake VolanteAlphaQT.pro ${{ inputs.qmakeflags }} && make
     - name: Environment Variables
       shell: bash
       run: |
           ARTIFACTS_SHA=$(git rev-parse HEAD)
           BUILD_ARTIFACTS=BuildArtifacts_${ARTIFACTS_SHA}
           echo "ARTIFACTS_DIR=$ARTIFACTS_DIR" >> $GITHUB_ENV
-    - name: Build with qmake
-      run: /usr/bin/qmake VolanteAlphaQT.pro ${{ inputs.qmakeflags }} && make
-    # export artifact
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:

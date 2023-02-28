@@ -15,6 +15,8 @@ jobs:
     needs: [build-qt-desktop]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Environment Variables
         shell: bash
         run: |

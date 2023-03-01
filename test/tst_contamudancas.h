@@ -16,7 +16,8 @@ class Tst_contamudancas : public Tst_contarotacoes
         //void checkRpmChangesFromStoreToGraphicText();
 		void checkMudancaChangesFromStore();
 		void checkGearShiftEncoding();
-		void checkErrorLogging();
+		void checkRPMErrorLogging();
+
 };
 
 #endif // TST_CONTAMUDANCAS_H

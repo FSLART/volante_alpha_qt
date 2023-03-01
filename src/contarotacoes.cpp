@@ -60,7 +60,7 @@ void ContaRotacoes::drawContaRotacoes(QPainter &painter, int size, int padding=1
    painter.translate(size,0);
    painter.scale(-1.0, 1.0);
    //due to the mirrowing of the arc padding is weird
-   painter.drawArc(-padding,height()/3, size, size, minPhi, maxPhi);
+   painter.drawArc(-padding, height()/3, size, size, minPhi, maxPhi);
    painter.setPen(QPen(Qt::red, 4));
    painter.drawArc(-padding, height()/3, size, size,minPhi, currentPhi);
 }

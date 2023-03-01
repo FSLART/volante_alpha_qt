@@ -13,6 +13,7 @@ class Tst_contarotacoes : public QObject
     Q_OBJECT
     private slots:
         void checkRpmChangesFromStoreToGraphicText();
+        void checkRotationErrorLogging();
 };
 
 #endif // TST_CONTAROTACOES_H

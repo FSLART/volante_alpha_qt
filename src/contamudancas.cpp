@@ -47,7 +47,6 @@ QString ContaMudancas::getGraphicalTextMudanca(int a){
 		case 6:
 			return QString::number(a);
 		default:
-
 			return QString("?");
 		
 	

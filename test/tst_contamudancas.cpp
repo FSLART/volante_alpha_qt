@@ -50,15 +50,10 @@ void Tst_contamudancas::checkGearShiftEncoding(){
     socat.terminate();
 }
 
-void Tst_contamudancas::checkErrorLogging(){
+void Tst_contamudancas::checkRPMErrorLogging(){
 	QProcess socat;
     socat.startDetached("socat pty,raw,echo=0,b115200,link=/tmp/banana,  pty,raw,echo=0,b115200,link=/tmp/tango");
     MainWindow ui= MainWindow(nullptr,"/tmp/banana");
-
-	ui.getStore()->setGearShift(-1);
-	ui.getStore()->setGearShift(100);
-    //open the most recent file in the folder
-	socat.terminate();
 
 	QDir dir = QDir::currentPath();
     dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
@@ -66,10 +61,22 @@ void Tst_contamudancas::checkErrorLogging(){
     QFileInfoList list = dir.entryInfoList();
     QFile file(list.first().absoluteFilePath());
     file.open(QIODevice::ReadOnly);
-    QTextStream in(&file);
+    file.seek(file.size());
+	QTextStream in(&file);
+	ui.getStore()->setGearShift(-1);
+	//read the last line
 	QString line = in.readLine();
-	
+	ui.getStore()->setGearShift(7);
+	//read the last line
 	QString line2 = in.readLine();
+	
+    //open the most recent file in the folder
+	socat.terminate();
+	//read the last line
+
+
+	
+	
 	QVERIFY(line.contains(__FSIPLEIRIA_STORE_SETGEARSHIFT_ERROR__));
 	QVERIFY(line2.contains(__FSIPLEIRIA_STORE_SETGEARSHIFT_ERROR__));
 	

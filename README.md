@@ -14,7 +14,7 @@ Para compilar o programa no ambiente testing atualmente(13-02-2023), é necessá
 qmake -project VolanteAlphaQT.pro CONFIG+=test
 ```
 
-No entanto, como dito anteriormente para manter o eyecandy que o qtcreator oferece basta ir a Projects (barra vertical no lado esquerdo do ecrã); Clicar no Kit que desejas criar o ambiente para (no meu caso é Desktop, mas no futuro poderás fazer este passo para o kit do BananaPi M2, se este estiver devidamente configurado); Faz build; Escolher Profile, a opção Profile e clicar Clone; e adicionar CONFIG+=test ao aditional arguments no qmake Build Steps
+No entanto, como dito anteriormente para manter o eyecandy que o qtcreator oferece basta ir a Projects (barra vertical no lado esquerdo do ecrã); Clicar no Kit que desejas criar o ambiente para (no meu caso é Desktop, mas no futuro poderás fazer este passo para o kit do BananaPi M2, se este estiver devidamente configurado); Build; Escolher a opção "Profile"; Clicar Clone; e adicionar CONFIG+=test ao aditional arguments no qmake Build Steps.
 
 O comando escrito no Effective qmake call por isso fica algo do genero:
 

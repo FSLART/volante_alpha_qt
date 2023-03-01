@@ -2,19 +2,19 @@
 
 Bem vindo!
 
-Este repo tem o propósito de uma implementação do software que será usado tanto para o volante do  T14 para fazer alguns testes como irá ser usado no futuro para modelos mais recentes. A sua implementação atualmente encontra-se em QT 6.0 com base nas livrarias nativas em C++. Para compilar o projeto necessitarás de qMake(uma implementação inspirada no software Cmake e make) existem cerca de 4 ambientes estes sendo: **Profile, Debug, Release e Testing**
+Este repo tem o propósito de uma implementação do software que será usado tanto para o volante do T14 para fazer alguns testes, como no futuro para modelos mais recentes. A sua implementação atualmente encontra-se em QT 6.0 com base nas bibliotecas nativas em C++. Para compilar o projeto necessitarás de qMake(uma implementação inspirada no software Cmake e make) existindo cerca de 4 ambientes, estes sendo: **Profile, Debug, Release e Testing**
 
 # Ambientes
 
-Deverás usar o software qtcreator já que ajuda a executar o qmake e o make com todo o make eyecandy para poderes fazer debugging e dar set up automatico de alguns ambientes listados acima. Tres dos quatro ambientes sao criados automaticamente pelo qtcreator, mas um deles(Testing) terá de ser criado manualmente no qtcreator pois este não vem por defeito.
+Deverás usar o software qtcreator já que ajuda a executar o qmake e o make com todo o make eyecandy para poderes fazer debugging e dar set up automatico de alguns ambientes listados acima. Três dos quatro ambientes são criados automaticamente pelo qtcreator, mas um deles (Testing) terá de ser criado manualmente no qtcreator, pois não vem por defeito.
 
-Para compilar o programa no ambiente testing, atualmente(13-02-2023), é necessário adicionar a flag `CONFIG+=test` o seja o comando quando escrito manualmente deve ser:
+Para compilar o programa no ambiente testing atualmente(13-02-2023), é necessário adicionar a flag `CONFIG+=test`, ou seja, o comando quando escrito manualmente deve ser:
 
 ```bash
 qmake -project VolanteAlphaQT.pro CONFIG+=test
 ```
 
-No entanto como dito anteriormente para manter o eyecandy que o qtcreator oferece basta ir a Projects(na barra vertical no lado esquerdo do ecrã); Clicar no Kit que desejas criar o ambiente(no meu caso e Desktop mas no futuro poderas fazer este passo para o kit do BananaPi M2 se este estiver devidamente configurado); Build; Escolher Profile a opção Profile e clicar Clone; e adicionar CONFIG+=test ao aditional arguments no qmake Build Steps
+No entanto, como dito anteriormente para manter o eyecandy que o qtcreator oferece basta ir a Projects (barra vertical no lado esquerdo do ecrã); Clicar no Kit que desejas criar o ambiente para (no meu caso é Desktop, mas no futuro poderás fazer este passo para o kit do BananaPi M2, se este estiver devidamente configurado); Build; Escolher a opção "Profile"; Clicar Clone; e adicionar CONFIG+=test ao aditional arguments no qmake Build Steps.
 
 O comando escrito no Effective qmake call por isso fica algo do genero:
 
@@ -22,7 +22,7 @@ O comando escrito no Effective qmake call por isso fica algo do genero:
 /usr/bin/qmake <DIRETORIA>/VolanteAlphaQT_1/VolanteAlphaQT.pro -spec linux-g++ CONFIG+=qml_debug CONFIG+=qtquickcompiler CONFIG+=force_debug_info CONFIG+=separate_debug_info CONFIG+=test && /usr/bin/make qmake_all
 ```
 
-A notar que devido a configuração atual o target terá o sufixo de ``_testes`` se preferires que so seja produzido um binario que dependa da ultima compilação deves ir ao ficheiro com a extensão .pro e alterar:
+A notar que devido à configuração atual o target terá o sufixo de ``_testes`` se preferires que so seja produzido um binario que dependa da ultima compilação deves ir ao ficheiro com a extensão .pro e alterar:
 
 ```cmake
 test{
@@ -38,23 +38,26 @@ test{
 
 ```
 
-ATENÇÃO
+**ATENÇÃO**
 ---------
 
 Se mudares a linha e tua responsabilidade mudares as alterações de volta antes de fazeres um commit. O .pro nao deve ser ignorado pois causa a que toda a gente tenha de manualmente criar o ficheiro. Ignorar isto pode causar problemas futuros.
 
+---------
+
 # Dependencias
 
-Vais precisar do standard c++ stuff, Clang, make, etc... nao vou listar isto porque probs ja os tens instalados, e o que importa sao as versões //TODO: adicionar versoes relevantes :P
+Vais precisar do standard c++ stuff, Clang, make, etc... nao vou listar isto porque provavelmente já os tens instalados, e o que importa sao as versões
+//TODO: adicionar versoes relevantes :P
 
 QT 6.0+
-O software foi desenvolvido em 6.2.1
+**O software foi desenvolvido em 6.2.1**
 QSerialPort 6.0+
 Terás de usar uma versão correspondente a acima
 
-Para o BSON irás precisar de uma livraria json mais especificamente desta especificação:
+Para o BSON irás precisar de uma biblioteca json, especificamente:
 https://github.com/nlohmann/json
-Poderás usar a seguinte package com o pacman ``nlohmann-json`` foi usada a versão nlohmann-json-3.11.2-1-any para o desenvolvimento
+Poderás usar a seguinte package com o pacman ``nlohmann-json``. Foi usada a versão `nlohmann-json-3.11.2-1-any` para o desenvolvimento
 
 # Manutenção do README
 

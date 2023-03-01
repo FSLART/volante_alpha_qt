@@ -128,5 +128,8 @@ class store: public QObject{
 		int m_tractionLaunch;
 };
 
+// Logging Macros
+#define __FSIPLEIRIA_STORE_SETRPM_ERROR__ "store::setRpm(int rpm)->Rpm is negative"
+#define __FSIPLEIRIA_STORE_SETGEARSHIFT_ERROR__ "store::setGearShift(int gearShift)->GearShift is out of bounds"
 
 #endif // STORE_H

@@ -55,9 +55,11 @@ void Tst_contamudancas::checkErrorLogging(){
     socat.startDetached("socat pty,raw,echo=0,b115200,link=/tmp/banana,  pty,raw,echo=0,b115200,link=/tmp/tango");
     MainWindow ui= MainWindow(nullptr,"/tmp/banana");
 
-    ContaMudancas _test = ContaMudancas(&ui);
-	_test.getGraphicalTextMudanca(1000);
+	ui.getStore()->setGearShift(-1);
+	ui.getStore()->setGearShift(100);
     //open the most recent file in the folder
+	socat.terminate();
+
 	QDir dir = QDir::currentPath();
     dir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
     dir.setSorting(QDir::Time);
@@ -66,11 +68,10 @@ void Tst_contamudancas::checkErrorLogging(){
     file.open(QIODevice::ReadOnly);
     QTextStream in(&file);
 	QString line = in.readLine();
-	socat.terminate();
-
-	//check if it contains ContaMudancas::getGraphicalTextMudanca(int a) received a value out of range
-	qDebug() << line;
-	QVERIFY(line.contains("ContaMudancas::getGraphicalTextMudanca(int a) received a value out of range"));
+	
+	QString line2 = in.readLine();
+	QVERIFY(line.contains(__FSIPLEIRIA_STORE_SETGEARSHIFT_ERROR__));
+	QVERIFY(line2.contains(__FSIPLEIRIA_STORE_SETGEARSHIFT_ERROR__));
 	
 
 }

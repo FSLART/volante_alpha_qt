@@ -47,7 +47,7 @@ QString ContaMudancas::getGraphicalTextMudanca(int a){
 		case 6:
 			return QString::number(a);
 		default:
-            store_pnt->scribeError("ContaMudancas::getGraphicalTextMudanca(int a) received a value out of range", store::error_severity::MINOR);
+
 			return QString("?");
 		
 	

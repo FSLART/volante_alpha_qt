@@ -268,20 +268,29 @@ int store::getTcLaunch() const{
 	return this->m_tractionLaunch;
 }
 void store::setRpm(int rpm){
-    if(rpm>=0&& rpm !=this->m_rotationsPerMinute){
-		int oldRpm=this->m_rotationsPerMinute;
-		this->m_rotationsPerMinute=rpm;
-		emit rpmChanged(this->m_rotationsPerMinute, oldRpm);
-	}
+    if(rpm>=0){
+		if(rpm !=this->m_rotationsPerMinute){
+			int oldRpm=this->m_rotationsPerMinute;
+			this->m_rotationsPerMinute=rpm;
+			emit rpmChanged(this->m_rotationsPerMinute, oldRpm);
+		}
+    }else{
+        this->scribeError(__FSIPLEIRIA_STORE_SETRPM_ERROR__, store::error_severity::MINOR);
+    }
 }
 void store::setGearShift(int gearShift){
-    if(gearShift>=0&& gearShift !=this->m_gearShift){
-		int oldGearShift=this->m_gearShift;
-		this->m_gearShift=gearShift;
-		emit gearShiftChanged(this->m_gearShift, oldGearShift);
+    if(gearShift>=0&&gearShift<=6){
+		if(gearShift !=this->m_gearShift){
+			int oldGearShift=this->m_gearShift;
+			this->m_gearShift=gearShift;
+			emit gearShiftChanged(this->m_gearShift, oldGearShift);
+		}
+	}else{
+		this->scribeError(__FSIPLEIRIA_STORE_SETGEARSHIFT_ERROR__, store::error_severity::MINOR);
 	}
 }
 void store::setEngineTemperature(int engineTemperature){
+
 	this->m_engineTemperature=engineTemperature;
 
 }

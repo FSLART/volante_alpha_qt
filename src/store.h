@@ -22,6 +22,7 @@
 
 #define DEFAULT_DEVICE "/dev/ttyACM0"
 #define BSON_WARNING "\xFF\xFF\xFF\xFF"
+#define BSON_SKIP_BYTES 9
 /* !
         \class store
         \brief Basicamente uma store contendo as vários dados necessários a serem transmitidos ou representados graficamente

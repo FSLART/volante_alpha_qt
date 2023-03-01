@@ -67,11 +67,10 @@ void store::bsonMining(){
 	//lastMessage starts at lastMessage size - ((lenght of buffer - index of BSON_WARNING) + length of BSON_WARNING)
 	const int bson_len = strlen(BSON_WARNING);
 	//im assuming a minimum of 9 due to warning=4, document size = 4, EOF =1, sum of them all is 9
-    if(lastMessage.size()<=9 || lastMessage.indexOf(BSON_WARNING)==-1){
+    if(lastMessage.size()<=BSON_SKIP_BYTES || lastMessage.indexOf(BSON_WARNING)==-1){
 
 		return;
 	}
-	// TODO: apparently the premeditated way doesnt work, and i just hit it with a hammer to work, im to tired to think and i will likely forget this on review CHECK THIS... ELSE IT WILL PROPAGATE STUPID DOODOO
 	int marcador = lastMessage.indexOf(BSON_WARNING) + bson_len;
 	auto shrinked=lastMessage.mid(marcador);
 	//get the first 4 bytes of the lastMessage and convert to int

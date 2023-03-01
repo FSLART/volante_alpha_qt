@@ -38,6 +38,7 @@
 
 #define BSON_WARNING "\xFF\xFF\xFF\xFF"
 #define LOG_MAX_RETRIES 4
+#define BSON_SKIP_BYTES 9
 /* !
         \class store
         \brief Basicamente uma store contendo as vários dados necessários a serem transmitidos ou representados graficamente

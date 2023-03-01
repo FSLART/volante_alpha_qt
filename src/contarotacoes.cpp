@@ -49,10 +49,12 @@ void ContaRotacoes::drawContaRotacoes(QPainter &painter, int size, int padding=1
 
 	//normal matrix
    painter.resetTransform();
-	//minimum whiper of the arc
-   const int minPhi = -45*16;
-   //maximum whiper of the arc
-   const int maxPhi = 270*16;
+	//minimum whipper of the arc
+   //const int minPhi = -45*16;
+   const int minPhi = -720;
+   //maximum whipper of the arc
+   //const int maxPhi = 270*16;
+   const int maxPhi = 4320; 
    double ratio = ((double)m_value)/((double)m_maxValue);
    
    int currentPhi =((int)((double)(ratio)*(maxPhi-minPhi)));

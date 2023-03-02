@@ -1,0 +1,9 @@
+name: Build Tests on Desktop
+on:
+  push: 
+    branches: [ master, workflow-stuff ]
+jobs:
+  test-qt-desktop:
+    uses: 
+      ./.github/workflows/testQTdesktop_wf.yml
+    

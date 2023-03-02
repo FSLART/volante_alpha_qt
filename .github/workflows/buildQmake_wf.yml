@@ -1,0 +1,14 @@
+name: Build with qmake
+on: 
+  workflow_call:
+    inputs:
+      qmakeflags:
+        required: false
+        type: string     
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build 
+      run: /usr/bin/qmake VolanteAlphaQT.pro ${{ inputs.qmakeflags }} && make
+    

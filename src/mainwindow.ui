@@ -73,7 +73,7 @@
          <number>30</number>
         </property>
         <item>
-         <widget class="ContaRotacoes" name="blah" native="true">
+         <widget class="ContaMudancas" name="contamudancas" native="true">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -122,9 +122,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ContaRotacoes</class>
-   <extends>QWidget</extends>
-   <header>contarotacoes.h</header>
+   <class>ContaMudancas</class>
+   <extends>ContaRotacoes</extends>
+   <header>src/contamudancas.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

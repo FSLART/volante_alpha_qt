@@ -1,0 +1,14 @@
+name: Install QT6
+on:
+  workflow_call:
+    inputs:
+      extras:
+        required: false
+        type: string
+jobs: 
+  install-deps:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get -y install qt6-base-dev ${{ inputs.extras }}
+    

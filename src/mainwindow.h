@@ -13,14 +13,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-	//override resizeEvent(QResizeEvent* event)
-	void resizeEvent(QResizeEvent* event) override;
-
+    MainWindow(QWidget *parent = nullptr, QString serialDev=nullptr);
+    store* getStore();
     ~MainWindow();
 
 private:
-    store* q;
+
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

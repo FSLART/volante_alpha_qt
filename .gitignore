@@ -72,6 +72,11 @@ CMakeLists.txt.user*
 *.dll
 *.exe
 
+**args.c
+**args.h
 
 bin
 build
+*.code-workspace
+serialLog**.txt
+**.log

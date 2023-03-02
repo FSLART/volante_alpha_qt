@@ -73,14 +73,16 @@ class store: public QObject{
 		QByteArray lastMessage;
 		QByteArray bufferMessage;
 		char * markerBSON_WARNING=nullptr; 
-
+		
 		void parseBson(std::vector<std::uint8_t> v);
 		void bsonMining();
         qint64 scribeError(QString error, error_severity severity=error_severity::INFO);
-        explicit store(QString dev="", QObject *parent = nullptr);
+        explicit store(QString dev="", QSerialPort::BaudRate baud = QSerialPort::Baud9600, QObject *parent = nullptr);
 		~store();
 		
 		//getters and setters
+		QSerialPort::BaudRate getBaudRate() const;
+
 		int getRpm() const;
 		int getGearShift() const;
 		int getEngineTemperature() const;
@@ -103,6 +105,9 @@ class store: public QObject{
 		void setLambda(float lambda);
 		void setTcSlip(int tcSlip);
 		void setTcLaunch(int tcLaunch);
+
+		void setBaudRate(QSerialPort::BaudRate baud);
+
 	protected:
         int startGeneralErrorLog(uint depth=0);
 		void stopGeneralErrorLog();
@@ -114,7 +119,7 @@ class store: public QObject{
 		void gearShiftChanged(int newGearShift, int oldGearShift);
 
     private:
-
+		QSerialPort::BaudRate baud;
 		QFile* errorLog=nullptr;
         int m_rotationsPerMinute;
         int m_gearShift;
@@ -127,6 +132,7 @@ class store: public QObject{
 		float m_lambdaMixtureAirFuel; 
 		int m_tractionSlip;
 		int m_tractionLaunch;
+
 };
 
 // Logging Macros

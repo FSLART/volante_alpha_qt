@@ -50,21 +50,20 @@ void ContaRotacoes::drawContaRotacoes(QPainter &painter, int size, int padding=1
 	//normal matrix
    painter.resetTransform();
 	//minimum whipper of the arc
-   //const int minPhi = -45*16;
-   const int minPhi = -720;
-   //maximum whipper of the arc
-   //const int maxPhi = 270*16;
-   const int maxPhi = 4320; 
-   double ratio = ((double)m_value)/((double)m_maxValue);
+	//const int minPhi = -45*16;
+	const int minPhi = -720;
+	//maximum whipper of the arc
+	//const int maxPhi = 270*16;
+	const int maxPhi = 4320; 
    
-   int currentPhi =((int)((double)(ratio)*(maxPhi-minPhi)));
 
    painter.translate(size,0);
    painter.scale(-1.0, 1.0);
    //due to the mirrowing of the arc padding is weird
    painter.drawArc(-padding, height()/3, size, size, minPhi, maxPhi);
-   painter.setPen(QPen(Qt::red, 4));
-   painter.drawArc(-padding, height()/3, size, size,minPhi, currentPhi);
+   QColor pen = getGraphicColorWhipper();
+   painter.setPen(QPen(pen, 4));
+   painter.drawArc(-padding, height()/3, size, size,minPhi, getPositionFromVariationSlope());
 }
 void ContaRotacoes::drawRotacoesText(QPainter &painter, int size, int padding=10){
 	//normal matrix
@@ -88,4 +87,24 @@ int ContaRotacoes::getValue () const{
 }
 int ContaRotacoes::getMaxValue () const{
 	return m_maxValue;
+}
+QColor ContaRotacoes::getGraphicColorWhipper(){
+	//TODO EXAMPLE CODE THIS IS SUPPOSED TO BE UNDER SUPERVISION
+    int red=std::floor(255* (1-(m_value/m_maxValue)));
+    int blue=std::floor(255*m_value/m_maxValue);
+	return QColor(red,0,blue);
+}
+int ContaRotacoes::getPositionFromVariationSlope(){
+	//minimum whipper of the arc
+	//const int minPhi = -45*16;
+	const int minPhi = -720;
+	//maximum whipper of the arc
+	//const int maxPhi = 270*16;
+	const int maxPhi = 4320; 
+	
+	//TODO EXAMPLE CODE THIS IS SUPPOSED TO BE UNDER SUPERVISION
+	double ratio = ((double)m_value)/((double)m_maxValue);
+   
+   	int currentPhi =((int)((double)(ratio)*(maxPhi-minPhi)));
+	return currentPhi;
 }

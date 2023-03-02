@@ -29,7 +29,7 @@ void Tst_serialport::checkSendMessage(){
 
 	 QSerialPort port;
 	 port.setPortName("/tmp/banana");
-	 port.setBaudRate(QSerialPort::Baud115200);
+	 port.setBaudRate(QSerialPort::Baud9600);
 	 port.setDataBits(QSerialPort::Data8);
 	 port.setStopBits(QSerialPort::OneStop);
 	 port.setParity(QSerialPort::NoParity);
@@ -170,7 +170,7 @@ void Tst_serialport::closeHandle(){
 
 void Tst_serialport::tangoWriteSetup(){
 	tango.setPortName("/tmp/tango");
-	tango.setBaudRate(QSerialPort::Baud115200);
+	tango.setBaudRate(QSerialPort::Baud9600);
 	tango.setDataBits(QSerialPort::Data8);
 	tango.setStopBits(QSerialPort::OneStop);
 	tango.setParity(QSerialPort::NoParity);

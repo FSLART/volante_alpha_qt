@@ -5,7 +5,7 @@ int store::setupSerial() {
 	
 	QSerialPort* serial= new QSerialPort();
 	serial->setPortName(this->dev);
-	serial->setBaudRate(QSerialPort::Baud115200);
+	serial->setBaudRate(this->baud);
 	serial->setDataBits(QSerialPort::Data8);
 	serial->setStopBits(QSerialPort::OneStop);
 	serial->setParity(QSerialPort::NoParity);
@@ -94,7 +94,8 @@ qint64 store::scribeError(QString error, error_severity severity){
 
 	return ret;
 }
-store::store( QString dev, QObject *parent  ): QObject(parent){
+store::store( QString dev, QSerialPort::BaudRate baud, QObject *parent): QObject(parent){
+	this->baud = baud;
 	//if Qstring dev is empty, use default device
 	if(dev.isEmpty()){
 		this->dev = DEFAULT_DEVICE;
@@ -149,7 +150,7 @@ void store::bsonMining(){
 	
 	int length = shrinked[0] | shrinked[1] << 8| shrinked[2] <<16| shrinked[3]<<24;
 	if(shrinked.size() < length){
-		qDebug() << "BSON WARNING FOUND BUT NOT ENOUGH BYTES";
+		//qDebug() << "BSON WARNING FOUND BUT NOT ENOUGH BYTES";
 		return;
 	}
 	
@@ -194,16 +195,13 @@ void store::handleError(QSerialPort::SerialPortError serialPortError)
     }
 }
 void store::parseBson(std::vector<std::uint8_t> v){
-    qDebug()<< "Parsing Incoming BSON";
 	try {
         
 
         json j = json::from_bson(v);
 		//read element "rpm"
         if(j.contains("rpm")){
-            
 			this->setRpm(j["rpm"]);
-			qDebug() << "RPM: " << this->getRpm();
 		}
 	} catch (json::parse_error& e) {
         qDebug() << "parse error at byte " << e.byte << "\n";
@@ -317,4 +315,12 @@ void store::setTcSlip(int tcSlip){
 }
 void store::setTcLaunch(int tcLaunch){
 	this->m_tractionLaunch=tcLaunch;
+}
+void store::setBaudRate(QSerialPort::BaudRate baud){
+	this->baud=baud;
+	this->port->setBaudRate(baud);
+	
+}
+QSerialPort::BaudRate store::getBaudRate() const{
+	return baud;
 }

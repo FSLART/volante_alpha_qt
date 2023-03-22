@@ -28,6 +28,6 @@ jobs:
       - name: Debug Workflow remove stuff
         run: ls -la && cd $GITHUB_WORKSPACE && ls -la
       - name: Run tests
-        run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT_testes -platform offscreen
+        run: cd $GITHUB_WORKSPACE && ./$GITHUB_WORKSPACE -platform offscreen
   
     

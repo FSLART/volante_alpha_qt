@@ -21,14 +21,20 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          path: $GITHUB_WORKSPACE
+          path: bin
           workflow: ${{ github.event.workflow_run.workflow_id }}
           workflow_conclusion: completed
           name: VolanteAlphaQT_testes
       # open ssh connection to the server
+      - name: Setup permissions
+        run: chmod u+x $GITHUB_WORKSPACE/bin/VolanteAlphaQT_testes
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: qt6-base-dev libqt6serialport6 libqt6serialport6-dev nlohmann-json3-dev socat gengetopt
+          version: 1.0
       - name: Setup upterm session
         uses: lhotari/action-upterm@v1
       - name: Run tests
-        run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT_testes -platform offscreen
+        run: cd $GITHUB_WORKSPACE/bin && ./VolanteAlphaQT_testes -platform offscreen
   
     

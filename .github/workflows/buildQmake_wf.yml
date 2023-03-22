@@ -1,14 +1,28 @@
-name: Build with qmake
+name: buildQmake_wf.yml
 on: 
   workflow_call:
     inputs:
       qmakeflags:
         required: false
-        type: string     
+        type: string
+      binaryfilename:
+        required: true
+        type: string      
 jobs: 
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Build 
+    - name: Checkout
+      uses: actions/checkout@v3
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: qt6-base-dev qt5-qmake qtbase5-dev libqt6serialport6 libqt6serialport6-dev libqt5serialport5 libqt5serialport5-dev nlohmann-json3-dev socat gengetopt
+        version: 1.0
+    - name: Build with qmake
       run: /usr/bin/qmake VolanteAlphaQT.pro ${{ inputs.qmakeflags }} && make
-    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.binaryfilename }}
+        path: ${{ github.workspace }}/bin/${{ inputs.binaryfilename }}
+        if-no-files-found: error

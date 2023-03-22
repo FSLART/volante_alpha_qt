@@ -1,4 +1,4 @@
-name: Build Tests on Desktop
+name: main_wf
 on:
   push: 
     branches: [ master, workflow-stuff ]
@@ -6,4 +6,4 @@ jobs:
   test-qt-desktop:
     uses: 
       ./.github/workflows/testQTdesktop_wf.yml
-    
+    secrets: inherit

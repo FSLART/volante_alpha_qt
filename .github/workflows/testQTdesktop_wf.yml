@@ -26,6 +26,6 @@ jobs:
           workflow_conclusion: completed
           name: VolanteAlphaQT_testes
       - name: Run tests
-        run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT -platform offscreen
+        run: cd $GITHUB_WORKSPACE && ./VolanteAlphaQT_testes -platform offscreen
   
     

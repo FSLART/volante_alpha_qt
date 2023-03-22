@@ -80,3 +80,4 @@ build
 *.code-workspace
 serialLog**.txt
 **.log
+.vscode

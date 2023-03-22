@@ -1,5 +1,7 @@
 # Volante Alpha
 
+[![main_wf](https://github.com/FSIPLEIRIA/volante_alpha_qt/actions/workflows/main_wf.yml/badge.svg)](https://github.com/FSIPLEIRIA/volante_alpha_qt/actions/workflows/main_wf.yml)
+
 Bem vindo!
 
 Este repo tem o propósito de uma implementação do software que será usado tanto para o volante do  T14 para fazer alguns testes como irá ser usado no futuro para modelos mais recentes. A sua implementação atualmente encontra-se em QT 6.0 com base nas livrarias nativas em C++. Para compilar o projeto necessitarás de qMake(uma implementação inspirada no software Cmake e make) existem cerca de 4 ambientes estes sendo: **Profile, Debug, Release e Testing**

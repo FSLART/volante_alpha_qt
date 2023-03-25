@@ -7,3 +7,7 @@ jobs:
     uses: 
       ./.github/workflows/testQTdesktop_wf.yml
     secrets: inherit
+  deploy-production:
+    uses: 
+      ./.github/workflows/deploymentProduction_wf.yml
+    secrets: inherit

@@ -66,4 +66,24 @@ test{
 		test/tst_contamudancas.cpp \
 		test/tst_serialport.cpp
 }
+release_armv7Cortex{
+	QMAKE_CC = arm-linux-gnueabihf-gcc
+	QMAKE_CXX = arm-linux-gnueabihf-g++
+	QMAKE_LINK = arm-linux-gnueabihf-ld.gold
+	QMAKE_LINK_SHLIB = arm-linux-gnueabihf-ld.gold
+	QMAKE_LIBS_EGL = -lEGL -lGLESv2
+	QMAKE_LIBS_OPENVG = -lEGL -lOpenVG -lGLESv2
+	QMAKE_INCDIR_BCM_HOST = $$[QT_SYSROOT]/opt/vc/include
+	QMAKE_LIBDIR_BCM_HOST = $$[QT_SYSROOT]/opt/vc/lib
+	QMAKE_LIBS_BCM_HOST = -lbcm_host
+	#add -I/usr/include/nlohmann to include path
+	# TODO: This is strange... check if theres something more adequate
+	QMAKE_CXXFLAGS *= -I/usr/include/nlohmann
+ 	QMAKE_CXXFLAGS *= -mfloat-abi=hard -mfpu=neon -mthumb -mthumb-interwork -mcpu=cortex-a7 -mtune=cortex-a7 -mabi=aapcs-linux -mhard-float -mno-unaligned-access 
+	QMAKE_LFLAGS = -Wl,-O1\
+	QMAKE_LFLAGS_RELEASE = -Wl,-O1
 
+	#
+	
+
+}

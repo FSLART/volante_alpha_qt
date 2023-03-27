@@ -1,5 +1,6 @@
 #ifndef TST_SERIALPORT_H
 #define TST_SERIALPORT_H
+#include <QFile>
 #include <QObject>
 #include <QTest>
 #include <QDebug>
@@ -31,8 +32,9 @@ class Tst_serialport : public QObject
 		void checkSendMessage();
 		void storeMessage();
         void bsonTest();
+		//void debugFailing(); 
+        void prependingTrash();
 		void partitionedSlowBsonMessage();
-		void prependingTrash();
 		void suffixingTrash();
 		void updatingRPM();
         void closeHandle();

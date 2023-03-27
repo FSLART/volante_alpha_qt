@@ -129,8 +129,8 @@ void store::handleReadyRead(){
 	lastMessage.append(bufferMessage);
 
 	//regex BSON_WARNING value in bufferMessage if its found set markerBSON_WARNING to the first character after BSON_WARNING
-    QString* temp = new QString(lastMessage);
-	if(temp->contains(BSON_WARNING)){
+
+    if(lastMessage.contains(BSON_WARNING)){
 		bsonMining();
     }
 	

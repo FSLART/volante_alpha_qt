@@ -77,7 +77,7 @@ class store: public QObject{
 		void parseBson(std::vector<std::uint8_t> v);
 		void bsonMining();
         qint64 scribeError(QString error, error_severity severity=error_severity::INFO);
-        explicit store(QString dev="", QSerialPort::BaudRate baud = QSerialPort::Baud9600, QObject *parent = nullptr);
+        explicit store(QString dev="", QSerialPort::BaudRate baud = QSerialPort::Baud38400, QObject *parent = nullptr);
 		~store();
 		
 		//getters and setters
@@ -121,17 +121,17 @@ class store: public QObject{
     private:
 		QSerialPort::BaudRate baud;
 		QFile* errorLog=nullptr;
-        int m_rotationsPerMinute;
-        int m_gearShift;
-        int m_engineTemperature;
-        float m_oilPressure;
-        float m_oilTemperature;
-        float m_batteryVoltage;
-		int m_vehicleVelocity;
-		int m_dataLoggerStatus;
-		float m_lambdaMixtureAirFuel; 
-		int m_tractionSlip;
-		int m_tractionLaunch;
+        int m_rotationsPerMinute=0;
+        int m_gearShift=0;
+        int m_engineTemperature=0;
+        float m_oilPressure=0;
+        float m_oilTemperature=0;
+        float m_batteryVoltage=0;
+        int m_vehicleVelocity=0;
+        int m_dataLoggerStatus=0;
+        float m_lambdaMixtureAirFuel=0;
+        int m_tractionSlip=0;
+        int m_tractionLaunch=0;
 
 };
 

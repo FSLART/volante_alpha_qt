@@ -28,7 +28,10 @@ int store::startGeneralErrorLog(uint depth){
 		//get todays date and time and use it as a filename
 		QDateTime now = QDateTime::currentDateTime();
         QString dateStr = now.toString("hhmmss_dd-MM-yyyy");
-		errorLog = new QFile("errorLog_"+dateStr+".log");
+        dateStr = "errorLog_"+dateStr+".log";
+
+        auto a = QFile(dateStr);
+        errorLog = &a;
         if(errorLog->open(QIODevice::WriteOnly|QIODevice::Unbuffered)){
             return 1;
         }
@@ -69,14 +72,21 @@ void store::stopGeneralErrorLog(){
 }
 qint64 store::scribeError(QString error, error_severity severity){
 	qint64 ret = 0;
+	//check if error is initialized if not
+	if(error==nullptr){
+		error = "An error occurred but no error message was provided";
+	}
+
 	try{		
-		if(errorLog==nullptr){
+        if(errorLog==nullptr){
 			startGeneralErrorLog();
 		}
+
 		//append a timestamp to the error and write it to the file
 		QDateTime now = QDateTime::currentDateTime();
 		QString dateStr = now.toString("hh:mm:ss dd-MM-yyyy");
 		error.prepend(dateStr + " |" + QString::number(severity) + "|*_");
+
         ret= errorLog->write(error.toUtf8()+"|EOL|\n");
 		if (severity>=error_severity::CRITICAL){
 			//TODO handle exception graphically

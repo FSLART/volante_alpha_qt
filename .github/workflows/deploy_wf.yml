@@ -1,0 +1,9 @@
+name: deploy_wf
+on:
+  push: 
+    branches: [ master, workflow-stuff ]
+jobs:
+  deploy-production:
+      uses: 
+        ./.github/workflows/deploymentProduction_wf.yml
+      secrets: inherit

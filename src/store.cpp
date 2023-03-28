@@ -1,4 +1,5 @@
 #include "store.h"
+#include "references/bson_var.h"
 
 using json = nlohmann::json;
 int store::setupSerial() {
@@ -23,52 +24,51 @@ int store::setupSerial() {
 
 	return 0;	
 }
+//MUST REVIEW!! this probs is overcomplicated and im too tired+(my code effect)
 int store::startGeneralErrorLog(uint depth){
-    if(errorLog==nullptr){
+    //check if file is not null
+    if(!errorLog.exists()){
 		//get todays date and time and use it as a filename
 		QDateTime now = QDateTime::currentDateTime();
         QString dateStr = now.toString("hhmmss_dd-MM-yyyy");
         dateStr = "errorLog_"+dateStr+".log";
+        errorLog.setFileName(dateStr);
 
-        auto a = QFile(dateStr);
-        errorLog = &a;
-        if(errorLog->open(QIODevice::WriteOnly|QIODevice::Unbuffered)){
+        if(errorLog.open(QIODevice::WriteOnly|QIODevice::Unbuffered)){
             return 1;
         }
         return 0;
-	}
-			try {
-				if(!errorLog->isOpen()){
-					errorLog = nullptr;
-					scribeError("Apparently the error log was closed, yet the pointer was not set to nullptr.", error_severity::MAJOR);
-					if(depth>0){
-						//... Qcreator kept saying me this was possible...
-						scribeError("Something is really wrong, the depth is too big, and memory seems insane", error_severity::CRITICAL);
-					}
-					return startGeneralErrorLog(++depth);
-				}else{
-					scribeError("A request to open error log was made yet the file was already opened, Avoid multiple calls to startGeneralErrorLog", error_severity::WARNING);
-				
-				}
-			} catch (...) {
-				//TODO handle exception graphically
-				qDebug() << "An exception occurred while trying to open the error log";
-				return 1; //TODO return a more meaningful error code
-			}
-}
-
-void store::stopGeneralErrorLog(){
+    }
 	try {
-		if(errorLog->isOpen()){
-			errorLog->close();
-			errorLog=nullptr;
+        if(!errorLog.isOpen()){
+			scribeError("Apparently the error log was closed, yet the pointer was not set to nullptr.", error_severity::MAJOR);
+			if(depth>0){
+				//... Qcreator kept saying me this was possible...
+				scribeError("Something is really wrong, the depth is too big, and memory seems insane", error_severity::CRITICAL);
+			}
+			return startGeneralErrorLog(++depth);
 		}else{
-			scribeError("A request to close error log was made yet the file was already closed, Avoid multiple calls to stopGeneralErrorLog", error_severity::WARNING);
+			scribeError("A request to open error log was made yet the file was already opened, Avoid multiple calls to startGeneralErrorLog", error_severity::WARNING);
+		
 		}
 	} catch (...) {
 		//TODO handle exception graphically
-		qDebug() << "An exception occurred while trying to close the error log";
+		qDebug() << "An exception occurred while trying to open the error log";
+		return 1; //TODO return a more meaningful error code
 	}
+}
+
+void store::stopGeneralErrorLog(){
+    try {
+        if(!errorLog.isOpen()){
+            throw "The error log was already closed";
+			
+        }
+        errorLog.close();
+    } catch (...) {
+		//TODO handle exception graphically
+		qDebug() << "An exception occurred while trying to close the error log";
+    }
 }
 qint64 store::scribeError(QString error, error_severity severity){
 	qint64 ret = 0;
@@ -78,7 +78,7 @@ qint64 store::scribeError(QString error, error_severity severity){
 	}
 
 	try{		
-        if(errorLog==nullptr){
+        if(errorLog.isOpen()){
 			startGeneralErrorLog();
 		}
 
@@ -87,7 +87,7 @@ qint64 store::scribeError(QString error, error_severity severity){
 		QString dateStr = now.toString("hh:mm:ss dd-MM-yyyy");
 		error.prepend(dateStr + " |" + QString::number(severity) + "|*_");
 
-        ret= errorLog->write(error.toUtf8()+"|EOL|\n");
+        ret= errorLog.write(error.toUtf8()+"|EOL|\n");
 		if (severity>=error_severity::CRITICAL){
 			//TODO handle exception graphically
 			
@@ -209,10 +209,17 @@ void store::parseBson(std::vector<std::uint8_t> v){
         
 
         json j = json::from_bson(v);
-		//read element "rpm"
-        if(j.contains("rpm")){
-			this->setRpm(j["rpm"]);
+		//TODO this is ugly 
+        if(j.contains(BSON_RPM)){
+			this->setRpm(j[BSON_RPM]);
 		}
+		if(j.contains(BSON_GEARSHIFT)){
+			this->setGearShift(j[BSON_GEARSHIFT]);
+		}
+		if(j.contains(BSON_ENGINETEMPERATURE)){
+			this->setEngineTemperature(j[BSON_ENGINETEMPERATURE]);
+		}
+
 	} catch (json::parse_error& e) {
         qDebug() << "parse error at byte " << e.byte << "\n";
         qDebug() << "message: " << v << "\n";

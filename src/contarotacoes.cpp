@@ -30,7 +30,7 @@ void ContaRotacoes::paintEvent(QPaintEvent *event){
    QPainter painter(this);
    painter.setRenderHint(QPainter::Antialiasing);
    //draw an arc from -45 degrees to 225 degrees
-   painter.setPen(QPen(Qt::black, 10));
+   painter.setPen(QPen(Qt::black, 25));
    painter.setBrush(Qt::NoBrush); 
    drawContaRotacoes(painter, size, padding);
    drawRotacoesText(painter, size, padding);
@@ -62,7 +62,7 @@ void ContaRotacoes::drawContaRotacoes(QPainter &painter, int size, int padding=1
    //due to the mirrowing of the arc padding is weird
    painter.drawArc(-padding, height()/3, size, size, minPhi, maxPhi);
    QColor pen = getGraphicColorWhipper();
-   painter.setPen(QPen(pen, 4));
+   painter.setPen(QPen(pen, 20));
    painter.drawArc(-padding, height()/3, size, size,minPhi, getPositionFromVariationSlope());
 }
 void ContaRotacoes::drawRotacoesText(QPainter &painter, int size, int padding=10){

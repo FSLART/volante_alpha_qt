@@ -13,7 +13,7 @@ using namespace std;
 		0x00};
 void Tst_serialport::sanityCheck(){
      //-d -d -d -d
-    socat.startDetached("socat pty,raw,echo=0,b115200,link=/tmp/banana,  pty,raw,echo=0,b115200,link=/tmp/tango");
+    socat.startDetached("socat pty,raw,echo=0,b38400,link=/tmp/banana,  pty,raw,echo=0,b38400,link=/tmp/tango");
     sleep(2);
 
     _store = new store("/tmp/banana");
@@ -29,7 +29,7 @@ void Tst_serialport::checkSendMessage(){
 
 	 QSerialPort port;
 	 port.setPortName("/tmp/banana");
-	 port.setBaudRate(QSerialPort::Baud9600);
+	 port.setBaudRate(QSerialPort::Baud38400);
 	 port.setDataBits(QSerialPort::Data8);
 	 port.setStopBits(QSerialPort::OneStop);
 	 port.setParity(QSerialPort::NoParity);
@@ -194,7 +194,7 @@ void Tst_serialport::closeHandle(){
 
 void Tst_serialport::tangoWriteSetup(){
 	tango.setPortName("/tmp/tango");
-	tango.setBaudRate(QSerialPort::Baud9600);
+	tango.setBaudRate(QSerialPort::Baud38400);
 	tango.setDataBits(QSerialPort::Data8);
 	tango.setStopBits(QSerialPort::OneStop);
 	tango.setParity(QSerialPort::NoParity);

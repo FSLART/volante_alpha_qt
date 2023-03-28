@@ -17,11 +17,14 @@
 #include <QCoreApplication>
 #include <QErrorMessage>
 #include <QFile>
+#include <QObject>
+
 #include <QDebug>
 #include <QSerialPort>
 #include <QDateTime>
 #include <QThread>
 #include <nlohmann/json.hpp>
+#include "references/bson_var.h"
 #if !defined __arm__ || !defined __aarch64__
     #ifdef _WIN32
 		#define DEFAULT_DEVICE "COM3"
@@ -120,7 +123,7 @@ class store: public QObject{
 
     private:
 		QSerialPort::BaudRate baud;
-		QFile* errorLog=nullptr;
+        QFile errorLog;
         int m_rotationsPerMinute=0;
         int m_gearShift=0;
         int m_engineTemperature=0;

@@ -25,6 +25,7 @@ RCC_DIR = build
 
 # Input
 HEADERS += src/contarotacoes.h \
+           src/references/bson_var.h \
            src/contamudancas.h \
            src/mainwindow.h \
            src/store.h

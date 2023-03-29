@@ -78,7 +78,7 @@ qint64 store::scribeError(QString error, error_severity severity){
 	}
 
 	try{		
-        if(errorLog.isOpen()){
+        if(!errorLog.isOpen()){
 			startGeneralErrorLog();
 		}
 
@@ -174,6 +174,7 @@ void store::bsonMining(){
 }
 store::~store(){
 	//make shure all slots are disconnected
+	
 	this->disconnect();
 	try{
 		closeSerial();

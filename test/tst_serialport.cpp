@@ -106,9 +106,7 @@ void Tst_serialport::partitionedSlowBsonMessage(){
 }*/
 void Tst_serialport::prependingTrash(){
 	//open a unbuffered file to write to
-	QFile file("testTemp.log");
-    file.open(QIODevice::WriteOnly);
-	_store->lastMessage.clear();
+    _store->lastMessage.clear();
 	_store->setRpm(0);
 	tangoWriteSetup();
 
@@ -119,15 +117,13 @@ void Tst_serialport::prependingTrash(){
 		//the chance of landing 0xFF 4 times in a row is 1/256^4 or 1/65536, which is very unlikely, theres also a chance of landing an ff prepending the actual message 
 		char t =  (char)randomInt(0,255);
 		tango.putChar(t);
-		file.putChar(t);
 		tango.waitForBytesWritten();
 	}
 	tango.write(rpm_message, 18);
 	tango.waitForBytesWritten();
 	tango.close();
 	_store->port->waitForReadyRead();
-	file.close();
-	QCOMPARE(_store->getRpm(),10000);
+    QCOMPARE(_store->getRpm(),10000);
 		
 }
 

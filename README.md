@@ -1,6 +1,6 @@
 # Volante Alpha -> [![main_wf](https://github.com/FSIPLEIRIA/volante_alpha_qt/actions/workflows/main_wf.yml/badge.svg?branch=master)](https://github.com/FSIPLEIRIA/volante_alpha_qt/actions/workflows/main_wf.yml)
 
-[![main_wf](https://github.com/FSIPLEIRIA/volante_alpha_qt/actions/workflows/main_wf.yml/badge.svg)](https://github.com/FSIPLEIRIA/volante_alpha_qt/actions/workflows/main_wf.yml)
+[![test_wf](https://github.com/FSIPLEIRIA/volante_alpha_qt/actions/workflows/test_wf.yml/badge.svg?branch=master)](https://github.com/FSIPLEIRIA/volante_alpha_qt/actions/workflows/test_wf.yml) [![deploy_wf](https://github.com/FSIPLEIRIA/volante_alpha_qt/actions/workflows/deploy_wf.yml/badge.svg?branch=master)](https://github.com/FSIPLEIRIA/volante_alpha_qt/actions/workflows/deploy_wf.yml)
 
 Bem vindo!
 

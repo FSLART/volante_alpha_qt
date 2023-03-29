@@ -1,0 +1,11 @@
+#A workflow to deploy the application to a banana pi Zero M2
+name: deploymentProduction_wf
+on: workflow_call
+jobs: 
+  build-qt-desktop:
+    uses: ./.github/workflows/buildQmake_wf.yml
+    with:
+      qmakeflags: "CONFIG+=release_armv7Cortex"
+      binaryfilename: VolanteAlphaQT
+  
+    

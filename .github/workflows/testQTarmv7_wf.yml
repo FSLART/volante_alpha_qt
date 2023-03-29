@@ -1,0 +1,38 @@
+name: testQTarmv7_wf
+on:
+  workflow_call:
+    inputs:
+      suite: 
+        required: false
+        type: string
+jobs: 
+  build-qt-tests-armv7:
+    uses: ./.github/workflows/buildQmake_wf.yml
+    with:
+      qmakeflags: "CONFIG+=\"test release_armv7Cortex\""
+      binaryfilename: VolanteAlphaQT_testes
+  test-qt-armv7:
+    needs: [build-qt-desktop]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Fetch artifacts from build-qt-desktop
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          path: bin
+          workflow: ${{ github.event.workflow_run.workflow_id }}
+          workflow_conclusion: completed
+          name: VolanteAlphaQT_testes
+      # open ssh connection to the server
+      - name: Setup permissions
+        run: chmod u+x $GITHUB_WORKSPACE/bin/VolanteAlphaQT_testes
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: qt6-base-dev qt5-qmake qtbase5-dev libqt6serialport6 libqt6serialport6-dev libqt5serialport5 libqt5serialport5-dev nlohmann-json3-dev socat gengetopt
+          version: 1.0
+      - name: Run tests
+        run: cd $GITHUB_WORKSPACE/bin && ./VolanteAlphaQT_testes -platform offscreen
+  
+    

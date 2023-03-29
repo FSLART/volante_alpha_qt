@@ -67,4 +67,41 @@ test{
 		test/tst_contamudancas.cpp \
 		test/tst_serialport.cpp
 }
+release_armv7Cortex{
+	QT = 
+	CONFIG -= debug ltcg
+	
+	
+	CROSS_COMPILER_NAME = "arm-linux-gnueabihf"
+	DEFINES += CROSS_COMPILER_NAME=\"$$CROSS_COMPILER_NAME\"
+	
+	QMAKE_CC = $$CROSS_COMPILER_NAME-gcc
+	QMAKE_CXX = $$CROSS_COMPILER_NAME-g++
+	
+	QMAKE_LINK = $$CROSS_COMPILER_NAME-ld.gold
+	QMAKE_LINK_SHLIB = $$CROSS_COMPILER_NAME-ld.gold
+	QMAKE_LIBS_EGL = -lEGL -lGLESv2
+	QMAKE_LIBS_OPENVG = -lEGL -lOpenVG -lGLESv2
+	QMAKE_INCDIR_BCM_HOST = $$[QT_SYSROOT]/opt/vc/include
+	QMAKE_LIBDIR_BCM_HOST = $$[QT_SYSROOT]/opt/vc/lib
+	QMAKE_LIBS += -I$$[QT_SYSROOT]/usr/include/nlohmann 
+	QMAKE_LIBS_BCM_HOST = -lbcm_host
 
+	QT_ARMV7_COMPILER_VERSION = $$system($$QMAKE_CXX -dumpversion)
+	DEFINES += QT_ARMV7_COMPILER_VERSION=\"$$QT_ARMV7_COMPILER_VERSION\" 
+	QT_ARMV7_SO_LOCATION = /usr/lib/gcc/$$CROSS_COMPILER_NAME/$$QT_ARMV7_COMPILER_VERSION/qt
+	DEFINES += QT_ARMV7_SO_LOCATION=$$QT_ARMV7_SO_LOCATION
+	# TODO: This is strange... check if theres something more adequate
+	QMAKE_CXXFLAGS *= -I/usr/include/nlohmann -I$$QT_ARMV7_SO_LOCATION
+ 	QMAKE_CXXFLAGS *= -mfloat-abi=hard -mfpu=neon -mthumb -mthumb-interwork -mcpu=cortex-a7 -mtune=cortex-a7 -mabi=aapcs-linux -mhard-float -mno-unaligned-access -fPIC 
+	QMAKE_LFLAGS_RELEASE *= -shared -mfloat-abi=hard -mfpu=neon -mthumb -mthumb-interwork -mcpu=cortex-a7 -mtune=cortex-a7 -mabi=aapcs-linux -mhard-float -mno-unaligned-access -O2 -flto=4 -fno-fat-lto-objects -fuse-linker-plugin -fuse-ld=bfd
+	QMAKE_LFLAGS_RELEASE -= -Wl,-O1 
+	
+	
+	# spaggeti code...
+	message($$QMAKE_LIBS)
+	QMAKE_LIBS -= -lpthread 
+	QMAKE_LIBS += -L$$QT_ARMV7_SO_LOCATION/libpthread.so.0 -L$$QT_ARMV7_SO_LOCATION/libQt5Widgets.so -L$$QT_ARMV7_SO_LOCATION/libQt5Gui.so -L$$QT_ARMV7_SO_LOCATION/libQt5SerialPort.so -L$$QT_ARMV7_SO_LOCATION/libQt5Core.so
+	
+
+}

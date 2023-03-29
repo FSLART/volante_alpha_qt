@@ -1,4 +1,4 @@
-name: main_wf
+name: test_wf
 on:
   push: 
     branches: [ master, workflow-stuff ]
@@ -7,3 +7,4 @@ jobs:
     uses: 
       ./.github/workflows/testQTdesktop_wf.yml
     secrets: inherit
+  

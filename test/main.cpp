@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
 
 	
 	int status = 0;
-	for(int i = 0; i < sizeof(fullsuite)/sizeof(suite); i++){
+	for(int i = 0; i < (int)(sizeof(fullsuite)/sizeof(suite)); i++){
 		status |= QTest::qExec(fullsuite[i].test, argc, argv);
 	}
 

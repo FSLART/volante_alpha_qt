@@ -42,6 +42,7 @@ FORMS += src/mainwindow.ui
 TRANSLATIONS += src/VolanteAlphaQT_1_en_US.ts
 
 test{
+	
     message(A configurar a build de testes...)
 
     TARGET = VolanteAlphaQT_testes
@@ -70,7 +71,7 @@ test{
 release_armv7Cortex{
 	QT = 
 	CONFIG -= debug ltcg
-	
+	defines += __FSIPLEIRIA_DEPLOY__
 	
 	CROSS_COMPILER_NAME = "arm-linux-gnueabihf"
 	DEFINES += CROSS_COMPILER_NAME=\"$$CROSS_COMPILER_NAME\"

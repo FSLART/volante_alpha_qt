@@ -11,7 +11,11 @@
 class Tst_contarotacoes : public QObject
 {
     Q_OBJECT
+    public:
+        QString program;
+        QStringList args;
     private slots:
+        void setupTest();
         void checkRpmChangesFromStoreToGraphicText();
         void checkRotationErrorLogging();
 };

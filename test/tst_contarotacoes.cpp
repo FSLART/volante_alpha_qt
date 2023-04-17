@@ -1,10 +1,20 @@
 #include "tst_contarotacoes.h"
+#include "qcoreapplication.h"
 
 
+
+void Tst_contarotacoes::setupTest(){
+	program="socat";
+	args = QStringList();
+
+	args.append("pty,raw,echo=0,b38400,link=/tmp/banana,");
+	args.append("pty,raw,echo=0,b38400,link=/tmp/tango");
+}
 void Tst_contarotacoes::checkRpmChangesFromStoreToGraphicText(){
 	//TODO find a way to solve bellow apparently it crashes violently with a permission dennied in this context
-	QProcess socat; 
-	socat.startDetached("socat pty,raw,echo=0,b38400,link=/tmp/banana,  pty,raw,echo=0,b38400,link=/tmp/tango");
+    QProcess socat;
+
+        socat.startDetached(program, args);
     MainWindow ui= MainWindow(nullptr,"/tmp/banana");
 
 	//ui.add a widget contarotacoes with name _test
@@ -23,7 +33,7 @@ void Tst_contarotacoes::checkRpmChangesFromStoreToGraphicText(){
 
 void Tst_contarotacoes::checkRotationErrorLogging(){
 	QProcess socat;
-    socat.startDetached("socat pty,raw,echo=0,b38400,link=/tmp/banana,  pty,raw,echo=0,b38400,link=/tmp/tango");
+    socat.startDetached(program, args);
     MainWindow ui= MainWindow(nullptr,"/tmp/banana");
 
 	

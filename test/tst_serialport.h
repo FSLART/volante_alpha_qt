@@ -21,6 +21,9 @@
 class Tst_serialport : public QObject
 {
     Q_OBJECT
+	public:
+        QString program;
+        QStringList args;
     private:
 		QProcess socat;
         store * _store;
@@ -28,6 +31,7 @@ class Tst_serialport : public QObject
 		int randomInt(int offset, int n);
 		
     private slots:
+		void setup(); 
         void sanityCheck();
 		void checkSendMessage();
 		void storeMessage();

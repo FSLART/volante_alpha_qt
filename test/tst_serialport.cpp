@@ -11,9 +11,16 @@ using namespace std;
         0x72, 0x70, 0x6D, 0x00,
         0x10, 0x27, 0x00, 0x00,
 		0x00};
+void Tst_serialport::setup(){
+	program="socat";
+	args = QStringList();
+
+	args.append("pty,raw,echo=0,b38400,link=/tmp/banana,");
+	args.append("pty,raw,echo=0,b38400,link=/tmp/tango");
+}
 void Tst_serialport::sanityCheck(){
      //-d -d -d -d
-    socat.startDetached("socat pty,raw,echo=0,b38400,link=/tmp/banana,  pty,raw,echo=0,b38400,link=/tmp/tango");
+    socat.startDetached(program, args);
     sleep(2);
 
     _store = new store("/tmp/banana");

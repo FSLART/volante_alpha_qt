@@ -25,7 +25,7 @@ void Tst_contarotacoes::checkRpmChangesFromStoreToGraphicText(){
     auto s = ui.getStore();
 	s->setRpm(100);
     int a = ui.findChild<ContaRotacoes*>("_test")->getValue();
-    socat.terminate();
+    socat.kill();
 
     QCOMPARE(a, 100);
 }
@@ -50,7 +50,7 @@ void Tst_contarotacoes::checkRotationErrorLogging(){
 	QTextStream in(&file);
 	ui.getStore()->setRpm(-1);
 	QString line = in.readLine();
-	socat.terminate();
+	socat.kill();
 	file.close(); 
 	QVERIFY(line.contains(__FSIPLEIRIA_STORE_SETRPM_ERROR__));
 	

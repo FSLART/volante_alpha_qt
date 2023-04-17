@@ -113,7 +113,7 @@ store::store( QString dev, QSerialPort::BaudRate baud, QObject *parent): QObject
 		this->dev = dev;
 	}
 	setupSerial();
-    int8_t retries = LOG_MAX_RETRIES;
+    //int8_t retries = LOG_MAX_RETRIES;
     //wtf? TODO: retry system
     startGeneralErrorLog();
 	

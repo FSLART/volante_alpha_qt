@@ -14,7 +14,7 @@
     auto s = ui.getStore();
 	s->setRpm(100);
     int a = ui.findChild<ContaMudancas*>("_test")->getValue();
-    socat.terminate();
+    socat.kill();
 	
     QCOMPARE(a, 100);
 }*/
@@ -31,7 +31,7 @@ void Tst_contamudancas::checkMudancaChangesFromStore(){
 	auto s = ui.getStore();
 	s->setGearShift(1);
     int a = ui.findChild<ContaMudancas*>("_test")->getVisibleMudanca();
-    socat.terminate();
+    socat.kill();
 	QCOMPARE(a, 1);
 }
 
@@ -47,7 +47,8 @@ void Tst_contamudancas::checkGearShiftEncoding(){
 	for(int i = 1; i < 6; i++){
         QCOMPARE(_test.getGraphicalTextMudanca(i),QString::number(i));
 	}
-    socat.terminate();
+    socat.kill();
+	
 }
 
 void Tst_contamudancas::checkRPMErrorLogging(){
@@ -71,7 +72,7 @@ void Tst_contamudancas::checkRPMErrorLogging(){
 	QString line2 = in.readLine();
 	
     //open the most recent file in the folder
-	socat.terminate();
+	socat.kill();
 	//read the last line
 
 

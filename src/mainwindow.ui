@@ -38,7 +38,7 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QLabel" name="label_3">
+         <widget class="FLabel" name="EngineTemperature_Label">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -46,7 +46,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -123,9 +123,14 @@
  <customwidgets>
   <customwidget>
    <class>ContaMudancas</class>
-   <extends>ContaRotacoes</extends>
+   <extends>QWidget</extends>
    <header>src/contamudancas.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FLabel</class>
+   <extends>QLabel</extends>
+   <header>src/flabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

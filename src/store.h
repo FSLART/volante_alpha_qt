@@ -115,11 +115,22 @@ class store: public QObject{
         int startGeneralErrorLog(uint depth=0);
 		void stopGeneralErrorLog();
 		int setupSerial();
+		int setupSlots();
 		int closeSerial();
 
 	signals:
 		void rpmChanged(int newRpm, int oldRpm);
 		void gearShiftChanged(int newGearShift, int oldGearShift);
+		void engineTemperatureChanged(int newEngineTemperature, int oldEngineTemperature); 
+		void oilTemperatureChanged(int newOilTemperature, int oldOilTemperature); 
+		void oilPressureChanged(int newOilPressure, int oldOilPressure); 
+		void batteryVoltageChanged(int newBatteryVoltage, int oldBatteryVoltage); 
+		void vehicleSpeedChanged(int newVehicleSpeed, int oldVehicleSpeed); 
+		void dataLoggerChanged(int newDataLogger, int oldDataLogger); 
+		void lambdaChanged(int newLambda, int oldLambda); 
+		void tcSlipChanged(int newTCSlip, int oldTCSlip); 
+		void tcLaunchChanged(int newTcLaunch, int oldTcLaunch);  
+
 
     private:
 		QSerialPort::BaudRate baud;

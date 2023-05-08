@@ -1,6 +1,7 @@
 #include "store.h"
+#include "mainwindow.h"
 #include "references/bson_var.h"
-
+#include "flabel.h"
 using json = nlohmann::json;
 int store::setupSerial() {
 	
@@ -116,7 +117,16 @@ store::store( QString dev, QSerialPort::BaudRate baud, QObject *parent): QObject
     //int8_t retries = LOG_MAX_RETRIES;
     //wtf? TODO: retry system
     startGeneralErrorLog();
-	
+	setupSlots();
+}
+int store::setupSlots(){
+	MainWindow *ui = ((MainWindow*)this->parent());
+	//connect engineTemperatureChanged to FLabel with the name EngineTemperature_Label setVisual slot with the overload of int int
+	connect(this, &store::engineTemperatureChanged, (*ui).findChild<FLabel*>("EngineTemperature_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
+        
+	#ifdef __FSIPLEIRIA_T14__
+		 
+	#endif
 }
 void store::forceRead(qint64 len){
 	while (port->bytesAvailable() < len) {
@@ -211,6 +221,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
 
         json j = json::from_bson(v);
 		//TODO this is ugly 
+		
         if(j.contains(BSON_RPM)){
 			this->setRpm(j[BSON_RPM]);
 		}
@@ -219,6 +230,30 @@ void store::parseBson(std::vector<std::uint8_t> v){
 		}
 		if(j.contains(BSON_ENGINETEMPERATURE)){
 			this->setEngineTemperature(j[BSON_ENGINETEMPERATURE]);
+		}
+		if(j.contains(BSON_OILPRESSURE)){
+			this->setOilPressure(j[BSON_OILPRESSURE]);
+		}
+		if(j.contains(BSON_OILTEMPERATURE)){
+			this->setOilTemperature(j[BSON_OILTEMPERATURE]);
+		}
+		if(j.contains(BSON_BATTERYVOLTAGE)){
+			this->setBatteryVoltage(j[BSON_BATTERYVOLTAGE]);
+		}
+		if(j.contains(BSON_VEHICLESPEED)){
+			this->setVehicleSpeed(j[BSON_VEHICLESPEED]);
+		}
+		if(j.contains(BSON_DATALOGGERSTATUS)){
+			this->setDataLoggerStatus(j[BSON_DATALOGGERSTATUS]);
+		}
+		if(j.contains(BSON_AFR)){
+			this->setLambda(j[BSON_AFR]);
+		}
+		if(j.contains(BSON_TCSLIP)){
+			this->setTcSlip(j[BSON_TCSLIP]);
+		}
+		if(j.contains(BSON_TCLAUNCH)){
+			this->setTcLaunch(j[BSON_TCLAUNCH]);
 		}
 
 	} catch (json::parse_error& e) {
@@ -305,36 +340,56 @@ void store::setGearShift(int gearShift){
 	}
 }
 void store::setEngineTemperature(int engineTemperature){
-
+	int oldEngineTemperature = this->m_engineTemperature;
 	this->m_engineTemperature=engineTemperature;
+	emit engineTemperatureChanged(this->m_engineTemperature, oldEngineTemperature);
 
 }
 void store::setOilPressure(float oilPressure){
+	int oldOilPressure = this->m_oilPressure;
 	this->m_oilPressure=oilPressure;
+	emit oilPressureChanged(this->m_oilPressure, oldOilPressure);
 
 }
 void store::setOilTemperature(int oilTemperature){
+	int oldOilTemperature = this->m_oilTemperature;
 	this->m_oilTemperature=oilTemperature;
+	emit oilTemperatureChanged(this->m_oilTemperature, oldOilTemperature);
 }
 void store::setBatteryVoltage(float batteryVoltage){
+	int oldBatteryVoltage = this->m_batteryVoltage;
 	this->m_batteryVoltage=batteryVoltage;
+	emit batteryVoltageChanged(this->m_batteryVoltage, oldBatteryVoltage);
 }
 void store::setVehicleSpeed(int vehicleVelocity){
+	int oldVehicleVelocity = this->m_vehicleVelocity;
 	this->m_vehicleVelocity=vehicleVelocity;
+	emit vehicleSpeedChanged(this->m_vehicleVelocity, oldVehicleVelocity);
 }
 void store::setDataLoggerStatus(int dataLoggerStatus){
+	int oldDataLoggerStatus = this->m_dataLoggerStatus;
 	this->m_dataLoggerStatus=dataLoggerStatus;
+	emit dataLoggerChanged(this->m_dataLoggerStatus, oldDataLoggerStatus);
 }
 void store::setLambda(float lambda){
+	int oldLambda = this->m_lambdaMixtureAirFuel;
 	this->m_lambdaMixtureAirFuel=lambda;
+	emit lambdaChanged(this->m_lambdaMixtureAirFuel, oldLambda);
+
 }
 void store::setTcSlip(int tcSlip){
+	int oldTcSlip = this->m_tractionSlip;
 	this->m_tractionSlip=tcSlip;
+	emit tcSlipChanged(this->m_tractionSlip, oldTcSlip);
 }
 void store::setTcLaunch(int tcLaunch){
+	int oldTcLaunch = this->m_tractionLaunch;
 	this->m_tractionLaunch=tcLaunch;
+	emit tcLaunchChanged(this->m_tractionLaunch, oldTcLaunch);
 }
+
 void store::setBaudRate(QSerialPort::BaudRate baud){
+
 	this->baud=baud;
 	this->port->setBaudRate(baud);
 	

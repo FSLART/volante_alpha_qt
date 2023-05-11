@@ -3,7 +3,7 @@
 ######################################################################
 defines += __FSIPLEIRIA_T14__ 
 
-QT       += core gui widgets serialport
+QT	   += core gui widgets serialport
 
 TEMPLATE = app
 TARGET = VolanteAlphaQT
@@ -22,30 +22,30 @@ RCC_DIR = build
 # Please consult the documentation of the deprecated API in order to know
 # how to port your code away from it.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000	# disables all the APIs deprecated before Qt 6.0.0
 
 # Input
 HEADERS += \
-        #Constants Macros Aux stuff
-           src/references/bson_var.h \
-        #UI and other non operational stuff
-           src/flabel.h \
-           src/contarotacoes.h \
-           src/contamudancas.h \
-           src/mainwindow.h \
-        #Biz Logic
-           src/store.h
+		#Constants Macros Aux stuff
+		   src/references/bson_var.h \
+		#UI and other non operational stuff
+		   src/flabel.h \
+		   src/contarotacoes.h \
+		   src/contamudancas.h \
+		   src/mainwindow.h \
+		#Biz Logic
+		   src/store.h
 
 SOURCES += \
-        #Constants Macros Aux stuff
-        #UI and other non operational stuff
-           src/flabel.cpp \
-           src/contarotacoes.cpp \
-           src/contamudancas.cpp \
-           src/main.cpp \
-           src/mainwindow.cpp \
-           #Biz Logic
-           src/store.cpp
+		#Constants Macros Aux stuff
+		#UI and other non operational stuff
+		   src/flabel.cpp \
+		   src/contarotacoes.cpp \
+		   src/contamudancas.cpp \
+		   src/main.cpp \
+		   src/mainwindow.cpp \
+		   #Biz Logic
+		   src/store.cpp
 
 FORMS += src/mainwindow.ui
 
@@ -53,27 +53,31 @@ TRANSLATIONS += src/VolanteAlphaQT_1_en_US.ts
 
 test{
 	
-    message(A configurar a build de testes...)
+	message(A configurar a build de testes...)
 
-    TARGET = VolanteAlphaQT_testes
+	TARGET = VolanteAlphaQT_testes
 	# run command before compiling 
 	#go to 
 	system(gengetopt --input=./test/args.ggo --output-dir=./test -F args)
 
-    QT += testlib
-    SOURCES -= src/main.cpp
+	QT += testlib
+	SOURCES -= src/main.cpp
 	SOURCES += test/main.cpp
 
-    HEADERS += \
-        test/args.h \
-        test/tst_contarotacoes.h \
+	HEADERS += \
+		test/args.h \
+		test/aux.h \
+		test/tst_contarotacoes.h \
 		test/tst_contamudancas.h \
-		test/tst_serialport.h
+		test/tst_serialport.h \
+		test/tst_flabels.h
 
 	
 		
-    SOURCES += \
-        test/args.c \
+	SOURCES += \
+		test/args.c \
+		test/aux.cpp \
+		test/tst_flabels.cpp \
 		test/tst_contarotacoes.cpp \
 		test/tst_contamudancas.cpp \
 		test/tst_serialport.cpp

@@ -122,10 +122,17 @@ store::store( QString dev, QSerialPort::BaudRate baud, QObject *parent): QObject
 int store::setupSlots(){
 	MainWindow *ui = ((MainWindow*)this->parent());
 	//connect engineTemperatureChanged to FLabel with the name EngineTemperature_Label setVisual slot with the overload of int int
-	connect(this, &store::engineTemperatureChanged, (*ui).findChild<FLabel*>("EngineTemperature_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
-        
+	
 	#ifdef __FSIPLEIRIA_T14__
-		 
+		connect(this, &store::engineTemperatureChanged, (*ui).findChild<FLabel*>("EngineTemperature_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
+		connect(this, &store::oilPressureChanged, (*ui).findChild<FLabel*>("OilPressure_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
+		connect(this, &store::oilTemperatureChanged, (*ui).findChild<FLabel*>("OilTemperature_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
+		connect(this, &store::batteryVoltageChanged, (*ui).findChild<FLabel*>("BatteryVoltage_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
+		connect(this, &store::vehicleSpeedChanged, (*ui).findChild<FLabel*>("VehicleSpeed_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
+		connect(this, &store::dataLoggerChanged, (*ui).findChild<FLabel*>("DataLogger_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
+		connect(this, &store::lambdaChanged, (*ui).findChild<FLabel*>("Lambda_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
+		connect(this, &store::tcSlipChanged, (*ui).findChild<FLabel*>("TcSlip_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
+		connect(this, &store::tcLaunchChanged, (*ui).findChild<FLabel*>("TcLaunch_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
 	#endif
 }
 void store::forceRead(qint64 len){

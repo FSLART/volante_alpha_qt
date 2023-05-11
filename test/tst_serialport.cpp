@@ -118,11 +118,11 @@ void Tst_serialport::prependingTrash(){
 	tangoWriteSetup();
 
 	//random amount from 0 to 1000
-	int random = randomInt(0,1000);
+	int random = instance.randomInt(0,1000);
 	for(int i = 0; i < random; i++){
 		//write a random byte from 0 to 255
 		//the chance of landing 0xFF 4 times in a row is 1/256^4 or 1/65536, which is very unlikely, theres also a chance of landing an ff prepending the actual message 
-		char t =  (char)randomInt(0,255);
+		char t =  (char)instance.randomInt(0,255);
 		tango.putChar(t);
 		tango.waitForBytesWritten();
 	}
@@ -142,11 +142,11 @@ void Tst_serialport::suffixingTrash(){
 	//random amount from 0 to 1000
 	
 	tango.write(rpm_message, 18);
-	int random = randomInt(0,1000);
+	int random = instance.randomInt(0,1000);
 	for(int i = 0; i < random; i++){
 		//write a random byte from 0 to 255
 		//the chance of landing 0xFF 4 times in a row is 1/256^4 or 1/65536, which is very unlikely, theres also a chance of landing an ff prepending the actual message 
-		tango.putChar((char)randomInt(0,255));
+		tango.putChar((char)instance.randomInt(0,255));
 		tango.waitForBytesWritten();
 	}
 	tango.waitForBytesWritten();
@@ -171,7 +171,7 @@ void Tst_serialport::updatingRPM(){
 	tangoWriteSetup();
 	char * rpm_message2 = new char[18];
 	memcpy(rpm_message2,rpm_message,18);
-	int a = randomInt(0, 10000);
+	int a = instance.randomInt(0, 10000);
 	rpm_message2[13]= (char)(a & 0xFF);
 	rpm_message2[14]= (char)((a >> 8) & 0xFF);
 	rpm_message2[15]= (char)((a >> 16) & 0xFF);
@@ -204,8 +204,4 @@ void Tst_serialport::tangoWriteSetup(){
 	tango.setFlowControl(QSerialPort::NoFlowControl);
 	tango.open(QIODevice::WriteOnly);
 
-}
-int Tst_serialport::randomInt(int offset=0, int n=255){
-	QRandomGenerator a = QRandomGenerator::securelySeeded();
-	return a.bounded(n)+offset;
 }

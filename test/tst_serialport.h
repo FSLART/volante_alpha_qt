@@ -18,18 +18,18 @@
 #include <QSerialPort>
 #include "../src/store.h"
 #include "../src/mainwindow.h"
-class Tst_serialport : public QObject
-{
+#include "aux.h"
+class Tst_serialport : public QObject {
     Q_OBJECT
-	public:
+    public:
         QString program;
         QStringList args;
+        AuxSingleton instance;
     private:
 		QProcess socat;
-        store * _store;
+                store * _store;
 		void tangoWriteSetup();
-		int randomInt(int offset, int n);
-		
+
     private slots:
 		void setup(); 
         void sanityCheck();

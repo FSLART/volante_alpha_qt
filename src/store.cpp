@@ -13,8 +13,8 @@ int store::setupSerial() {
 	serial->setParity(QSerialPort::NoParity);
 	serial->setFlowControl(QSerialPort::NoFlowControl);
 	if (!serial->open(QIODevice::ReadWrite)) {
-		qDebug() << "Can't open " << this->dev << ", error code" << serial->error();
-		serialLog.append("||Can't open " + this->dev + ", error code" + serial->error()+"||");
+        qDebug() << "Can't open " << this->dev << ", error code" << serial->error();
+        serialLog.append("||Can't open " + this->dev + ", error code" + serial->errorString()+"||");
 		return 1;
 	}
 
@@ -120,7 +120,8 @@ store::store( QString dev, QSerialPort::BaudRate baud, QObject *parent): QObject
 	setupSlots();
 }
 int store::setupSlots(){
-	MainWindow *ui = ((MainWindow*)this->parent());
+        //MainWindow *ui = ((MainWindow*)this->parent());
+	
 	//connect engineTemperatureChanged to FLabel with the name EngineTemperature_Label setVisual slot with the overload of int int
 	
 	#ifdef __FSIPLEIRIA_T14__
@@ -134,6 +135,7 @@ int store::setupSlots(){
 		connect(this, &store::tcSlipChanged, (*ui).findChild<FLabel*>("TcSlip_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
 		connect(this, &store::tcLaunchChanged, (*ui).findChild<FLabel*>("TcLaunch_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
 	#endif
+        return 0;
 }
 void store::forceRead(qint64 len){
 	while (port->bytesAvailable() < len) {

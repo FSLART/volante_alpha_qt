@@ -26,26 +26,26 @@ RCC_DIR = build
 
 # Input
 HEADERS += \
-		#Constants Macros Aux stuff
-		   src/references/bson_var.h \
-		#UI and other non operational stuff
-		   src/flabel.h \
-		   src/contarotacoes.h \
-		   src/contamudancas.h \
-		   src/mainwindow.h \
-		#Biz Logic
-		   src/store.h
+	#Constants Macros Aux stuff
+		src/references/bson_var.h \
+	#UI and other non operational stuff
+		src/flabel.h \
+		src/contarotacoes.h \
+		src/contamudancas.h \
+		src/mainwindow.h \
+	#Biz Logic
+		src/store.h
 
 SOURCES += \
-		#Constants Macros Aux stuff
-		#UI and other non operational stuff
-		   src/flabel.cpp \
-		   src/contarotacoes.cpp \
-		   src/contamudancas.cpp \
-		   src/main.cpp \
-		   src/mainwindow.cpp \
-		   #Biz Logic
-		   src/store.cpp
+	#Constants Macros Aux stuff
+	#UI and other non operational stuff
+		src/flabel.cpp \
+		src/contarotacoes.cpp \
+		src/contamudancas.cpp \
+		src/main.cpp \
+		src/mainwindow.cpp \
+	#Biz Logic
+		src/store.cpp
 
 FORMS += src/mainwindow.ui
 
@@ -88,7 +88,7 @@ release_armv7Cortex{
 	defines += __FSIPLEIRIA_DEPLOY__
 	
 	CROSS_COMPILER_NAME = "arm-linux-gnueabihf"
-	DEFINES += CROSS_COMPILER_NAME=\"$$CROSS_COMPILER_NAME\"
+                #DEFINES += CROSS_COMPILER_NAME=\"$$CROSS_COMPILER_NAME"
 	
 	QMAKE_CC = $$CROSS_COMPILER_NAME-gcc
 	QMAKE_CXX = $$CROSS_COMPILER_NAME-g++

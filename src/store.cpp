@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "references/bson_var.h"
 #include "flabel.h"
+#define __FSIPLEIRIA_T14__
 using json = nlohmann::json;
 int store::setupSerial() {
 	
@@ -57,6 +58,7 @@ int store::startGeneralErrorLog(uint depth){
 		qDebug() << "An exception occurred while trying to open the error log";
 		return 1; //TODO return a more meaningful error code
 	}
+    return 0;
 }
 
 void store::stopGeneralErrorLog(){
@@ -117,26 +119,8 @@ store::store( QString dev, QSerialPort::BaudRate baud, QObject *parent): QObject
     //int8_t retries = LOG_MAX_RETRIES;
     //wtf? TODO: retry system
     startGeneralErrorLog();
-	setupSlots();
 }
-int store::setupSlots(){
-        //MainWindow *ui = ((MainWindow*)this->parent());
-	
-	//connect engineTemperatureChanged to FLabel with the name EngineTemperature_Label setVisual slot with the overload of int int
-	
-	#ifdef __FSIPLEIRIA_T14__
-		connect(this, &store::engineTemperatureChanged, (*ui).findChild<FLabel*>("EngineTemperature_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(this, &store::oilPressureChanged, (*ui).findChild<FLabel*>("OilPressure_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(this, &store::oilTemperatureChanged, (*ui).findChild<FLabel*>("OilTemperature_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(this, &store::batteryVoltageChanged, (*ui).findChild<FLabel*>("BatteryVoltage_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(this, &store::vehicleSpeedChanged, (*ui).findChild<FLabel*>("VehicleSpeed_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(this, &store::dataLoggerChanged, (*ui).findChild<FLabel*>("DataLogger_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(this, &store::lambdaChanged, (*ui).findChild<FLabel*>("Lambda_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(this, &store::tcSlipChanged, (*ui).findChild<FLabel*>("TcSlip_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(this, &store::tcLaunchChanged, (*ui).findChild<FLabel*>("TcLaunch_Label"), (void (FLabel::*)(int, int))&FLabel::setVisual);
-	#endif
-        return 0;
-}
+
 void store::forceRead(qint64 len){
 	while (port->bytesAvailable() < len) {
 		if (!port->waitForReadyRead(1000)) {
@@ -338,6 +322,7 @@ void store::setRpm(int rpm){
     }
 }
 void store::setGearShift(int gearShift){
+	qDebug() << "setGearShift";
     if(gearShift>=0&&gearShift<=6){
 		if(gearShift !=this->m_gearShift){
 			int oldGearShift=this->m_gearShift;
@@ -349,6 +334,7 @@ void store::setGearShift(int gearShift){
 	}
 }
 void store::setEngineTemperature(int engineTemperature){
+	qDebug() << "setEngineTemperature";
 	int oldEngineTemperature = this->m_engineTemperature;
 	this->m_engineTemperature=engineTemperature;
 	emit engineTemperatureChanged(this->m_engineTemperature, oldEngineTemperature);

@@ -38,21 +38,24 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QLabel" name="batteryVoltageChanged">
+         <layout class="QFormLayout" name="formLayout"/>
+        </item>
+        <item>
+         <widget class="FLabel" name="BatteryVoltage_Label">
           <property name="text">
            <string>TextLabel</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="OilTemperature_Label">
+         <widget class="FLabel" name="OilTemperature_Label">
           <property name="text">
            <string>TextLabel</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="OilPressure_Label">
+         <widget class="FLabel" name="OilPressure_Label">
           <property name="text">
            <string>TextLabel</string>
           </property>
@@ -111,7 +114,7 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QLabel" name="label">
+         <widget class="FLabel" name="label">
           <property name="text">
            <string>TextLabel</string>
           </property>
@@ -145,7 +148,7 @@
   <customwidget>
    <class>FLabel</class>
    <extends>QLabel</extends>
-   <header>src/flabel.h</header>
+   <header location="global">src/flabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

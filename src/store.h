@@ -23,6 +23,8 @@
 #include <QSerialPort>
 #include <QDateTime>
 #include <QThread>
+//QVBoxLayout
+#include <QVBoxLayout>
 #include <nlohmann/json.hpp>
 #include "references/bson_var.h"
 #if !defined __arm__ || !defined __aarch64__
@@ -32,7 +34,7 @@
 		#ifdef __FSIPLEIRIA_DEPLOY__
 			#define DEFAULT_DEVICE "/dev/ttyS0"
 		#else
-			#define DEFAULT_DEVICE "/dev/ttyACM0"
+            #define DEFAULT_DEVICE "/dev/ttyUSB0"
 		#endif
 	#endif
 #else
@@ -78,7 +80,8 @@ class store: public QObject{
 		char * markerBSON_WARNING=nullptr; 
 		
 		void parseBson(std::vector<std::uint8_t> v);
-		void bsonMining();
+                void bsonMining();
+                int requestSlotAttachment();
         qint64 scribeError(QString error, error_severity severity=error_severity::INFO);
         explicit store(QString dev="", QSerialPort::BaudRate baud = QSerialPort::Baud38400, QObject *parent = nullptr);
 		~store();
@@ -114,8 +117,9 @@ class store: public QObject{
 	protected:
         int startGeneralErrorLog(uint depth=0);
 		void stopGeneralErrorLog();
-		int setupSerial();
-		int setupSlots();
+                int setupSerial();
+        //        bool setSlots=false;
+        //        int setupSlots();
 		int closeSerial();
 
 	signals:

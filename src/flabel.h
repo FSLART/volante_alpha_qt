@@ -13,7 +13,7 @@ class FLabel : public QLabel{
 	public slots:
 		void setVisual(int newValue, int oldValue);
 		void setVisual(float newValue, float oldValue);
-        void setVisual(QString newValue, QString oldValue);
+                void setVisual(QString newValue, QString oldValue);
 
 };
 #endif // FLABEL_H

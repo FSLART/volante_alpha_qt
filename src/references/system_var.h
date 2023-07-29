@@ -1,1 +1,1 @@
-#define __FSIPLEIRIA_NULL_DEVICE_DESCRIPTOR__ "/dev/null"
+#define __LART_NULL_DEVICE_DESCRIPTOR__ "/dev/null"

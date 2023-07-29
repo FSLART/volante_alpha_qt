@@ -78,8 +78,8 @@ void Tst_contamudancas::checkRPMErrorLogging(){
 
 	
 	
-	QVERIFY(line.contains(__FSIPLEIRIA_STORE_SETGEARSHIFT_ERROR__));
-	QVERIFY(line2.contains(__FSIPLEIRIA_STORE_SETGEARSHIFT_ERROR__));
+	QVERIFY(line.contains(__LART_STORE_SETGEARSHIFT_ERROR__));
+	QVERIFY(line2.contains(__LART_STORE_SETGEARSHIFT_ERROR__));
 	
 
 }

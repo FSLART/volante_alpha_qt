@@ -52,7 +52,7 @@ void Tst_contarotacoes::checkRotationErrorLogging(){
 	QString line = in.readLine();
 	socat.kill();
 	file.close(); 
-	QVERIFY(line.contains(__FSIPLEIRIA_STORE_SETRPM_ERROR__));
+	QVERIFY(line.contains(__LART_STORE_SETRPM_ERROR__));
 	
 	
 

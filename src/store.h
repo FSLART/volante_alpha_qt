@@ -31,7 +31,7 @@
     #ifdef _WIN32
 		#define DEFAULT_DEVICE "COM3"
     #elif defined __linux__
-		#ifdef __FSIPLEIRIA_DEPLOY__
+		#ifdef __LART_DEPLOY__
 			#define DEFAULT_DEVICE "/dev/ttyS0"
 		#else
             #define DEFAULT_DEVICE "/dev/ttyUSB0"
@@ -154,7 +154,7 @@ class store: public QObject{
 };
 
 // Logging Macros
-#define __FSIPLEIRIA_STORE_SETRPM_ERROR__ "store::setRpm(int rpm)->Rpm is negative"
-#define __FSIPLEIRIA_STORE_SETGEARSHIFT_ERROR__ "store::setGearShift(int gearShift)->GearShift is out of bounds"
+#define __LART_STORE_SETRPM_ERROR__ "store::setRpm(int rpm)->Rpm is negative"
+#define __LART_STORE_SETGEARSHIFT_ERROR__ "store::setGearShift(int gearShift)->GearShift is out of bounds"
 
 #endif // STORE_H

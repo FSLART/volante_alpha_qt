@@ -2,7 +2,7 @@
 #include "mainwindow.h"
 #include "references/bson_var.h"
 #include "flabel.h"
-#define __FSIPLEIRIA_T14__
+#define __LART_T14__
 using json = nlohmann::json;
 int store::setupSerial() {
 	
@@ -318,7 +318,7 @@ void store::setRpm(int rpm){
 			emit rpmChanged(this->m_rotationsPerMinute, oldRpm);
 		}
     }else{
-        this->scribeError(__FSIPLEIRIA_STORE_SETRPM_ERROR__, store::error_severity::MINOR);
+        this->scribeError(__LART_STORE_SETRPM_ERROR__, store::error_severity::MINOR);
     }
 }
 void store::setGearShift(int gearShift){
@@ -330,7 +330,7 @@ void store::setGearShift(int gearShift){
 			emit gearShiftChanged(this->m_gearShift, oldGearShift);
 		}
 	}else{
-		this->scribeError(__FSIPLEIRIA_STORE_SETGEARSHIFT_ERROR__, store::error_severity::MINOR);
+		this->scribeError(__LART_STORE_SETGEARSHIFT_ERROR__, store::error_severity::MINOR);
 	}
 }
 void store::setEngineTemperature(int engineTemperature){

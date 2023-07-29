@@ -2,7 +2,7 @@
 
 void Tst_flabels::setup(){
 	//create a MainWindww
-	this->ui= MainWindow(nullptr, __FSIPLEIRIA_NULL_DEVICE_DESCRIPTOR__);
+	this->ui= MainWindow(nullptr, __LART_NULL_DEVICE_DESCRIPTOR__);
 	//get the ui store
 	pstore = this->ui.store;
 	

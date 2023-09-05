@@ -15,8 +15,8 @@ void Tst_serialport::setup(){
 	program="socat";
 	args = QStringList();
 
-	args.append("pty,raw,echo=0,b38400,link=/tmp/banana,");
-	args.append("pty,raw,echo=0,b38400,link=/tmp/tango");
+    args.append("pty,raw,echo=0,b115200,link=/tmp/banana,");
+    args.append("pty,raw,echo=0,b115200,link=/tmp/tango");
 }
 void Tst_serialport::sanityCheck(){
      //-d -d -d -d
@@ -36,7 +36,7 @@ void Tst_serialport::checkSendMessage(){
 
 	 QSerialPort port;
 	 port.setPortName("/tmp/banana");
-	 port.setBaudRate(QSerialPort::Baud38400);
+	 port.setBaudRate(QSerialPort::Baud115200);
 	 port.setDataBits(QSerialPort::Data8);
 	 port.setStopBits(QSerialPort::OneStop);
 	 port.setParity(QSerialPort::NoParity);
@@ -197,7 +197,7 @@ void Tst_serialport::closeHandle(){
 
 void Tst_serialport::tangoWriteSetup(){
 	tango.setPortName("/tmp/tango");
-	tango.setBaudRate(QSerialPort::Baud38400);
+    tango.setBaudRate(QSerialPort::Baud115200);
 	tango.setDataBits(QSerialPort::Data8);
 	tango.setStopBits(QSerialPort::OneStop);
 	tango.setParity(QSerialPort::NoParity);

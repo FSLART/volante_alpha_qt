@@ -34,12 +34,18 @@
 		#ifdef __LART_DEPLOY__
 			#define DEFAULT_DEVICE "/dev/ttyS0"
 		#else
-            #define DEFAULT_DEVICE "/dev/ttyUSB0"
+            #define DEFAULT_DEVICE "/dev/ttyACM0"
 		#endif
 	#endif
 #else
     #define DEFAULT_DEVICE "/dev/ttyS0"
 #endif
+
+typedef union {
+	float decoded;
+	int32_t encoded;
+} EncodingUnion;
+
 
 #define BSON_WARNING "\xFF\xFF\xFF\xFF"
 #define LOG_MAX_RETRIES 4
@@ -83,7 +89,7 @@ class store: public QObject{
                 void bsonMining();
                 int requestSlotAttachment();
         qint64 scribeError(QString error, error_severity severity=error_severity::INFO);
-        explicit store(QString dev="", QSerialPort::BaudRate baud = QSerialPort::Baud38400, QObject *parent = nullptr);
+        explicit store(QString dev="", QSerialPort::BaudRate baud = QSerialPort::Baud115200, QObject *parent = nullptr);
 		~store();
 		
 		//getters and setters
@@ -93,7 +99,7 @@ class store: public QObject{
 		int getGearShift() const;
 		int getEngineTemperature() const;
 		float getOilPressure() const;
-		int getOilTemperature() const;
+		float getOilTemperature() const;
 		float getBatteryVoltage() const;
 		int getVehicleSpeed() const;
 		int getDataLoggerStatus() const;
@@ -102,9 +108,9 @@ class store: public QObject{
 		int getTcLaunch() const;
 		void setRpm(int rpm);
 		void setGearShift(int gearShift);
-		void setEngineTemperature(int engineTemperature);
+                void setEngineTemperature(int engineTemperature);
 		void setOilPressure(float oilPressure);
-		void setOilTemperature(int oilTemperature);
+                 void setOilTemperature(float oilTemperature);
 		void setBatteryVoltage(float batteryVoltage);
 		void setVehicleSpeed(int vehicleVelocity);
 		void setDataLoggerStatus(int dataLoggerStatus);
@@ -126,12 +132,12 @@ class store: public QObject{
 		void rpmChanged(int newRpm, int oldRpm);
 		void gearShiftChanged(int newGearShift, int oldGearShift);
 		void engineTemperatureChanged(int newEngineTemperature, int oldEngineTemperature); 
-		void oilTemperatureChanged(int newOilTemperature, int oldOilTemperature); 
-		void oilPressureChanged(int newOilPressure, int oldOilPressure); 
-		void batteryVoltageChanged(int newBatteryVoltage, int oldBatteryVoltage); 
+		void oilTemperatureChanged(float newOilTemperature, float oldOilTemperature); 
+		void oilPressureChanged(float newOilPressure, float oldOilPressure); 
+		void batteryVoltageChanged(float newBatteryVoltage, float oldBatteryVoltage); 
 		void vehicleSpeedChanged(int newVehicleSpeed, int oldVehicleSpeed); 
 		void dataLoggerChanged(int newDataLogger, int oldDataLogger); 
-		void lambdaChanged(int newLambda, int oldLambda); 
+		void lambdaChanged(float newLambda, float oldLambda); 
 		void tcSlipChanged(int newTCSlip, int oldTCSlip); 
 		void tcLaunchChanged(int newTcLaunch, int oldTcLaunch);  
 

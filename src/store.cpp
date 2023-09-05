@@ -225,13 +225,19 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			this->setEngineTemperature(j[BSON_ENGINETEMPERATURE]);
 		}
 		if(j.contains(BSON_OILPRESSURE)){
-			this->setOilPressure(j[BSON_OILPRESSURE]);
+			EncodingUnion t;
+			t.encoded=j[BSON_OILPRESSURE];
+			this->setOilPressure(t.decoded);
 		}
 		if(j.contains(BSON_OILTEMPERATURE)){
-			this->setOilTemperature(j[BSON_OILTEMPERATURE]);
+			EncodingUnion t;
+			t.encoded=j[BSON_OILTEMPERATURE]; 
+			this->setOilTemperature(t.decoded);
 		}
 		if(j.contains(BSON_BATTERYVOLTAGE)){
-			this->setBatteryVoltage(j[BSON_BATTERYVOLTAGE]);
+			EncodingUnion t;
+			t.encoded=j[BSON_BATTERYVOLTAGE]; 
+			this->setBatteryVoltage(t.decoded);
 		}
 		if(j.contains(BSON_VEHICLESPEED)){
 			this->setVehicleSpeed(j[BSON_VEHICLESPEED]);
@@ -240,7 +246,12 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			this->setDataLoggerStatus(j[BSON_DATALOGGERSTATUS]);
 		}
 		if(j.contains(BSON_AFR)){
-			this->setLambda(j[BSON_AFR]);
+			EncodingUnion t;
+			t.encoded=j[BSON_AFR];
+			this->setLambda(t.decoded);
+                        //this->setTcSlip(j[BSON_AFR]);
+                         //this->setTcLaunch(j[BSON_AFR]);
+			//this->setLambda(j[BSON_AFR]);
 		}
 		if(j.contains(BSON_TCSLIP)){
 			this->setTcSlip(j[BSON_TCSLIP]);
@@ -288,7 +299,7 @@ int store::getEngineTemperature() const{
 float store::getOilPressure() const{
 	return this->m_oilPressure;
 }
-int store::getOilTemperature() const{
+float store::getOilTemperature() const{
 	return this->m_oilTemperature;
 }
 float store::getBatteryVoltage() const{
@@ -341,18 +352,18 @@ void store::setEngineTemperature(int engineTemperature){
 
 }
 void store::setOilPressure(float oilPressure){
-	int oldOilPressure = this->m_oilPressure;
+    float oldOilPressure = this->m_oilPressure;
 	this->m_oilPressure=oilPressure;
 	emit oilPressureChanged(this->m_oilPressure, oldOilPressure);
 
 }
-void store::setOilTemperature(int oilTemperature){
-	int oldOilTemperature = this->m_oilTemperature;
+void store::setOilTemperature(float oilTemperature){
+        float oldOilTemperature = this->m_oilTemperature;
 	this->m_oilTemperature=oilTemperature;
 	emit oilTemperatureChanged(this->m_oilTemperature, oldOilTemperature);
 }
 void store::setBatteryVoltage(float batteryVoltage){
-	int oldBatteryVoltage = this->m_batteryVoltage;
+         float oldBatteryVoltage = this->m_batteryVoltage;
 	this->m_batteryVoltage=batteryVoltage;
 	emit batteryVoltageChanged(this->m_batteryVoltage, oldBatteryVoltage);
 }
@@ -367,7 +378,7 @@ void store::setDataLoggerStatus(int dataLoggerStatus){
 	emit dataLoggerChanged(this->m_dataLoggerStatus, oldDataLoggerStatus);
 }
 void store::setLambda(float lambda){
-	int oldLambda = this->m_lambdaMixtureAirFuel;
+        float oldLambda = this->m_lambdaMixtureAirFuel;
 	this->m_lambdaMixtureAirFuel=lambda;
 	emit lambdaChanged(this->m_lambdaMixtureAirFuel, oldLambda);
 

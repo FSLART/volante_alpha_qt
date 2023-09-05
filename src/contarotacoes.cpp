@@ -21,6 +21,7 @@ ContaRotacoes::ContaRotacoes( QWidget *parent)
 }
 ContaRotacoes::~ContaRotacoes(){
 	disconnect(store_pnt,&store::rpmChanged, this, &ContaRotacoes::handleChangedValue);
+
 }
 void ContaRotacoes::paintEvent(QPaintEvent *event){
 	//remove the warning for unused *event
@@ -29,11 +30,19 @@ void ContaRotacoes::paintEvent(QPaintEvent *event){
 	//padding of the line
 	const int padding = 10; 
 	const int size = width()-(padding*2);
-
+        ;
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
-	//draw an arc from -45 degrees to 225 degrees
-	painter.setPen(QPen(Qt::black, 25));
+	const auto group = QPalette::Active;
+  	const auto role = QPalette::Text;
+
+
+    auto palette=this->palette();
+
+    /*Get Brush */
+    painter.setPen(QPen(palette.color(group, role),25));
+	
+
 	painter.setBrush(Qt::NoBrush); 
 	drawContaRotacoes(painter, size, padding);
 	drawRotacoesText(painter, size, padding);
@@ -73,9 +82,14 @@ void ContaRotacoes::drawContaRotacoes(QPainter &painter, int size, int padding=1
 void ContaRotacoes::drawRotacoesText(QPainter &painter, int size, int padding=10){
 	//normal matrix
 	painter.resetTransform();
+	const auto group = QPalette::Active;
+  	const auto role = QPalette::Text;
+
+
+    auto palette=this->palette();
 
 	//draw the text
-	painter.setPen(QPen(Qt::black, 3));
+    painter.setPen(QPen(palette.color(group, role), 3));
 	
 	//make the font size scale with the width of the widget
 	auto fontSize= width()/padding;

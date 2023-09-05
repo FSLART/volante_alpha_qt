@@ -7,8 +7,8 @@ void Tst_contarotacoes::setupTest(){
 	program="socat";
 	args = QStringList();
 
-	args.append("pty,raw,echo=0,b38400,link=/tmp/banana,");
-	args.append("pty,raw,echo=0,b38400,link=/tmp/tango");
+	args.append("pty,raw,echo=0,b115200,link=/tmp/banana,");
+	args.append("pty,raw,echo=0,b115200,link=/tmp/tango");
 }
 void Tst_contarotacoes::checkRpmChangesFromStoreToGraphicText(){
 	//TODO find a way to solve bellow apparently it crashes violently with a permission dennied in this context

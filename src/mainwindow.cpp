@@ -28,12 +28,12 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
 
 
         connect(store_ref, &store::engineTemperatureChanged, EngineTemperature_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(store_ref, &store::oilPressureChanged, OilPressure_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(store_ref, &store::oilTemperatureChanged, OilTemperature_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(store_ref, &store::batteryVoltageChanged, BatteryVoltage_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
+		connect(store_ref, &store::oilPressureChanged, OilPressure_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
+		connect(store_ref, &store::oilTemperatureChanged, OilTemperature_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
+		connect(store_ref, &store::batteryVoltageChanged, BatteryVoltage_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
 		connect(store_ref, &store::vehicleSpeedChanged, VehicleSpeed_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
 		connect(store_ref, &store::dataLoggerChanged, DataLogger_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(store_ref, &store::lambdaChanged, Lambda_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
+		connect(store_ref, &store::lambdaChanged, Lambda_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
 		connect(store_ref, &store::tcSlipChanged, TcSlip_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
 		connect(store_ref, &store::tcLaunchChanged, TcLaunch_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
 }

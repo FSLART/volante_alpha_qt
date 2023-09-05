@@ -26,7 +26,12 @@ void ContaMudancas::paintEvent(QPaintEvent *event){
 	//draw a big QString centered in the middle of the widget with getGraphicalTextMudanca(m_mudanca)
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setPen(Qt::black);
+	const auto group = QPalette::Active;
+  	const auto role = QPalette::Text;
+
+
+    auto palette=this->palette();
+	painter.setPen(QPen(palette.color(group, role)));
     painter.setFont(QFont("Arial", width()/padding*4));
 	//rect add padding vertical 
     painter.drawText(this->rect().adjusted(0, padding*4, 0, 0), Qt::AlignCenter, getGraphicalTextMudanca(m_mudanca));

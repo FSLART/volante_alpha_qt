@@ -10,16 +10,18 @@ int store::setupSerial() {
 	serial->setPortName(this->dev);
 	serial->setBaudRate(this->baud);
 	serial->setDataBits(QSerialPort::Data8);
-	serial->setStopBits(QSerialPort::OneStop);
-	serial->setParity(QSerialPort::NoParity);
-	serial->setFlowControl(QSerialPort::NoFlowControl);
+        serial->setStopBits(QSerialPort::OneStop);
+        serial->setParity(QSerialPort::OddParity);
+        serial->setFlowControl(QSerialPort::NoFlowControl);
 	if (!serial->open(QIODevice::ReadWrite)) {
         qDebug() << "Can't open " << this->dev << ", error code" << serial->error();
         serialLog.append("||Can't open " + this->dev + ", error code" + serial->errorString()+"||");
 		return 1;
 	}
 
-	this->port = serial;
+        this->port = serial;
+        //clear garbage
+        this->port->flush();
 	connect(this->port, &QSerialPort::readyRead, this, &store::handleReadyRead);
 	connect(this->port, &QSerialPort::errorOccurred, this, &store::handleError);
 	
@@ -30,8 +32,8 @@ int store::setupSerial() {
 int store::startGeneralErrorLog(uint depth){
     //check if file is not null
     if(!errorLog.exists()){
-		//get todays date and time and use it as a filename
-		QDateTime now = QDateTime::currentDateTime();
+        //get todays date and time and use it as a filename
+        QDateTime now = QDateTime::currentDateTime();
         QString dateStr = now.toString("hhmmss_dd-MM-yyyy");
         dateStr = "errorLog_"+dateStr+".log";
         errorLog.setFileName(dateStr);
@@ -95,7 +97,7 @@ qint64 store::scribeError(QString error, error_severity severity){
 			//TODO handle exception graphically
 			
 			//freeze the program for 3 secs
-            this->thread()->msleep(3000);
+                        this->thread()->msleep(3000);
 			
 			//its pretty much garanteed but just in case
 			assert(severity>=error_severity::CRITICAL);
@@ -132,14 +134,13 @@ void store::forceRead(qint64 len){
 	}
     port->read(bufferMessage.data(), len);
 }
-//destructor for store 
 
 void store::handleReadyRead(){
 
     bufferMessage=port->readAll();
     serialLog.append(bufferMessage);
-	//can be optimized using pointers or even a variable as a "bookmark" wether a int or pointer 
-	lastMessage.append(bufferMessage);
+    //can be optimized using pointers or even a variable as a "bookmark" wether a int or pointer
+    lastMessage.append(bufferMessage);
 
 	//regex BSON_WARNING value in bufferMessage if its found set markerBSON_WARNING to the first character after BSON_WARNING
 
@@ -181,8 +182,10 @@ store::~store(){
 	this->disconnect();
 	try{
 		closeSerial();
-
-		QFile file("serialLog.txt");
+		QDateTime now = QDateTime::currentDateTime();
+                QString dateStr = now.toString("hhmmss_dd-MM-yyyy");
+                dateStr.append("serialLog.txt");
+                QFile file(dateStr);
 		if (file.open(QIODevice::WriteOnly)) {
 			file.write(serialLog);
 			file.close();
@@ -210,8 +213,6 @@ void store::handleError(QSerialPort::SerialPortError serialPortError)
 }
 void store::parseBson(std::vector<std::uint8_t> v){
 	try {
-        
-
         json j = json::from_bson(v);
 		//TODO this is ugly 
 		
@@ -249,9 +250,6 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			EncodingUnion t;
 			t.encoded=j[BSON_AFR];
 			this->setLambda(t.decoded);
-                        //this->setTcSlip(j[BSON_AFR]);
-                         //this->setTcLaunch(j[BSON_AFR]);
-			//this->setLambda(j[BSON_AFR]);
 		}
 		if(j.contains(BSON_TCSLIP)){
 			this->setTcSlip(j[BSON_TCSLIP]);

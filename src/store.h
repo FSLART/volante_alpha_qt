@@ -9,19 +9,46 @@
 #include <errno.h>
 #include <cstdio>
 #include <cstdint>
-#include <QFile>
 #include <cstring>
-#include <QDebug>
-#include <QSerialPort>
 #include <thread>
 #include <cstdio>
+#include <sys/types.h>
+#include <vector>
 #include <QCoreApplication>
 #include <QErrorMessage>
-#include <qobject.h>
-#include <nlohmann/json.hpp>
+#include <QFile>
+#include <QObject>
 
-#define DEFAULT_DEVICE "/dev/ttyACM0"
+#include <QDebug>
+#include <QSerialPort>
+#include <QDateTime>
+#include <QThread>
+//QVBoxLayout
+#include <QVBoxLayout>
+#include <nlohmann/json.hpp>
+#include "references/bson_var.h"
+#if !defined __arm__ || !defined __aarch64__
+    #ifdef _WIN32
+		#define DEFAULT_DEVICE "COM3"
+    #elif defined __linux__
+		#ifdef __LART_DEPLOY__
+			#define DEFAULT_DEVICE "/dev/ttyS0"
+		#else
+            #define DEFAULT_DEVICE "/dev/ttyACM0"
+		#endif
+	#endif
+#else
+    #define DEFAULT_DEVICE "/dev/ttyS0"
+#endif
+
+typedef union {
+	float decoded;
+	int32_t encoded;
+} EncodingUnion;
+
+
 #define BSON_WARNING "\xFF\xFF\xFF\xFF"
+#define LOG_MAX_RETRIES 4
 #define BSON_SKIP_BYTES 9
 /* !
         \class store
@@ -36,7 +63,17 @@
 class store: public QObject{
     Q_OBJECT;
     Q_PROPERTY(int  m_rotationsPerMinute READ getRpm WRITE setRpm NOTIFY rpmChanged);
+
+
+
 	public:
+        enum error_severity {
+            INFO=0,
+            WARNING=1,
+            MINOR=2,
+            MAJOR=3,
+            CRITICAL=100
+        };
         QString dev;
 		QSerialPort* port=nullptr;
 		void handleReadyRead();
@@ -47,18 +84,22 @@ class store: public QObject{
 		QByteArray lastMessage;
 		QByteArray bufferMessage;
 		char * markerBSON_WARNING=nullptr; 
-
+		
 		void parseBson(std::vector<std::uint8_t> v);
-		void bsonMining();
-        explicit store(QString dev="", QObject *parent = nullptr);
+                void bsonMining();
+                int requestSlotAttachment();
+        qint64 scribeError(QString error, error_severity severity=error_severity::INFO);
+        explicit store(QString dev="", QSerialPort::BaudRate baud = QSerialPort::Baud115200, QObject *parent = nullptr);
 		~store();
 		
 		//getters and setters
+		QSerialPort::BaudRate getBaudRate() const;
+
 		int getRpm() const;
 		int getGearShift() const;
 		int getEngineTemperature() const;
 		float getOilPressure() const;
-		int getOilTemperature() const;
+		float getOilTemperature() const;
 		float getBatteryVoltage() const;
 		int getVehicleSpeed() const;
 		int getDataLoggerStatus() const;
@@ -67,35 +108,59 @@ class store: public QObject{
 		int getTcLaunch() const;
 		void setRpm(int rpm);
 		void setGearShift(int gearShift);
-		void setEngineTemperature(int engineTemperature);
+                void setEngineTemperature(int engineTemperature);
 		void setOilPressure(float oilPressure);
-		void setOilTemperature(int oilTemperature);
+                 void setOilTemperature(float oilTemperature);
 		void setBatteryVoltage(float batteryVoltage);
 		void setVehicleSpeed(int vehicleVelocity);
 		void setDataLoggerStatus(int dataLoggerStatus);
 		void setLambda(float lambda);
 		void setTcSlip(int tcSlip);
 		void setTcLaunch(int tcLaunch);
+
+		void setBaudRate(QSerialPort::BaudRate baud);
+
 	protected:
-		int setupSerial();
+        int startGeneralErrorLog(uint depth=0);
+		void stopGeneralErrorLog();
+                int setupSerial();
+        //        bool setSlots=false;
+        //        int setupSlots();
 		int closeSerial();
+
 	signals:
 		void rpmChanged(int newRpm, int oldRpm);
+		void gearShiftChanged(int newGearShift, int oldGearShift);
+		void engineTemperatureChanged(int newEngineTemperature, int oldEngineTemperature); 
+		void oilTemperatureChanged(float newOilTemperature, float oldOilTemperature); 
+		void oilPressureChanged(float newOilPressure, float oldOilPressure); 
+		void batteryVoltageChanged(float newBatteryVoltage, float oldBatteryVoltage); 
+		void vehicleSpeedChanged(int newVehicleSpeed, int oldVehicleSpeed); 
+		void dataLoggerChanged(int newDataLogger, int oldDataLogger); 
+		void lambdaChanged(float newLambda, float oldLambda); 
+		void tcSlipChanged(int newTCSlip, int oldTCSlip); 
+		void tcLaunchChanged(int newTcLaunch, int oldTcLaunch);  
+
 
     private:
-        int m_rotationsPerMinute;
-        int m_gearShift;
-        int m_engineTemperature;
-        float m_oilPressure;
-        float m_oilTemperature;
-        float m_batteryVoltage;
-		int m_vehicleVelocity;
-		int m_dataLoggerStatus;
-		//todo ask stuff about this
-		float m_lambdaMixtureAirFuel; 
-		int m_tractionSlip;
-		int m_tractionLaunch;
+		QSerialPort::BaudRate baud;
+        QFile errorLog;
+        int m_rotationsPerMinute=0;
+        int m_gearShift=0;
+        int m_engineTemperature=0;
+        float m_oilPressure=0;
+        float m_oilTemperature=0;
+        float m_batteryVoltage=0;
+        int m_vehicleVelocity=0;
+        int m_dataLoggerStatus=0;
+        float m_lambdaMixtureAirFuel=0;
+        int m_tractionSlip=0;
+        int m_tractionLaunch=0;
+
 };
 
+// Logging Macros
+#define __LART_STORE_SETRPM_ERROR__ "store::setRpm(int rpm)->Rpm is negative"
+#define __LART_STORE_SETGEARSHIFT_ERROR__ "store::setGearShift(int gearShift)->GearShift is out of bounds"
 
 #endif // STORE_H

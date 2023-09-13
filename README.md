@@ -1,8 +1,14 @@
-# Volante Alpha
+# Volante Alpha -> [![main_wf](https://github.com/FSLART/volante_alpha_qt/actions/workflows/main_wf.yml/badge.svg?branch=master)](https://github.com/FSLART/volante_alpha_qt/actions/workflows/main_wf.yml)
+
+[![test_wf](https://github.com/FSLART/volante_alpha_qt/actions/workflows/test_wf.yml/badge.svg?branch=master)](https://github.com/FSLART/volante_alpha_qt/actions/workflows/test_wf.yml) [![deploy_wf](https://github.com/FSLART/volante_alpha_qt/actions/workflows/deploy_wf.yml/badge.svg?branch=master)](https://github.com/FSLART/volante_alpha_qt/actions/workflows/deploy_wf.yml)
 
 Bem vindo!
 
 Este repo tem o propósito de uma implementação do software que será usado tanto para o volante do T14 para fazer alguns testes, como no futuro para modelos mais recentes. A sua implementação atualmente encontra-se em QT 6.0 com base nas bibliotecas nativas em C++. Para compilar o projeto necessitarás de qMake(uma implementação inspirada no software Cmake e make) existindo cerca de 4 ambientes, estes sendo: **Profile, Debug, Release e Testing**
+
+## v1.0.0
+
+Apesar de não ter havido versionamento pois o desenvolvimento foi apressado e houveram prioridades este release é exclusivamente para as variáveis do T-14 e não deve ser usado para outros veiculos pois terão variaveis de controlo diferente às usadas.
 
 # Ambientes
 
@@ -43,7 +49,7 @@ test{
 
 Se mudares a linha e tua responsabilidade mudares as alterações de volta antes de fazeres um commit. O .pro nao deve ser ignorado pois causa a que toda a gente tenha de manualmente criar o ficheiro. Ignorar isto pode causar problemas futuros.
 
----------
+---
 
 # Dependencias
 
@@ -58,6 +64,8 @@ Terás de usar uma versão correspondente a acima
 Para o BSON irás precisar de uma biblioteca json, especificamente:
 https://github.com/nlohmann/json
 Poderás usar a seguinte package com o pacman ``nlohmann-json``. Foi usada a versão `nlohmann-json-3.11.2-1-any` para o desenvolvimento
+
+Para testes terás de instalar gengetopt e socat.
 
 # Manutenção do README
 

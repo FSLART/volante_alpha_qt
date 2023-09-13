@@ -6,6 +6,10 @@ Bem vindo!
 
 Este repo tem o propósito de uma implementação do software que será usado tanto para o volante do T14 para fazer alguns testes, como no futuro para modelos mais recentes. A sua implementação atualmente encontra-se em QT 6.0 com base nas bibliotecas nativas em C++. Para compilar o projeto necessitarás de qMake(uma implementação inspirada no software Cmake e make) existindo cerca de 4 ambientes, estes sendo: **Profile, Debug, Release e Testing**
 
+## v1.0.0
+
+Apesar de não ter havido versionamento pois o desenvolvimento foi apressado e houveram prioridades este release é exclusivamente para as variáveis do T-14 e não deve ser usado para outros veiculos pois terão variaveis de controlo diferente às usadas.
+
 # Ambientes
 
 Deverás usar o software qtcreator já que ajuda a executar o qmake e o make com todo o make eyecandy para poderes fazer debugging e dar set up automatico de alguns ambientes listados acima. Três dos quatro ambientes são criados automaticamente pelo qtcreator, mas um deles (Testing) terá de ser criado manualmente no qtcreator, pois não vem por defeito.
@@ -45,7 +49,7 @@ test{
 
 Se mudares a linha e tua responsabilidade mudares as alterações de volta antes de fazeres um commit. O .pro nao deve ser ignorado pois causa a que toda a gente tenha de manualmente criar o ficheiro. Ignorar isto pode causar problemas futuros.
 
----------
+---
 
 # Dependencias
 

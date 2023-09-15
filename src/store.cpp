@@ -513,3 +513,7 @@ void store::setBaudRate(QSerialPort::BaudRate baud){
 QSerialPort::BaudRate store::getBaudRate() const{
 	return baud;
 }
+/*
+
+
+*/

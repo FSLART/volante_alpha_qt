@@ -167,7 +167,8 @@ class store: public QObject{
 			void batteryTemperatureChanged(float newBatteryTemperature, float oldBatteryTemperature);
 			void inverterTemperatureChanged(int newInverterTemperature, int oldInverterTemperature);
 			void powerChanged(short newPower, short oldPower);
-			void lapTimeChanged(int newLapTime, int oldLapTime);
+			void lapTimeChanged(QTime newLapTime, QTime oldLapTime);
+			void diffLapTimeChanged(QTime newDiffLapTime, QTime oldDiffLapTime);
 			void lapCountChanged(short newLapCount, short oldLapCount);
 			//void tyreTemperatureChanged(int newTyreTemperature, int oldTyreTemperature); 
 		#endif

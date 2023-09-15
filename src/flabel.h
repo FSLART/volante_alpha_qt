@@ -12,6 +12,7 @@ class FLabel : public QLabel{
             explicit FLabel(QWidget *parent = nullptr);
 	public slots:
 		void setVisual(int newValue, int oldValue);
+		void setVisual(QTime newValue, QTime oldValue); 
 		void setVisual(float newValue, float oldValue);
                 void setVisual(QString newValue, QString oldValue);
 

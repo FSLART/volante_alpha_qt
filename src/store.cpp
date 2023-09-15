@@ -2,7 +2,7 @@
 #include "mainwindow.h"
 #include "references/bson_var.h"
 #include "flabel.h"
-
+#define __LART_T24__
 using json = nlohmann::json;
 int store::setupSerial() {
 	
@@ -486,7 +486,21 @@ void store::setPower(short power){
 void store::setLapTime(int lapTime){
 	int oldLapTime = this->m_lapTime;
 	this->m_lapTime=lapTime;
-	emit lapTimeChanged(this->m_lapTime, oldLapTime);
+	//transform lapTime int into QTime 
+	//TODO document this
+	//CurrentLapTimes
+	QTime time = QTime::fromMSecsSinceStartOfDay(this->m_lapTime);
+	QTime oldtime = QTime::fromMSecsSinceStartOfDay(oldLapTime);
+
+	//DiffLapTimes
+	QTime diffTime = QTime::fromMSecsSinceStartOfDay(this->m_lapTime - oldLapTime);
+	//Pluggin this is not used for anything
+	QTime oldDiffTime = QTime::fromMSecsSinceStartOfDay(0);
+
+	
+
+	emit diffLapTimeChanged(diffTime, oldDiffTime);
+	emit lapTimeChanged(time, oldtime);
 }
 void store::setLapCount(short lapCount){
 	short oldLapCount = this->m_lapCount;

@@ -600,6 +600,35 @@
 		</property>
 	</widget>
 </item>
+<item row="8" column="0">
+	<widget class="QLabel" name="DiffTime_Prefix">
+		<property name="text">
+			<string>Lap Time Difference: </string>
+		</property>
+	</widget>
+</item>
+<item row="8" column="1">
+	<widget class="FLabel" name="DiffTime_Label">
+		<property name="text">
+			<string>__00:00.000__</string>
+		</property>
+	</widget>
+</item>
+
+<item row="9" column="0">
+	<widget class="QLabel" name="LapTime_Prefix">
+		<property name="text">
+			<string>Lap Time: </string>
+		</property>
+	</widget>
+</item>
+<item row="9" column="1">
+	<widget class="FLabel" name="LapTime_Label">
+		<property name="text">
+			<string>__00:00.000__</string>
+		</property>
+	</widget>
+</item>
 
          </layout>
         </item>

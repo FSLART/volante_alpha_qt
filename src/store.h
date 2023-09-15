@@ -171,32 +171,38 @@ class store: public QObject{
 			void lapCountChanged(short newLapCount, short oldLapCount);
 			//void tyreTemperatureChanged(int newTyreTemperature, int oldTyreTemperature); 
 		#endif
-		
-		
-		 
-		
-		
-		
-		 
-		
-		
-		
-
 
     private:
 		QSerialPort::BaudRate baud;
         QFile errorLog;
-        int m_rotationsPerMinute=0;
-        int m_gearShift=0;
-        int m_engineTemperature=0;
-        float m_oilPressure=0;
-        float m_oilTemperature=0;
-        float m_batteryVoltage=0;
-        int m_vehicleVelocity=0;
-        int m_dataLoggerStatus=0;
-        float m_lambdaMixtureAirFuel=0;
-        int m_tractionSlip=0;
-        int m_tractionLaunch=0;
+		int m_rotationsPerMinute=0;
+		int m_engineTemperature=0;
+		float m_batteryVoltage=0;
+		int m_vehicleVelocity=0;
+		#ifdef __LART_T14__
+			int m_gearShift=0;
+			float m_oilPressure=0;
+			float m_oilTemperature=0;
+			int m_dataLoggerStatus=0;
+			float m_lambdaMixtureAirFuel=0;
+			int m_tractionSlip=0;
+			int m_tractionLaunch=0;
+		#endif
+		#ifdef __LART_T24__
+			float m_stateOfCharge=0;
+			float m_batteryTemperature=0;
+			int m_inverterTemperature=0;
+			short m_power=0;
+			int m_lapTime=0;
+			short m_lapCount=0;
+			//int m_tyreTemperature=0;
+		#endif
+
+        
+        
+        
+        
+        
 
 };
 

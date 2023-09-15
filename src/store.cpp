@@ -267,11 +267,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
 				t.encoded=j[BSON_SOC];
 				this->setSoc(t.decoded);
 			}
-			if(j.contains(BSON_BATTERYCURRENT)){
-				EncodingUnion t;
-				t.encoded=j[BSON_BATTERYCURRENT];
-				this->setBatteryCurrent(t.decoded);
-			}
+			
 			if(j.contains(BSON_BATTERYTEMPERATURE)){
 				EncodingUnion t;
 				t.encoded=j[BSON_BATTERYTEMPERATURE];

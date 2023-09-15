@@ -9,7 +9,9 @@ ContaMudancas::ContaMudancas( QWidget *parent)
     try{
         MainWindow* w = qobject_cast<MainWindow*>(parent->parent());
         store_pnt=w->getStore();
-        connect(store_pnt,&store::gearShiftChanged, this, &ContaMudancas::handleChangedMudanca);
+		#ifdef __LART_T14__
+        	connect(store_pnt,&store::gearShiftChanged, this, &ContaMudancas::handleChangedMudanca);
+		#endif
     }catch(...){
 		//TODO proper notices
 		qDebug() << "Error: ContaMudancas::ContaMudancas( QWidget *parent) failed to connect to store";
@@ -68,7 +70,9 @@ void ContaMudancas::handleChangedMudanca(int newValue, int oldValue){
 	}
 }
 ContaMudancas::~ContaMudancas(){
+	#ifdef __LART_T14__
 	disconnect(store_pnt,&store::gearShiftChanged, this, &ContaMudancas::handleChangedMudanca);
+	#endif
 }
 QColor ContaMudancas::getGraphicColorWhipper(){
     switch (m_mudanca) {

@@ -2,7 +2,7 @@
 #include "mainwindow.h"
 #include "references/bson_var.h"
 #include "flabel.h"
-#define __LART_T14__
+
 using json = nlohmann::json;
 int store::setupSerial() {
 	
@@ -10,9 +10,9 @@ int store::setupSerial() {
 	serial->setPortName(this->dev);
 	serial->setBaudRate(this->baud);
 	serial->setDataBits(QSerialPort::Data8);
-        serial->setStopBits(QSerialPort::OneStop);
-        serial->setParity(QSerialPort::OddParity);
-        serial->setFlowControl(QSerialPort::NoFlowControl);
+	serial->setStopBits(QSerialPort::OneStop);
+	serial->setParity(QSerialPort::OddParity);
+	serial->setFlowControl(QSerialPort::NoFlowControl);
 	if (!serial->open(QIODevice::ReadWrite)) {
         qDebug() << "Can't open " << this->dev << ", error code" << serial->error();
         serialLog.append("||Can't open " + this->dev + ", error code" + serial->errorString()+"||");
@@ -219,22 +219,11 @@ void store::parseBson(std::vector<std::uint8_t> v){
         if(j.contains(BSON_RPM)){
 			this->setRpm(j[BSON_RPM]);
 		}
-		if(j.contains(BSON_GEARSHIFT)){
-			this->setGearShift(j[BSON_GEARSHIFT]);
-		}
+
 		if(j.contains(BSON_ENGINETEMPERATURE)){
 			this->setEngineTemperature(j[BSON_ENGINETEMPERATURE]);
 		}
-		if(j.contains(BSON_OILPRESSURE)){
-			EncodingUnion t;
-			t.encoded=j[BSON_OILPRESSURE];
-			this->setOilPressure(t.decoded);
-		}
-		if(j.contains(BSON_OILTEMPERATURE)){
-			EncodingUnion t;
-			t.encoded=j[BSON_OILTEMPERATURE]; 
-			this->setOilTemperature(t.decoded);
-		}
+		
 		if(j.contains(BSON_BATTERYVOLTAGE)){
 			EncodingUnion t;
 			t.encoded=j[BSON_BATTERYVOLTAGE]; 
@@ -243,21 +232,75 @@ void store::parseBson(std::vector<std::uint8_t> v){
 		if(j.contains(BSON_VEHICLESPEED)){
 			this->setVehicleSpeed(j[BSON_VEHICLESPEED]);
 		}
-		if(j.contains(BSON_DATALOGGERSTATUS)){
-			this->setDataLoggerStatus(j[BSON_DATALOGGERSTATUS]);
-		}
-		if(j.contains(BSON_AFR)){
-			EncodingUnion t;
-			t.encoded=j[BSON_AFR];
-			this->setLambda(t.decoded);
-		}
-		if(j.contains(BSON_TCSLIP)){
-			this->setTcSlip(j[BSON_TCSLIP]);
-		}
-		if(j.contains(BSON_TCLAUNCH)){
-			this->setTcLaunch(j[BSON_TCLAUNCH]);
-		}
+		#ifdef __LART_T14__
+			if(j.contains(BSON_AFR)){
+				EncodingUnion t;
+				t.encoded=j[BSON_AFR];
+				this->setLambda(t.decoded);
+			}
+			if(j.contains(BSON_TCSLIP)){
+				this->setTcSlip(j[BSON_TCSLIP]);
+			}
+			if(j.contains(BSON_TCLAUNCH)){
+				this->setTcLaunch(j[BSON_TCLAUNCH]);
+			}
+			if(j.contains(BSON_GEARSHIFT)){
+				this->setGearShift(j[BSON_GEARSHIFT]);
+			}
+			if(j.contains(BSON_DATALOGGERSTATUS)){
+				this->setDataLoggerStatus(j[BSON_DATALOGGERSTATUS]);
+			}
+			if(j.contains(BSON_OILPRESSURE)){
+				EncodingUnion t;
+				t.encoded=j[BSON_OILPRESSURE];
+				this->setOilPressure(t.decoded);
+			}
+			if(j.contains(BSON_OILTEMPERATURE)){
+				EncodingUnion t;
+				t.encoded=j[BSON_OILTEMPERATURE]; 
+				this->setOilTemperature(t.decoded);
+			}
+		#endif
+		#ifdef __LART_T24__
+			if(j.contains(BSON_SOC)){
+				EncodingUnion t;
+				t.encoded=j[BSON_SOC];
+				this->setSoc(t.decoded);
+			}
+			if(j.contains(BSON_BATTERYCURRENT)){
+				EncodingUnion t;
+				t.encoded=j[BSON_BATTERYCURRENT];
+				this->setBatteryCurrent(t.decoded);
+			}
+			if(j.contains(BSON_BATTERYTEMPERATURE)){
+				EncodingUnion t;
+				t.encoded=j[BSON_BATTERYTEMPERATURE];
+				this->setBatteryTemperature(t.decoded);
+			}
+			if(j.contains(BSON_INVERTERTEMPERATURE)){
+				this->setInverterTemperature(j[BSON_INVERTERTEMPERATURE]);
+			}
+			if(j.contains(BSON_POWER)){
+				EncodingUnion t;
+				t.encoded=j[BSON_POWER];
+				this->setPower(t.decoded);
+			}
+			if(j.contains(BSON_LAPTIME)){
+				this->setLapTime(j[BSON_LAPTIME]);
+			}
+			if(j.contains(BSON_LAPCOUNT)){
+				EncodingUnion t;
+				t.encoded=j[BSON_LAPCOUNT];
+				this->setLapCount(t.decoded);
 
+			}
+			//if(j.contains(BSON_TYRETEMPERATURE)){
+			//	this->setTyreTemperature(j[BSON_TYRETEMPERATURE]);
+			//}
+
+
+		#endif
+	
 	} catch (json::parse_error& e) {
         qDebug() << "parse error at byte " << e.byte << "\n";
         qDebug() << "message: " << v << "\n";
@@ -284,28 +327,55 @@ int store::closeSerial(){
     return 0;
 }
 //getters and setters
+
 int store::getRpm() const{
 	return this->m_rotationsPerMinute;
+}
 
+void store::setRpm(int rpm){
+    if(rpm>=0){
+		if(rpm !=this->m_rotationsPerMinute){
+			int oldRpm=this->m_rotationsPerMinute;
+			this->m_rotationsPerMinute=rpm;
+			emit rpmChanged(this->m_rotationsPerMinute, oldRpm);
+		}
+    }else{
+        this->scribeError(__LART_STORE_SETRPM_ERROR__, store::error_severity::MINOR);
+    }
 }
-int store::getGearShift() const{
-	return this->m_gearShift;
-}
+
 int store::getEngineTemperature() const{
 	return this->m_engineTemperature;
 }
-float store::getOilPressure() const{
-	return this->m_oilPressure;
-}
-float store::getOilTemperature() const{
-	return this->m_oilTemperature;
+void store::setEngineTemperature(int engineTemperature){
+	qDebug() << "setEngineTemperature";
+	int oldEngineTemperature = this->m_engineTemperature;
+	this->m_engineTemperature=engineTemperature;
+	emit engineTemperatureChanged(this->m_engineTemperature, oldEngineTemperature);
+
 }
 float store::getBatteryVoltage() const{
 	return this->m_batteryVoltage;
 }
+
+void store::setBatteryVoltage(float batteryVoltage){
+	float oldBatteryVoltage = this->m_batteryVoltage;
+	this->m_batteryVoltage=batteryVoltage;
+	emit batteryVoltageChanged(this->m_batteryVoltage, oldBatteryVoltage);
+}
+
 int store::getVehicleSpeed() const{
 	return this->m_vehicleVelocity;
 }
+void store::setVehicleSpeed(int vehicleVelocity){
+	int oldVehicleVelocity = this->m_vehicleVelocity;
+	this->m_vehicleVelocity=vehicleVelocity;
+	emit vehicleSpeedChanged(this->m_vehicleVelocity, oldVehicleVelocity);
+}
+
+
+
+#ifdef __LART_T14__
 int store::getDataLoggerStatus() const{
 	return this->m_dataLoggerStatus;
 }
@@ -319,17 +389,10 @@ int store::getTcSlip() const{
 int store::getTcLaunch() const{
 	return this->m_tractionLaunch;
 }
-void store::setRpm(int rpm){
-    if(rpm>=0){
-		if(rpm !=this->m_rotationsPerMinute){
-			int oldRpm=this->m_rotationsPerMinute;
-			this->m_rotationsPerMinute=rpm;
-			emit rpmChanged(this->m_rotationsPerMinute, oldRpm);
-		}
-    }else{
-        this->scribeError(__LART_STORE_SETRPM_ERROR__, store::error_severity::MINOR);
-    }
+int store::getGearShift() const{
+	return this->m_gearShift;
 }
+
 void store::setGearShift(int gearShift){
 	qDebug() << "setGearShift";
     if(gearShift>=0&&gearShift<=6){
@@ -342,12 +405,11 @@ void store::setGearShift(int gearShift){
 		this->scribeError(__LART_STORE_SETGEARSHIFT_ERROR__, store::error_severity::MINOR);
 	}
 }
-void store::setEngineTemperature(int engineTemperature){
-	qDebug() << "setEngineTemperature";
-	int oldEngineTemperature = this->m_engineTemperature;
-	this->m_engineTemperature=engineTemperature;
-	emit engineTemperatureChanged(this->m_engineTemperature, oldEngineTemperature);
-
+float store::getOilPressure() const{
+	return this->m_oilPressure;
+}
+float store::getOilTemperature() const{
+	return this->m_oilTemperature;
 }
 void store::setOilPressure(float oilPressure){
     float oldOilPressure = this->m_oilPressure;
@@ -359,16 +421,6 @@ void store::setOilTemperature(float oilTemperature){
         float oldOilTemperature = this->m_oilTemperature;
 	this->m_oilTemperature=oilTemperature;
 	emit oilTemperatureChanged(this->m_oilTemperature, oldOilTemperature);
-}
-void store::setBatteryVoltage(float batteryVoltage){
-         float oldBatteryVoltage = this->m_batteryVoltage;
-	this->m_batteryVoltage=batteryVoltage;
-	emit batteryVoltageChanged(this->m_batteryVoltage, oldBatteryVoltage);
-}
-void store::setVehicleSpeed(int vehicleVelocity){
-	int oldVehicleVelocity = this->m_vehicleVelocity;
-	this->m_vehicleVelocity=vehicleVelocity;
-	emit vehicleSpeedChanged(this->m_vehicleVelocity, oldVehicleVelocity);
 }
 void store::setDataLoggerStatus(int dataLoggerStatus){
 	int oldDataLoggerStatus = this->m_dataLoggerStatus;
@@ -391,6 +443,66 @@ void store::setTcLaunch(int tcLaunch){
 	this->m_tractionLaunch=tcLaunch;
 	emit tcLaunchChanged(this->m_tractionLaunch, oldTcLaunch);
 }
+
+#endif
+#ifdef __LART_T24__
+float store::getSoc() const{
+	return this->m_stateOfCharge;
+}
+float store::getBatteryTemperature() const{
+	return this->m_batteryTemperature;
+}
+int store::getInverterTemperature() const{
+	return this->m_inverterTemperature;
+}
+short store::getPower() const{
+	return this->m_power;
+}
+int store::getLapTime() const{
+	return this->m_lapTime;
+}
+short store::getLapCount() const{
+	return this->m_lapCount;
+}
+//int store::getTyreTemperature() const{
+//	return this->m_tyreTemperature;
+//}
+void store::setSoc(float soc){
+	float oldSoc = this->m_stateOfCharge;
+	this->m_stateOfCharge=soc;
+	emit socChanged(this->m_stateOfCharge, oldSoc);
+}
+void store::setBatteryTemperature(float batteryTemperature){
+	float oldBatteryTemperature = this->m_batteryTemperature;
+	this->m_batteryTemperature=batteryTemperature;
+	emit batteryTemperatureChanged(this->m_batteryTemperature, oldBatteryTemperature);
+}
+void store::setInverterTemperature(int inverterTemperature){
+	int oldInverterTemperature = this->m_inverterTemperature;
+	this->m_inverterTemperature=inverterTemperature;
+	emit inverterTemperatureChanged(this->m_inverterTemperature, oldInverterTemperature);
+}
+void store::setPower(short power){
+	short oldPower = this->m_power;
+	this->m_power=power;
+	emit powerChanged(this->m_power, oldPower);
+}
+void store::setLapTime(int lapTime){
+	int oldLapTime = this->m_lapTime;
+	this->m_lapTime=lapTime;
+	emit lapTimeChanged(this->m_lapTime, oldLapTime);
+}
+void store::setLapCount(short lapCount){
+	short oldLapCount = this->m_lapCount;
+	this->m_lapCount=lapCount;
+	emit lapCountChanged(this->m_lapCount, oldLapCount);
+}
+//void store::setTyreTemperature(int tyreTemperature){
+//	int oldTyreTemperature = this->m_tyreTemperature;
+//	this->m_tyreTemperature=tyreTemperature;
+//	emit tyreTemperatureChanged(this->m_tyreTemperature, oldTyreTemperature);
+//}
+#endif
 
 void store::setBaudRate(QSerialPort::BaudRate baud){
 

@@ -94,29 +94,49 @@ class store: public QObject{
 		
 		//getters and setters
 		QSerialPort::BaudRate getBaudRate() const;
-
+		//getters wire variables
 		int getRpm() const;
-		int getGearShift() const;
 		int getEngineTemperature() const;
-		float getOilPressure() const;
-		float getOilTemperature() const;
 		float getBatteryVoltage() const;
 		int getVehicleSpeed() const;
-		int getDataLoggerStatus() const;
-		float getLambda() const;
-		int getTcSlip() const;
-		int getTcLaunch() const;
+		//setters wire variables
 		void setRpm(int rpm);
-		void setGearShift(int gearShift);
-                void setEngineTemperature(int engineTemperature);
-		void setOilPressure(float oilPressure);
-                 void setOilTemperature(float oilTemperature);
+		void setEngineTemperature(int engineTemperature);
 		void setBatteryVoltage(float batteryVoltage);
 		void setVehicleSpeed(int vehicleVelocity);
-		void setDataLoggerStatus(int dataLoggerStatus);
-		void setLambda(float lambda);
-		void setTcSlip(int tcSlip);
-		void setTcLaunch(int tcLaunch);
+		#ifdef __LART_T14__
+			int getGearShift() const;			
+			float getOilPressure() const;
+			float getOilTemperature() const;
+			int getDataLoggerStatus() const;
+			float getLambda() const;
+			int getTcSlip() const;
+			int getTcLaunch() const;
+			void setGearShift(int gearShift);
+			void setOilPressure(float oilPressure);
+			void setOilTemperature(float oilTemperature);
+			void setDataLoggerStatus(int dataLoggerStatus);
+			void setLambda(float lambda);
+			void setTcSlip(int tcSlip);
+			void setTcLaunch(int tcLaunch);
+
+		#endif
+		#ifdef __LART_T24__
+			float getSoc() const;
+			float getBatteryTemperature() const;
+			int getInverterTemperature() const;
+			short getPower() const;
+			int getLapTime() const;
+			short getLapCount() const;
+			//int getTyreTemperature() const;
+			void setSoc(float soc);
+			void setBatteryTemperature(float batteryTemperature);
+			void setInverterTemperature(int inverterTemperature);
+			void setPower(short power);
+			void setLapTime(int lapTime);
+			void setLapCount(short lapCount);
+			//void setTyreTemperature(int tyreTemperature);
+		#endif
 
 		void setBaudRate(QSerialPort::BaudRate baud);
 
@@ -130,16 +150,37 @@ class store: public QObject{
 
 	signals:
 		void rpmChanged(int newRpm, int oldRpm);
-		void gearShiftChanged(int newGearShift, int oldGearShift);
-		void engineTemperatureChanged(int newEngineTemperature, int oldEngineTemperature); 
-		void oilTemperatureChanged(float newOilTemperature, float oldOilTemperature); 
-		void oilPressureChanged(float newOilPressure, float oldOilPressure); 
+		void engineTemperatureChanged(int newEngineTemperature, int oldEngineTemperature);
 		void batteryVoltageChanged(float newBatteryVoltage, float oldBatteryVoltage); 
-		void vehicleSpeedChanged(int newVehicleSpeed, int oldVehicleSpeed); 
-		void dataLoggerChanged(int newDataLogger, int oldDataLogger); 
-		void lambdaChanged(float newLambda, float oldLambda); 
-		void tcSlipChanged(int newTCSlip, int oldTCSlip); 
-		void tcLaunchChanged(int newTcLaunch, int oldTcLaunch);  
+		void vehicleSpeedChanged(int newVehicleSpeed, int oldVehicleSpeed);
+		#ifdef __LART_T14__
+			void gearShiftChanged(int newGearShift, int oldGearShift);
+			void oilTemperatureChanged(float newOilTemperature, float oldOilTemperature); 
+			void oilPressureChanged(float newOilPressure, float oldOilPressure); 
+			void dataLoggerChanged(int newDataLogger, int oldDataLogger); 
+			void lambdaChanged(float newLambda, float oldLambda); 
+			void tcSlipChanged(int newTCSlip, int oldTCSlip); 
+			void tcLaunchChanged(int newTcLaunch, int oldTcLaunch);  
+		#endif
+		#ifdef __LART_T24__
+			void socChanged(float newSoc, float oldSoc);
+			void batteryTemperatureChanged(float newBatteryTemperature, float oldBatteryTemperature);
+			void inverterTemperatureChanged(int newInverterTemperature, int oldInverterTemperature);
+			void powerChanged(short newPower, short oldPower);
+			void lapTimeChanged(int newLapTime, int oldLapTime);
+			void lapCountChanged(short newLapCount, short oldLapCount);
+			//void tyreTemperatureChanged(int newTyreTemperature, int oldTyreTemperature); 
+		#endif
+		
+		
+		 
+		
+		
+		
+		 
+		
+		
+		
 
 
     private:

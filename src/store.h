@@ -1,3 +1,12 @@
+/**
+* @file store.h
+* @brief This file contains the declaration of the store class
+* @see store.cpp
+* @see mainwindow.h
+* @see flabel.h
+* @author João Vieira
+* This piece of software was developed for the T24e project belonging to the LART Team
+**/
 #ifndef STORE_H
 #define STORE_H
 #include <iostream>
@@ -43,15 +52,16 @@
 #else
     #define DEFAULT_DEVICE "/dev/ttyS3"
 #endif
-
+// Mostly used for "de-typing" data.
 typedef union {
 	float decoded;
 	int32_t encoded;
 } EncodingUnion;
 
-
+// Header of start of Bson Message, this is used to identify the start of a message, however it is not used for parsing. and in the future a better way of doing this is possible. Trust the standard!
 #define BSON_WARNING "\xFF\xFF\xFF\xFF"
 #define LOG_MAX_RETRIES 4
+// this is a constant pretty much dont touch it..
 #define BSON_SKIP_BYTES 9
 /**
 *	@class store
@@ -60,7 +70,8 @@ typedef union {
 * 		   this class is designed as a <b>Centralized Application State for data<b/>,  similar to the ideology that is widely used in distributed systems (especially speaking of JS, Vue, React, etc...)
 *  		   @b HOWEVER it doesnt have some arguably annoying features of some of those systems, such as "Fold"/"Reduce" States or immutable data. This was choosen both due to personal experience 
 * 		   and due to the fact that this is a real time system, and the overhead of having to copy the data to a new object every time it changes is not worth it. 
-* 		   
+* 		   This class is intended to also be flexible and be able to tolerate future changes of communication protocol such as SPI, etc... 
+*		   However since its not on the horizon for now theres no overhead or implementation for other protocols of communication.
 **/
 class store: public QObject{
     Q_OBJECT;

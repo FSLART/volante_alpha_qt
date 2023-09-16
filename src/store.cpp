@@ -610,42 +610,77 @@ float store::getBatteryTemperature() const{
 * @brief getter for the inverter temperature variable
 * @return The inverter temperature variable
 **/
-
 int store::getInverterTemperature() const{
 	return this->m_inverterTemperature;
 }
+/**
+* @brief getter for the power variable
+* @return The power variable
+**/
 short store::getPower() const{
 	return this->m_power;
 }
+/**
+* @brief getter for the lap time  @b Double-Word Integer variable,
+* @return The lap time variable
+**/
 int store::getLapTime() const{
 	return this->m_lapTime;
 }
+/**
+* @brief getter for the lap count variable
+* @return The lap count variable
+**/
 short store::getLapCount() const{
 	return this->m_lapCount;
 }
+/**
+* @brief getter for the tyre temperature variable
+* @return The tyre temperature variable
+**/
 //int store::getTyreTemperature() const{
 //	return this->m_tyreTemperature;
 //}
+/**
+* @brief setter for the state of charge variable
+* @param soc The new value for the state of charge variable
+**/
 void store::setSoc(float soc){
 	float oldSoc = this->m_stateOfCharge;
 	this->m_stateOfCharge=soc;
 	emit socChanged(this->m_stateOfCharge, oldSoc);
 }
+/**
+* @brief setter for the battery temperature variable
+* @param batteryTemperature The new value for the battery temperature variable
+**/
 void store::setBatteryTemperature(float batteryTemperature){
 	float oldBatteryTemperature = this->m_batteryTemperature;
 	this->m_batteryTemperature=batteryTemperature;
 	emit batteryTemperatureChanged(this->m_batteryTemperature, oldBatteryTemperature);
 }
+/**
+* @brief setter for the inverter temperature variable
+* @param inverterTemperature The new value for the inverter temperature variable
+**/
 void store::setInverterTemperature(int inverterTemperature){
 	int oldInverterTemperature = this->m_inverterTemperature;
 	this->m_inverterTemperature=inverterTemperature;
 	emit inverterTemperatureChanged(this->m_inverterTemperature, oldInverterTemperature);
 }
+/**
+* @brief setter for the power variable
+* @param power The new value for the power variable
+**/
 void store::setPower(short power){
 	short oldPower = this->m_power;
 	this->m_power=power;
 	emit powerChanged(this->m_power, oldPower);
 }
+/**
+* @brief setter for the lap time @b Double-Worded Integer variable. <b>Also Handles Lap Differences</b>
+* @param lapTime The new value for the lap time variable
+**/
 void store::setLapTime(int lapTime){
 	int oldLapTime = this->m_lapTime;
 	this->m_lapTime=lapTime;
@@ -665,6 +700,10 @@ void store::setLapTime(int lapTime){
 	emit diffLapTimeChanged(diffTime, oldDiffTime);
 	emit lapTimeChanged(time, oldtime);
 }
+/**
+* @brief setter for the lap count variable
+* @param lapCount The new value for the lap count variable
+**/
 void store::setLapCount(short lapCount){
 	short oldLapCount = this->m_lapCount;
 	this->m_lapCount=lapCount;
@@ -676,13 +715,20 @@ void store::setLapCount(short lapCount){
 //	emit tyreTemperatureChanged(this->m_tyreTemperature, oldTyreTemperature);
 //}
 #endif
-
+/**
+* @brief setter for the baud rate variable
+* @param baud The new value for the baud rate variable
+**/
 void store::setBaudRate(QSerialPort::BaudRate baud){
 
 	this->baud=baud;
 	this->port->setBaudRate(baud);
 	
 }
+/**
+* @brief getter for the baud rate variable
+* @return QSerialPort::BaudRate The baud rate variable
+*/
 QSerialPort::BaudRate store::getBaudRate() const{
 	return baud;
 }

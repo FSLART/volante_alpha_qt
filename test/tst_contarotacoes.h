@@ -14,6 +14,8 @@ class Tst_contarotacoes : public QObject
     public:
         QString program;
         QStringList args;
+		Tst_contarotacoes() = default;
+		~Tst_contarotacoes() = default;
     private slots:
         void setupTest();
         void checkRpmChangesFromStoreToGraphicText();

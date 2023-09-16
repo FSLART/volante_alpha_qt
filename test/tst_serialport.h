@@ -24,7 +24,9 @@ class Tst_serialport : public QObject {
     public:
         QString program;
         QStringList args;
-        AuxSingleton instance;
+        AuxSingleton* instance;
+		Tst_serialport() = default;
+		~Tst_serialport() = default;
     private:
 		QProcess socat;
                 store * _store;

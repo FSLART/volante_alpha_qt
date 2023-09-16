@@ -13,8 +13,11 @@
 class Tst_flabels : public QObject {
 	Q_OBJECT;
 	public: 
-		AuxSingleton instance;
-
+		AuxSingleton* instance;
+		//default constructor
+		Tst_flabels() = default;
+		//destructor
+		~Tst_flabels() = default;
 	protected:
 		MainWindow ui; 
 		store * pstore;

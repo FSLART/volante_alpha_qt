@@ -17,7 +17,7 @@ Deverás usar o software qtcreator já que ajuda a executar o qmake e o make com
 Para compilar o programa no ambiente testing atualmente(13-02-2023), é necessário adicionar a flag `CONFIG+=test`, ou seja, o comando quando escrito manualmente deve ser:
 
 ```bash
-qmake -project VolanteAlphaQT.pro CONFIG+=test
+qmake -makefile VolanteAlphaQT.pro CONFIG+=test
 ```
 
 No entanto, como dito anteriormente para manter o eyecandy que o qtcreator oferece basta ir a Projects (barra vertical no lado esquerdo do ecrã); Clicar no Kit que desejas criar o ambiente para (no meu caso é Desktop, mas no futuro poderás fazer este passo para o kit do BananaPi M2, se este estiver devidamente configurado); Build; Escolher a opção "Profile"; Clicar Clone; e adicionar CONFIG+=test ao aditional arguments no qmake Build Steps.

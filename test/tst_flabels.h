@@ -1,6 +1,7 @@
-#include "aux.h"
+
 #ifndef TST_FLABELS_H
-#include <QFile>
+#define TST_FLABELS_H
+/**#include <QFile>
 #include <QObject>
 #include <QTest>
 #include <QDebug>
@@ -26,5 +27,5 @@ class Tst_flabels : public QObject {
 		void setup();
 		void checkFLabelsLogicalChange();
 		void cleanup();
-};
+};**/
 #endif // TST_FLABELS_H

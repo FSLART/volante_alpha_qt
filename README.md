@@ -54,7 +54,7 @@ Se mudares a linha e tua responsabilidade mudares as alterações de volta antes
 # Dependencias
 
 Vais precisar do standard c++ stuff, Clang, make, etc... nao vou listar isto porque provavelmente já os tens instalados, e o que importa sao as versões
-//TODO: adicionar versoes relevantes :P
+//TODO adicionar versoes relevantes :P
 
 QT 6.0+
 **O software foi desenvolvido em 6.2.1**

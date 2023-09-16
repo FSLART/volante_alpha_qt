@@ -85,7 +85,7 @@ test{
 release_armv7Cortex{
 	QT = 
 	CONFIG -= debug ltcg
-	defines += __LART_DEPLOY__
+	DEFINES += __LART_DEPLOY__
 	
 	CROSS_COMPILER_NAME = "arm-linux-gnueabihf"
                 #DEFINES += CROSS_COMPILER_NAME=\"$$CROSS_COMPILER_NAME"

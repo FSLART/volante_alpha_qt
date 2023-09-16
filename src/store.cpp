@@ -276,18 +276,16 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			if(j.contains(BSON_INVERTERTEMPERATURE)){
 				this->setInverterTemperature(j[BSON_INVERTERTEMPERATURE]);
 			}
-			if(j.contains(BSON_POWER)){
-				EncodingUnion t;
-				t.encoded=j[BSON_POWER];
-				this->setPower(t.decoded);
+                         if(j.contains(BSON_POWER)){
+                                short temp =  j[BSON_POWER];
+                this->setPower(temp);
 			}
 			if(j.contains(BSON_LAPTIME)){
 				this->setLapTime(j[BSON_LAPTIME]);
 			}
-			if(j.contains(BSON_LAPCOUNT)){
-				EncodingUnion t;
-				t.encoded=j[BSON_LAPCOUNT];
-				this->setLapCount(t.decoded);
+            if(j.contains(BSON_LAPCOUNT)){
+                                short temp = j[BSON_LAPCOUNT];
+                this->setLapCount(temp);
 
 			}
 			//if(j.contains(BSON_TYRETEMPERATURE)){

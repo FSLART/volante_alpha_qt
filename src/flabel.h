@@ -14,7 +14,8 @@ class FLabel : public QLabel{
 		void setVisual(int newValue, int oldValue);
 		void setVisual(QTime newValue, QTime oldValue); 
 		void setVisual(float newValue, float oldValue);
-                void setVisual(QString newValue, QString oldValue);
+        void setVisual(short newValue, short oldValue);
+		void setVisual(QString newValue, QString oldValue);
 
 };
 #endif // FLABEL_H

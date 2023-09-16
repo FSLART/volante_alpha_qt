@@ -5,7 +5,7 @@
 #include <cstdint>
 #include "args.h"
 //write me a macro that includes all .h files in the test folder
-
+#include "tst_flabels.h"
 #include "tst_serialport.h"
 #include "tst_contarotacoes.h"
 #include "tst_contamudancas.h"
@@ -19,8 +19,11 @@ typedef struct{
 
 suite fullsuite [] = {
     {0,QString("SerialPort"),new Tst_serialport},
-    {1,QString("ContaRotacoes"),new Tst_contarotacoes},
-	{2,QString("ContaMudancas"), new Tst_contamudancas}
+    {1,QString("ContaRotacoes"),new Tst_contarotacoes}
+	//{3,QString("FLabels"), new Tst_flabels}
+	#ifdef __LART_T14__
+    ,{2,QString("ContaMudancas"), new Tst_contamudancas}
+    #endif
 };
 int main(int argc, char *argv[]){
 
@@ -35,7 +38,7 @@ int main(int argc, char *argv[]){
 
 	
 	int status = 0;
-	for(int i = 0; i < sizeof(fullsuite)/sizeof(suite); i++){
+	for(int i = 0; i < (int)(sizeof(fullsuite)/sizeof(suite)); i++){
 		status |= QTest::qExec(fullsuite[i].test, argc, argv);
 	}
 
@@ -43,3 +46,4 @@ int main(int argc, char *argv[]){
 	return status;
 	
 }
+

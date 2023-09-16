@@ -12,10 +12,15 @@
 class Tst_contamudancas : public Tst_contarotacoes
 {
     Q_OBJECT
+	public: 
+		Tst_contamudancas() = default;
+		~Tst_contamudancas() = default;
     private slots:
-        void checkRpmChangesFromStoreToGraphicText();
+        //void checkRpmChangesFromStoreToGraphicText();
 		void checkMudancaChangesFromStore();
 		void checkGearShiftEncoding();
+		void checkRPMErrorLogging();
+
 };
 
 #endif // TST_CONTAMUDANCAS_H

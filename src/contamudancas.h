@@ -5,13 +5,17 @@
 #include <QObject>
 #include <QWidget>
 #include <QString>
+#include <QColor>
 
 class ContaMudancas : public ContaRotacoes{
     Q_OBJECT
 	public:
 		explicit ContaMudancas( QWidget *parent = nullptr);
+		~ContaMudancas();
 		void paintEvent(QPaintEvent *event) override;
 		int getVisibleMudanca();
+		QColor getGraphicColorWhipper() override;
+		int getPositionFromVariationSlope() override;
 		QString getGraphicalTextMudanca(int a);
 	protected:
 

@@ -1,5 +1,6 @@
 #ifndef TST_SERIALPORT_H
 #define TST_SERIALPORT_H
+#include <QFile>
 #include <QObject>
 #include <QTest>
 #include <QDebug>
@@ -17,22 +18,29 @@
 #include <QSerialPort>
 #include "../src/store.h"
 #include "../src/mainwindow.h"
-class Tst_serialport : public QObject
-{
+#include "aux.h"
+class Tst_serialport : public QObject {
     Q_OBJECT
+    public:
+        QString program;
+        QStringList args;
+        AuxSingleton* instance;
+		Tst_serialport() = default;
+		~Tst_serialport() = default;
     private:
 		QProcess socat;
-        store * _store;
+                store * _store;
 		void tangoWriteSetup();
-		int randomInt(int offset, int n);
-		
+
     private slots:
+		void setup(); 
         void sanityCheck();
 		void checkSendMessage();
 		void storeMessage();
         void bsonTest();
+		//void debugFailing(); 
+        void prependingTrash();
 		void partitionedSlowBsonMessage();
-		void prependingTrash();
 		void suffixingTrash();
 		void updatingRPM();
         void closeHandle();

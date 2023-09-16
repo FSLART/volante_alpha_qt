@@ -48,7 +48,7 @@ int store::setupSerial() {
 * @param depth The depth of the recursion, used to prevent infinite recursion
 * @return 0 if success, 1 if failure
 **/
-//TODO: MUST REVIEW!! this probs is overcomplicated and im too tired+(my code effect) (side note: this still wasnt reviewed. Dont complain about issues here...); 
+//TODO MUST REVIEW!! this probs is overcomplicated and im too tired+(my code effect) (side note: this still wasnt reviewed. Dont complain about issues here...); 
 int store::startGeneralErrorLog(uint depth){
     //check if file is not null
     if(!errorLog.exists()){
@@ -157,7 +157,7 @@ store::store( QString dev, QSerialPort::BaudRate baud, QObject *parent): QObject
 	}
 	setupSerial();
     //int8_t retries = LOG_MAX_RETRIES;
-    //TODO: wtf? retry system
+    //TODO wtf? retry system
     startGeneralErrorLog();
 }
 /**
@@ -244,7 +244,7 @@ store::~store(){
 			file.write(serialLog);
 			file.close();
 		}else{
-			//TODO: figure out if this is able to handle out of disk exceptions. Not that it will ever reach it but still...
+			//TODO figure out if this is able to handle out of disk exceptions. Not that it will ever reach it but still...
 			scribeError("Failed to write serial log to file", error_severity::MAJOR);
 		}
 

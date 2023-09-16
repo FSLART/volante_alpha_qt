@@ -18,7 +18,7 @@ FLabel::FLabel(QWidget *parent) : QLabel(parent){
 * @param oldValue The old value
 **/
 void FLabel::setVisual(QString newValue, QString oldValue=""){
-	//TODO: Out of time, Out of touch.
+	//TODO Out of time, Out of touch.
 	(void)oldValue;
 	this->setText(newValue);
 }
@@ -29,7 +29,7 @@ void FLabel::setVisual(QString newValue, QString oldValue=""){
 * @param oldValue The old value, intended for animation purposes, defaults to "0"
 **/
 void FLabel::setVisual(int newValue, int oldValue=0){
-	//TODO: Out of time, Out of touch.
+	//TODO Out of time, Out of touch.
 	(void)oldValue;
 	this->setText(QString::number(newValue));
 }
@@ -40,7 +40,7 @@ void FLabel::setVisual(int newValue, int oldValue=0){
 * @param oldValue The old value, intended for animation purposes, defaults to "0"
 **/
 void FLabel::setVisual(short newValue, short oldValue=0){
-	//TODO: Out of time, Out of touch.
+	//TODO Out of time, Out of touch.
 	(void)oldValue;
 	this->setVisual((int)newValue, (int)oldValue);
 }
@@ -50,7 +50,7 @@ void FLabel::setVisual(short newValue, short oldValue=0){
 * @param oldValue The old value, intended for animation purposes, defaults to "0"
 **/
 void FLabel::setVisual(float newValue, float oldValue=0){
-	//TODO: Out of time, Out of touch.
+	//TODO Out of time, Out of touch.
 	(void)oldValue;
 	this->setText(QString::number(newValue));
 }
@@ -60,7 +60,7 @@ void FLabel::setVisual(float newValue, float oldValue=0){
 * @param oldValue The old value, intended for animation purposes, defaults to "0"
 **/
 void FLabel::setVisual(QTime newValue, QTime oldValue=QTime(0,0,0,0)){
-	//TODO: Out of time, Out of touch.
+	//TODO Out of time, Out of touch.
 	(void)oldValue;
 	 
 	int msfromStart= newValue.msecsSinceStartOfDay(); 

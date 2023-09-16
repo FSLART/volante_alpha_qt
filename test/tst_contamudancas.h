@@ -12,6 +12,7 @@
 class Tst_contamudancas : public Tst_contarotacoes
 {
     Q_OBJECT
+	#ifdef __LART_T14__
 	public: 
 		Tst_contamudancas() = default;
 		~Tst_contamudancas() = default;
@@ -20,7 +21,7 @@ class Tst_contamudancas : public Tst_contarotacoes
 		void checkMudancaChangesFromStore();
 		void checkGearShiftEncoding();
 		void checkRPMErrorLogging();
-
+	#endif
 };
 
 #endif // TST_CONTAMUDANCAS_H

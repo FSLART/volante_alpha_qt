@@ -1,3 +1,12 @@
+/**
+* @file store.cpp
+* @brief This file contains the logic for the store class
+* @see store.h
+* @see mainwindow.h
+* @see flabel.h
+* @author João Vieira
+* This piece of software was developed for the T24e project belonging to the LART Team
+**/
 #include "store.h"
 #include "mainwindow.h"
 #include "references/bson_var.h"
@@ -484,11 +493,17 @@ int store::getTcSlip() const{
 int store::getTcLaunch() const{
 	return this->m_tractionLaunch;
 }
-
+/**
+* @brief getter for the gear shift variable
+* @return The gear shift variable
+**/
 int store::getGearShift() const{
 	return this->m_gearShift;
 }
-
+/**
+* @brief setter for the gear shift variable
+* @param gearShift The new value for the gear shift variable
+**/
 void store::setGearShift(int gearShift){
 	qDebug() << "setGearShift";
     if(gearShift>=0&&gearShift<=6){
@@ -501,39 +516,71 @@ void store::setGearShift(int gearShift){
 		this->scribeError(__LART_STORE_SETGEARSHIFT_ERROR__, store::error_severity::MINOR);
 	}
 }
+/**
+* @brief setter for the data logger status variable
+* @param dataLoggerStatus The new value for the data logger status variable
+**/
 float store::getOilPressure() const{
 	return this->m_oilPressure;
 }
+/**
+* @brief getter for the oil pressure variable
+* @return The oil pressure variable
+**/
 float store::getOilTemperature() const{
 	return this->m_oilTemperature;
 }
+/**
+* @brief setter for the oil temperature variable
+* @param oilTemperature The new value for the oil temperature variable
+**/
 void store::setOilPressure(float oilPressure){
     float oldOilPressure = this->m_oilPressure;
 	this->m_oilPressure=oilPressure;
 	emit oilPressureChanged(this->m_oilPressure, oldOilPressure);
 
 }
+/**
+* @brief setter for the oil temperature variable
+* @param oilTemperature The new value for the oil temperature variable
+**/
 void store::setOilTemperature(float oilTemperature){
         float oldOilTemperature = this->m_oilTemperature;
 	this->m_oilTemperature=oilTemperature;
 	emit oilTemperatureChanged(this->m_oilTemperature, oldOilTemperature);
 }
+/**
+* @brief setter for the data logger status variable
+* @param dataLoggerStatus The new value for the data logger status variable
+**/
 void store::setDataLoggerStatus(int dataLoggerStatus){
 	int oldDataLoggerStatus = this->m_dataLoggerStatus;
 	this->m_dataLoggerStatus=dataLoggerStatus;
 	emit dataLoggerChanged(this->m_dataLoggerStatus, oldDataLoggerStatus);
 }
+/**
+* @brief setter for the lambda variable
+* @param lambda The new value for the lambda variable
+**/
 void store::setLambda(float lambda){
         float oldLambda = this->m_lambdaMixtureAirFuel;
 	this->m_lambdaMixtureAirFuel=lambda;
 	emit lambdaChanged(this->m_lambdaMixtureAirFuel, oldLambda);
 
 }
+/**
+* @brief setter for the traction slip variable
+* @param tcSlip The new value for the traction slip variable
+**/
 void store::setTcSlip(int tcSlip){
 	int oldTcSlip = this->m_tractionSlip;
 	this->m_tractionSlip=tcSlip;
 	emit tcSlipChanged(this->m_tractionSlip, oldTcSlip);
 }
+/**
+* @brief setter for the traction launch variable
+* @param tcLaunch The new value for the traction launch variable
+**/
 void store::setTcLaunch(int tcLaunch){
 	int oldTcLaunch = this->m_tractionLaunch;
 	this->m_tractionLaunch=tcLaunch;
@@ -541,13 +588,29 @@ void store::setTcLaunch(int tcLaunch){
 }
 
 #endif
+/**
+* @b Start of T24
+**/
 #ifdef __LART_T24__
+/**
+* @brief getter for the state of charge variable
+* @return The state of charge variable
+**/
 float store::getSoc() const{
 	return this->m_stateOfCharge;
 }
+/**
+* @brief getter for the battery temperature variable
+* @return The battery temperature variable
+**/
 float store::getBatteryTemperature() const{
 	return this->m_batteryTemperature;
 }
+/**
+* @brief getter for the inverter temperature variable
+* @return The inverter temperature variable
+**/
+
 int store::getInverterTemperature() const{
 	return this->m_inverterTemperature;
 }

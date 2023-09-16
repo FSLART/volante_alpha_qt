@@ -2,8 +2,14 @@
 #include "mainwindow.h"
 #include "references/bson_var.h"
 #include "flabel.h"
-#define __LART_T24__
+
+
 using json = nlohmann::json;
+/**
+* @brief Arguably the boilerplate code, necessary to run an Asynchronous Serial Uart communication. Also responsible for handling @b slots and other callback logic
+* @see https://doc.qt.io/qt-5/qtserialport-creaderasync-example.html
+*      wow the above was suggested by copilot. how many times did people have issues with this?
+**/
 int store::setupSerial() {
 	
 	QSerialPort* serial= new QSerialPort();
@@ -28,7 +34,12 @@ int store::setupSerial() {
 
 	return 0;	
 }
-//MUST REVIEW!! this probs is overcomplicated and im too tired+(my code effect)
+/**
+* @brief Starts the error logging system / journal, if it doesnt exist, creates it.
+* @param depth The depth of the recursion, used to prevent infinite recursion
+* @return 0 if success, 1 if failure
+**/
+//TODO: MUST REVIEW!! this probs is overcomplicated and im too tired+(my code effect) (side note: this still wasnt reviewed. Dont complain about issues here...); 
 int store::startGeneralErrorLog(uint depth){
     //check if file is not null
     if(!errorLog.exists()){
@@ -62,7 +73,11 @@ int store::startGeneralErrorLog(uint depth){
 	}
     return 0;
 }
+/**
+* @brief Stops the error logging system / journal, if it exists, closes it.
+* @return 0 if success, 1 if failure
 
+**/
 void store::stopGeneralErrorLog(){
     try {
         if(!errorLog.isOpen()){
@@ -75,6 +90,13 @@ void store::stopGeneralErrorLog(){
 		qDebug() << "An exception occurred while trying to close the error log";
     }
 }
+/**
+* @brief Writes an error to the error log
+* @param error The error message
+* @param severity The severity of the error
+* @return The number of bytes written to the file
+* @see store.h
+**/
 qint64 store::scribeError(QString error, error_severity severity){
 	qint64 ret = 0;
 	//check if error is initialized if not
@@ -109,6 +131,13 @@ qint64 store::scribeError(QString error, error_severity severity){
 
 	return ret;
 }
+/**
+* @brief Constructor of the store class, responsible for setting up communications and the error log
+* @param dev The device to be used, defaults to DEFAULT_DEVICE
+* @param baud The baud rate to be used, defaults to 115200
+* @param parent The parent of the store class, defaults to nullptr
+* @see store.h
+**/
 store::store( QString dev, QSerialPort::BaudRate baud, QObject *parent): QObject(parent){
 	this->baud = baud;
 	//if Qstring dev is empty, use default device
@@ -119,10 +148,15 @@ store::store( QString dev, QSerialPort::BaudRate baud, QObject *parent): QObject
 	}
 	setupSerial();
     //int8_t retries = LOG_MAX_RETRIES;
-    //wtf? TODO: retry system
+    //TODO: wtf? retry system
     startGeneralErrorLog();
 }
-
+/**
+* @brief Forces the serial port to read a certain amount of bytes. 
+*		 @b This is a blocking function and isnt being used as of the moment. Its mostly for profiling environment and testing.
+* @param len The amount of bytes to be read
+* @see store.h
+**/
 void store::forceRead(qint64 len){
 	while (port->bytesAvailable() < len) {
 		if (!port->waitForReadyRead(1000)) {
@@ -134,7 +168,12 @@ void store::forceRead(qint64 len){
 	}
     port->read(bufferMessage.data(), len);
 }
-
+/**
+* @brief Slot callback for the serial port, handles the reading of the serial port and indirectly the parsing of the BSON data. 
+*		 @b NON-BLOCKING function, you should'nt call this function directly.
+*		 @b IMPURE function, obviously...
+* @see store.h
+**/
 void store::handleReadyRead(){
 
     bufferMessage=port->readAll();
@@ -147,9 +186,11 @@ void store::handleReadyRead(){
     if(lastMessage.contains(BSON_WARNING)){
 		bsonMining();
     }
-	
-
 }
+/**
+* @brief function mostly used to prevent spaghetti code in the handleReadyRead function. Contains the logic required to parse the bson message
+*		 @b IMPURE function.
+**/
 void store::bsonMining(){
 	//lastMessage starts at lastMessage size - ((lenght of buffer - index of BSON_WARNING) + length of BSON_WARNING)
 	const int bson_len = strlen(BSON_WARNING);
@@ -164,6 +205,7 @@ void store::bsonMining(){
 	
 	int length = shrinked[0] | shrinked[1] << 8| shrinked[2] <<16| shrinked[3]<<24;
 	if(shrinked.size() < length){
+		//TODO handle exception graphically
 		//qDebug() << "BSON WARNING FOUND BUT NOT ENOUGH BYTES";
 		return;
 	}
@@ -176,6 +218,9 @@ void store::bsonMining(){
 	lastMessage=lastMessage.mid(marcador+length);
 	return bsonMining();
 }
+/**
+* @brief Destructor of the store class, responsible for closing the serial port and writing the serial log to a file
+**/
 store::~store(){
 	//make shure all slots are disconnected
 	
@@ -190,6 +235,7 @@ store::~store(){
 			file.write(serialLog);
 			file.close();
 		}else{
+			//TODO: figure out if this is able to handle out of disk exceptions. Not that it will ever reach it but still...
 			scribeError("Failed to write serial log to file", error_severity::MAJOR);
 		}
 
@@ -199,18 +245,27 @@ store::~store(){
 	}
 	
 }
+/**
+* @brief Slot callback for the serial port, handles the errors of the serial port.
+*		 @b  NON-BLOCKING function, you should'nt call this function directly.
+* @param serialPortError The error code of the serial port
+* @see store.h
 
+**/
 void store::handleError(QSerialPort::SerialPortError serialPortError)
 {
     if (serialPortError == QSerialPort::ReadError) {
-        qDebug() << QObject::tr("An I/O error occurred while reading "
-                                        "the data from port %1, error: %2")
-                            .arg(port->portName())
-                            .arg(port->errorString())
-                         << "\n";
+        scribeError("An I/O error occurred while reading the data from port " + this->dev + " error code: " + QString::number(serialPortError), error_severity::CRITICAL);
         QCoreApplication::exit(1);
     }
 }
+//TODO maybe do this but non blocking? 
+/**
+* @brief Parses the BSON data and updates the variables of the store class
+*	     @b Blocking function
+* @param v The BSON data
+* @see store.h
+**/
 void store::parseBson(std::vector<std::uint8_t> v){
 	try {
         json j = json::from_bson(v);
@@ -232,6 +287,8 @@ void store::parseBson(std::vector<std::uint8_t> v){
 		if(j.contains(BSON_VEHICLESPEED)){
 			this->setVehicleSpeed(j[BSON_VEHICLESPEED]);
 		}
+		// SPAGGETI Macro for __the win__ Darn you co pilot what a cringe move, 
+		// anyway i was saying that this handles portability between vehicles.
 		#ifdef __LART_T14__
 			if(j.contains(BSON_AFR)){
 				EncodingUnion t;
@@ -296,17 +353,19 @@ void store::parseBson(std::vector<std::uint8_t> v){
 		#endif
 	
 	} catch (json::parse_error& e) {
-        qDebug() << "parse error at byte " << e.byte << "\n";
-        qDebug() << "message: " << v << "\n";
-        qDebug() << v.size();
-        //lastMessage.clear();
+		scribeError("An error occurred while parsing the BSON data, error: " + QString::fromStdString(e.what()), error_severity::MINOR);
+        //TODO study if bellow is better or worse.
+		//lastMessage.clear();
 
 
 	}
     
 
 }
-
+/**
+* @brief Closes the serial port
+* @return 0 if success, 1 if failure
+**/
 int store::closeSerial(){
 	// TODO: Error handling?
     try {
@@ -320,12 +379,17 @@ int store::closeSerial(){
     }
     return 0;
 }
-//getters and setters
-
+/**
+* @brief getter for the rpm variable
+* @return The rpm variable
+**/
 int store::getRpm() const{
 	return this->m_rotationsPerMinute;
 }
-
+/**
+* @brief setter for the rpm variable
+* @param rpm The new value for the rpm variable
+**/
 void store::setRpm(int rpm){
     if(rpm>=0){
 		if(rpm !=this->m_rotationsPerMinute){
@@ -337,10 +401,17 @@ void store::setRpm(int rpm){
         this->scribeError(__LART_STORE_SETRPM_ERROR__, store::error_severity::MINOR);
     }
 }
-
+/**
+* @brief getter for the engine temperature variable
+* @return The engine temperature variable
+**/
 int store::getEngineTemperature() const{
 	return this->m_engineTemperature;
 }
+/**
+* @brief setter for the engine temperature variable
+* @param engineTemperature The new value for the engine temperature variable
+**/
 void store::setEngineTemperature(int engineTemperature){
 	qDebug() << "setEngineTemperature";
 	int oldEngineTemperature = this->m_engineTemperature;
@@ -348,19 +419,33 @@ void store::setEngineTemperature(int engineTemperature){
 	emit engineTemperatureChanged(this->m_engineTemperature, oldEngineTemperature);
 
 }
+/**
+* @brief getter for the battery voltage variable
+* @return The battery voltage variable
+**/
 float store::getBatteryVoltage() const{
 	return this->m_batteryVoltage;
 }
-
+/**
+* @brief setter for the battery voltage variable
+* @param batteryVoltage The new value for the battery voltage variable
+**/
 void store::setBatteryVoltage(float batteryVoltage){
 	float oldBatteryVoltage = this->m_batteryVoltage;
 	this->m_batteryVoltage=batteryVoltage;
 	emit batteryVoltageChanged(this->m_batteryVoltage, oldBatteryVoltage);
 }
-
+/**
+* @brief getter for the vehicle speed variable
+* @return The vehicle speed variable
+**/
 int store::getVehicleSpeed() const{
 	return this->m_vehicleVelocity;
 }
+/**
+* @brief setter for the vehicle speed variable
+* @param vehicleVelocity The new value for the vehicle speed variable
+**/
 void store::setVehicleSpeed(int vehicleVelocity){
 	int oldVehicleVelocity = this->m_vehicleVelocity;
 	this->m_vehicleVelocity=vehicleVelocity;
@@ -370,19 +455,36 @@ void store::setVehicleSpeed(int vehicleVelocity){
 
 
 #ifdef __LART_T14__
+/**
+* @brief getter for the data logger status
+* @return The data logger status variable
+**/
 int store::getDataLoggerStatus() const{
 	return this->m_dataLoggerStatus;
 }
+/**
+* @brief getter for the lambda variable
+* @return The lambda variable
+**/
 float store::getLambda() const{
 	return this->m_lambdaMixtureAirFuel;
 }
+/**
+* @brief getter for the traction slip variable
+* @return The traction slip variable
+**/
 int store::getTcSlip() const{
 	return this->m_tractionSlip;
 
 }
+/**
+* @brief getter for the traction launch variable
+* @return The traction launch variable
+**/
 int store::getTcLaunch() const{
 	return this->m_tractionLaunch;
 }
+
 int store::getGearShift() const{
 	return this->m_gearShift;
 }

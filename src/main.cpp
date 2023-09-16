@@ -1,3 +1,10 @@
+/**
+* @file main.cpp
+* @brief This file contains the main function, responsible for starting the application
+* @see mainwindow.h
+* IDK who developed the "default" main.cpp, but it was not me. 
+* @b Don't touch this unless you know what you are doing, theres very "few" things to "properly" implement here.
+**/
 #include "mainwindow.h"
 #include <QApplication>
 #include <QLocale>

@@ -1,6 +1,15 @@
+/**
+* @file bson_var.h
+* @brief This file contains the declaration of the BSON variables that allow flexibility and some portability between LART's various vehicles.
+* @author João Vieira
+* This piece of software was developed for the T24e project belonging to the LART Team
+**/
 #ifndef BSON_VAR_H
 #define BSON_VAR_H
-//T_14 
+
+/**
+* @brief Common Variables between both T14 and T24e
+**/
 #define BSON_RPM "rpm"
 #define BSON_VEHICLESPEED "vel"
 #define BSON_ENGINETEMPERATURE "eng_t"

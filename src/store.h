@@ -27,18 +27,21 @@
 #include <QVBoxLayout>
 #include <nlohmann/json.hpp>
 #include "references/bson_var.h"
+/**
+* @brief Go big or go home, :) 
+**/
 #if !defined __arm__ || !defined __aarch64__
     #ifdef _WIN32
 		#define DEFAULT_DEVICE "COM3"
     #elif defined __linux__
 		#ifdef __LART_DEPLOY__
-			#define DEFAULT_DEVICE "/dev/ttyS0"
+			#define DEFAULT_DEVICE "/dev/ttyS3"
 		#else
             #define DEFAULT_DEVICE "/dev/ttyACM0"
 		#endif
 	#endif
 #else
-    #define DEFAULT_DEVICE "/dev/ttyS0"
+    #define DEFAULT_DEVICE "/dev/ttyS3"
 #endif
 
 typedef union {
@@ -50,18 +53,18 @@ typedef union {
 #define BSON_WARNING "\xFF\xFF\xFF\xFF"
 #define LOG_MAX_RETRIES 4
 #define BSON_SKIP_BYTES 9
-/* !
-        \class store
-        \brief Basicamente uma store contendo as vários dados necessários a serem transmitidos ou representados graficamente
-
-		Comecemos com o resumo pois se estás a ler isto provavelmente não e de completa livre vontade,
-		esta classe representa um ponto centralizado dos dados semelhante a ideologia que e muito usada em sistemas distribuídos(especialmente falando em JS, Vue, React, etc...)
-		
-		\fields
-*/
-
+/**
+*	@class store
+*   @brief A class containing the various data, logic, journals required to reliably transmit or represent firmware driven variables graphically.
+* 		   Let's start with the summary, because if you're reading this it's probably not of your own free will,
+* 		   this class is designed as a <b>Centralized Application State for data<b/>,  similar to the ideology that is widely used in distributed systems (especially speaking of JS, Vue, React, etc...)
+*  		   @b HOWEVER it doesnt have some arguably annoying features of some of those systems, such as "Fold"/"Reduce" States or immutable data. This was choosen both due to personal experience 
+* 		   and due to the fact that this is a real time system, and the overhead of having to copy the data to a new object every time it changes is not worth it. 
+* 		   
+**/
 class store: public QObject{
     Q_OBJECT;
+	// TODO well now its too late to remove this, but check what this does. Its a leftover of learning, and was presumed to be boylerplate
     Q_PROPERTY(int  m_rotationsPerMinute READ getRpm WRITE setRpm NOTIFY rpmChanged);
 
 

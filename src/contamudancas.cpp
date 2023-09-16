@@ -11,13 +11,19 @@
 #include "contarotacoes.h"
 #include "mainwindow.h"
 #include <cmath>
+
 static store * store_pnt = nullptr;
+/**
+* @brief Constructor for the ContaMudancas Class, Responsible for the @b connection off both Gear and RPM variables. 
+**/
 ContaMudancas::ContaMudancas( QWidget *parent)
     : ContaRotacoes(parent){
     this->m_mudanca=0;
     try{
         MainWindow* w = qobject_cast<MainWindow*>(parent->parent());
         store_pnt=w->getStore();
+		
+		//Bellow is a macro as even if its not used in the graphical window, it would require a declaration to be made that isn't present on T24e. 
 		#ifdef __LART_T14__
         	connect(store_pnt,&store::gearShiftChanged, this, &ContaMudancas::handleChangedMudanca);
 		#endif
@@ -29,12 +35,17 @@ ContaMudancas::ContaMudancas( QWidget *parent)
 
 }
 
-
+// Value used for padding, Unless you are messing with the graphical design DO NOT CHANGE THE VALUE. 
 const int padding = 10; 
 
+/**
+* @brief Handles the visual representation of the widget. Calls its parent, ContaRotacoes::paintEvent and then draws the gear shift.
+* @param event The event that triggered the paintEvent
+* @see ContaRotacoes::paintEvent
+**/
 void ContaMudancas::paintEvent(QPaintEvent *event){
     ContaRotacoes::paintEvent(event);
-	//draw a big QString centered in the middle of the widget with getGraphicalTextMudanca(m_mudanca)
+	
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
 	const auto group = QPalette::Active;
@@ -43,14 +54,23 @@ void ContaMudancas::paintEvent(QPaintEvent *event){
 
     auto palette=this->palette();
 	painter.setPen(QPen(palette.color(group, role)));
-    painter.setFont(QFont("Arial", width()/padding*4));
+    painter.setFont(QFont("Source Code Pro", width()/padding*4));
 	//rect add padding vertical 
     painter.drawText(this->rect().adjusted(0, padding*4, 0, 0), Qt::AlignCenter, getGraphicalTextMudanca(m_mudanca));
 	
 }
+/**
+* @brief Returns the current gear shift
+* @return The current gear shift
+**/
 int ContaMudancas::getVisibleMudanca(){
 	return m_mudanca;
 }
+/**
+* @brief Returns the text that should be displayed on the gear shift, as of 16/09/2023, its mostly a demo.
+* @param a The gear shift
+* @return The text that should be displayed on the gear shift
+**/
 QString ContaMudancas::getGraphicalTextMudanca(int a){
 	switch (a) {
 		case 0:
@@ -68,6 +88,9 @@ QString ContaMudancas::getGraphicalTextMudanca(int a){
 	
 	}
 }
+/**
+* @brief Slot callback for the gear shift change, if valid, updates both variables, and orders a graphical redraw.
+**/
 void ContaMudancas::handleChangedMudanca(int newValue, int oldValue){
 	//remove unused warning
 	(void)oldValue;
@@ -78,11 +101,21 @@ void ContaMudancas::handleChangedMudanca(int newValue, int oldValue){
 		this->update();
 	}
 }
+/**
+* @brief Destructor for the ContaMudancas Class, Responsible for the @b disconnection of signals and its slots. 
+**/
 ContaMudancas::~ContaMudancas(){
 	#ifdef __LART_T14__
 	disconnect(store_pnt,&store::gearShiftChanged, this, &ContaMudancas::handleChangedMudanca);
 	#endif
 }
+
+/**
+* @brief Returns the color that should be used for the RPM whipper, as of 16/09/2023, its mostly a demo. 
+*		 @b NON-PURE function, it uses the current state of the object...
+* @return The color that should be used for the RPM whipper
+* @see ContaRotacoes::getGraphicColorWhipper()
+**/
 QColor ContaMudancas::getGraphicColorWhipper(){
     switch (m_mudanca) {
 			case 0:
@@ -169,15 +202,14 @@ QColor ContaMudancas::getGraphicColorWhipper(){
         }
 
 }
+/**
+* @brief Returns the position of the RPM whipper.
+* @return The position in Degrees*16 of the RPM whipper
+* @see ContaRotacoes::getPositionFromVariationSlope()
+* @see QPainter::drawArc()
+**/
 int ContaMudancas::getPositionFromVariationSlope(){
-	const int minPhi = -720;
-	//maximum whipper of the arc
-	//const int maxPhi = 270*16;
-	const int maxPhi = 4320; 
-	
-	//TODO EXAMPLE CODE THIS IS SUPPOSED TO BE UNDER SUPERVISION
-	double ratio = ((double)m_value)/((double)m_maxValue);
-   
-   	int currentPhi =((int)((double)(ratio)*(maxPhi-minPhi)));
+	//call the parent function
+	int currentPhi=ContaRotacoes::getPositionFromVariationSlope();
 	return currentPhi;
 }

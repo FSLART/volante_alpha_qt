@@ -1,7 +1,7 @@
 name: test_wf
 on:
   push: 
-    branches: [ master, workflow-stuff ]
+    branches: [ master, dev, workflow-stuff ]
 jobs:
   test-qt-desktop:
     uses: 

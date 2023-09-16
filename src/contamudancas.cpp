@@ -1,3 +1,12 @@
+/**
+* @file contamudancas.cpp
+* @brief This file contains additional logic to a child of the RPM meter(contarotacoes),
+*		 that logic being mostly used for displaying the current gear shift.
+* 		 In its current form as of 16/09/2023, its also provides a non linear graphical representation of the RPM meter.
+* @see contarotacoes.h
+* @author João Vieira
+* This piece of software was developed for the T24e project belonging to the LART Team
+**/
 #include "contamudancas.h"
 #include "contarotacoes.h"
 #include "mainwindow.h"

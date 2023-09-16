@@ -1,4 +1,12 @@
+/**
+* @file contarotacoes.cpp
+* @brief This file contains logic for the RPM meter and its derivates
+* @see contarotacoes.h
+* @author João Vieira
+* This piece of software was developed for the T24e project belonging to the LART Team
+**/
 #include "contarotacoes.h"
+
 static store * store_pnt = nullptr;
 ContaRotacoes::ContaRotacoes( QWidget *parent)
 	 : QWidget(parent){

@@ -1,3 +1,10 @@
+/**
+* @file contarotacoes.h
+* @brief This file contains the declaration of the ContaRotacoes class
+* @see flabel.cpp
+* @author João Vieira
+* This piece of software was developed for the T24e project belonging to the LART Team
+*/
 #ifndef CONTAROTACOES_H
 #define CONTAROTACOES_H
 

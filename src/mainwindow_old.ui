@@ -488,148 +488,131 @@
         <item>
          <layout class="QFormLayout" name="formLayout">
           <item row="0" column="0">
-           <widget class="QLabel" name="EngineTemperature_Prefix">
+           <widget class="QLabel" name="OilPressure_Prefix">
             <property name="text">
-             <string>Motor Temperature</string>
+             <string>Oil Pressure</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="FLabel" name="EngineTemperature_Label">
+           <widget class="FLabel" name="OilPressure_Label">
             <property name="text">
              <string>__0__</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="BatteryVoltage_Prefix">
+           <widget class="QLabel" name="OilTemperature_prefix">
             <property name="text">
-             <string>Battery Voltage</string>
+             <string>Oil Temperature</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="FLabel" name="BatteryVoltage_Label">
+           <widget class="FLabel" name="OilTemperature_Label">
             <property name="text">
              <string>__0__</string>
             </property>
            </widget>
           </item>
           <item row="2" column="0">
+           <widget class="QLabel" name="EngineTemperature_Prefix">
+            <property name="text">
+             <string>Engine Temperature</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="FLabel" name="EngineTemperature_Label">
+            <property name="text">
+             <string>__0__</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="BatteryVoltage_Prefix">
+            <property name="text">
+             <string>Battery Voltage</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="FLabel" name="BatteryVoltage_Label">
+            <property name="text">
+             <string>__0__</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="DataLogger_Prefix">
+            <property name="text">
+             <string>DataLogger Status</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="FLabel" name="DataLogger_Label">
+            <property name="text">
+             <string>__OFF(DEFAULT)__</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
            <widget class="QLabel" name="VehicleSpeed_Prefix">
             <property name="text">
              <string>Vehicle Speed: </string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="5" column="1">
            <widget class="FLabel" name="VehicleSpeed_Label">
             <property name="text">
              <string>__0__</string>
             </property>
            </widget>
           </item>
-		  <item row="3" column="0">
-	<widget class="QLabel" name="Soc_Prefix">
-		<property name="text">
-			<string>State Of Charge: </string>
-		</property>
-	</widget>
-</item>
-<item row="3" column="1">
-	<widget class="FLabel" name="Soc_Label">
-		<property name="text">
-			<string>__0__%</string>
-		</property>
-	</widget>
-</item>
-
-<item row="4" column="0">
-	<widget class="QLabel" name="BatteryTemperature_Prefix">
-		<property name="text">
-			<string>Battery Temperature: </string>
-		</property>
-	</widget>
-</item>
-<item row="4" column="1">
-	<widget class="FLabel" name="BatteryTemperature_Label">
-		<property name="text">
-			<string>__0__</string>
-		</property>
-	</widget>
-</item>
-<item row="5" column="0">
-	<widget class="QLabel" name="InverterTemperature_Prefix">
-		<property name="text">
-			<string>Inverter Temperature: </string>
-		</property>
-	</widget>
-</item>
-<item row="5" column="1">
-	<widget class="FLabel" name="InverterTemperature_Label">
-		<property name="text">
-			<string>__0__</string>
-		</property>
-	</widget>
-</item>
-<item row="6" column="0">
-	<widget class="QLabel" name="Power_Prefix">
-		<property name="text">
-			<string>Power: </string>
-		</property>
-	</widget>
-</item>
-<item row="6" column="1">
-	<widget class="FLabel" name="Power_Label">
-		<property name="text">
-			<string>__0__</string>
-		</property>
-	</widget>
-</item>
-<item row="7" column="0">
-	<widget class="QLabel" name="LapCount_Prefix">
-		<property name="text">
-			<string>Lap Count: </string>
-		</property>
-	</widget>
-</item>
-<item row="7" column="1">
-	<widget class="FLabel" name="LapCount_Label">
-		<property name="text">
-			<string>__0__</string>
-		</property>
-	</widget>
-</item>
-<item row="8" column="0">
-	<widget class="QLabel" name="DiffTime_Prefix">
-		<property name="text">
-			<string>Lap Time Difference: </string>
-		</property>
-	</widget>
-</item>
-<item row="8" column="1">
-	<widget class="FLabel" name="DiffTime_Label">
-		<property name="text">
-			<string>__00:00.000__</string>
-		</property>
-	</widget>
-</item>
-
-<item row="9" column="0">
-	<widget class="QLabel" name="LapTime_Prefix">
-		<property name="text">
-			<string>Lap Time: </string>
-		</property>
-	</widget>
-</item>
-<item row="9" column="1">
-	<widget class="FLabel" name="LapTime_Label">
-		<property name="text">
-			<string>__00:00.000__</string>
-		</property>
-	</widget>
-</item>
-
+          <item row="6" column="0">
+           <widget class="QLabel" name="Lambda_Prefix">
+            <property name="text">
+             <string>Lambda Mixture: </string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="FLabel" name="Lambda_Label">
+            <property name="text">
+             <string>__0.0__</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="TcSlip_Prefix">
+            <property name="text">
+             <string>Tc Slip: </string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="FLabel" name="TcSlip_Label">
+            <property name="text">
+             <string>__0__</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="TcLaunch_Prefix">
+            <property name="text">
+             <string>TC Launch: </string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="FLabel" name="TcLaunch_Label">
+            <property name="text">
+             <string>__0__</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
        </layout>
@@ -655,7 +638,7 @@
          <number>30</number>
         </property>
         <item>
-         <widget class="ContaRotacoes" name="contaRotacoes" native="true">
+         <widget class="ContaMudancas" name="contamudancas" native="true">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -687,15 +670,15 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ContaMudancas</class>
+   <extends>QWidget</extends>
+   <header>src/contamudancas.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>FLabel</class>
    <extends>QLabel</extends>
    <header location="global">src/flabel.h</header>
-  </customwidget>
-  <customwidget>
-   <class>ContaRotacoes</class>
-   <extends>QWidget</extends>
-   <header>src/contarotacoes.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

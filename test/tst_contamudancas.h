@@ -12,6 +12,9 @@
 class Tst_contamudancas : public Tst_contarotacoes
 {
     Q_OBJECT
+	public: 
+		Tst_contamudancas() = default;
+		~Tst_contamudancas() = default;
     private slots:
         //void checkRpmChangesFromStoreToGraphicText();
 		void checkMudancaChangesFromStore();

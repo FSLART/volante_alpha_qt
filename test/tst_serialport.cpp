@@ -17,6 +17,9 @@ void Tst_serialport::setup(){
 
     args.append("pty,raw,echo=0,b115200,link=/tmp/banana,");
     args.append("pty,raw,echo=0,b115200,link=/tmp/tango");
+	//initialize singleton
+	instance = &AuxSingleton::getInstance();
+
 }
 void Tst_serialport::sanityCheck(){
      //-d -d -d -d
@@ -118,11 +121,11 @@ void Tst_serialport::prependingTrash(){
 	tangoWriteSetup();
 
 	//random amount from 0 to 1000
-	int random = instance.randomInt(0,1000);
+	int random = instance->randomInt(0,1000);
 	for(int i = 0; i < random; i++){
 		//write a random byte from 0 to 255
 		//the chance of landing 0xFF 4 times in a row is 1/256^4 or 1/65536, which is very unlikely, theres also a chance of landing an ff prepending the actual message 
-		char t =  (char)instance.randomInt(0,255);
+		char t =  (char)instance->randomInt(0,255);
 		tango.putChar(t);
 		tango.waitForBytesWritten();
 	}
@@ -142,11 +145,11 @@ void Tst_serialport::suffixingTrash(){
 	//random amount from 0 to 1000
 	
 	tango.write(rpm_message, 18);
-	int random = instance.randomInt(0,1000);
+	int random = instance->randomInt(0,1000);
 	for(int i = 0; i < random; i++){
 		//write a random byte from 0 to 255
 		//the chance of landing 0xFF 4 times in a row is 1/256^4 or 1/65536, which is very unlikely, theres also a chance of landing an ff prepending the actual message 
-		tango.putChar((char)instance.randomInt(0,255));
+		tango.putChar((char)instance->randomInt(0,255));
 		tango.waitForBytesWritten();
 	}
 	tango.waitForBytesWritten();
@@ -171,7 +174,7 @@ void Tst_serialport::updatingRPM(){
 	tangoWriteSetup();
 	char * rpm_message2 = new char[18];
 	memcpy(rpm_message2,rpm_message,18);
-	int a = instance.randomInt(0, 10000);
+	int a = instance->randomInt(0, 10000);
 	rpm_message2[13]= (char)(a & 0xFF);
 	rpm_message2[14]= (char)((a >> 8) & 0xFF);
 	rpm_message2[15]= (char)((a >> 16) & 0xFF);

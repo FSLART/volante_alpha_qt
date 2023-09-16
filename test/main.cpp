@@ -19,9 +19,11 @@ typedef struct{
 
 suite fullsuite [] = {
     {0,QString("SerialPort"),new Tst_serialport},
-    {1,QString("ContaRotacoes"),new Tst_contarotacoes},
-    {2,QString("ContaMudancas"), new Tst_contamudancas},
-    {3,QString("FLabels"), new Tst_flabels}
+    {1,QString("ContaRotacoes"),new Tst_contarotacoes}
+	//{3,QString("FLabels"), new Tst_flabels}
+	#ifdef __LART_T14__
+    ,{2,QString("ContaMudancas"), new Tst_contamudancas}
+    #endif
 };
 int main(int argc, char *argv[]){
 

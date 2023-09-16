@@ -7,7 +7,7 @@
 class AuxSingleton{
 	public:
     	static AuxSingleton& getInstance();
-		int randomInt(int offset=0, int n=255);
+		int randomInt(int offset, int n);
     	AuxSingleton(const AuxSingleton&) = delete;
     	AuxSingleton& operator=(const AuxSingleton&) = delete;
 

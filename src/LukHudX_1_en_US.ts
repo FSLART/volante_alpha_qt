@@ -5,7 +5,7 @@
     <name>MainWindow</name>
     <message>
         <location filename="mainwindow.ui" line="20"/>
-        <source>VolanteAlpha</source>
+        <source>LukHudX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

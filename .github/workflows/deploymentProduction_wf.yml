@@ -6,6 +6,6 @@ jobs:
     uses: ./.github/workflows/buildQmake_wf.yml
     with:
       qmakeflags: "CONFIG+=release_armv7Cortex"
-      binaryfilename: VolanteAlphaQT
+      binaryfilename: LukHudX
   
     

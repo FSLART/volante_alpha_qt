@@ -465,7 +465,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>VolanteAlpha</string>
+   <string>LukHudX</string>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>

@@ -6,7 +6,7 @@ DEFINES += __LART_T24__
 QT	   += core gui widgets serialport
 
 TEMPLATE = app
-TARGET = VolanteAlphaQT
+TARGET = LukHudX
 INCLUDEPATH += .
 
 DESTDIR = bin
@@ -49,13 +49,13 @@ SOURCES += \
 
 FORMS += src/mainwindow.ui
 
-TRANSLATIONS += src/VolanteAlphaQT_1_en_US.ts
+TRANSLATIONS += src/LukHudX_1_en_US.ts
 
 test{
 	
 	message(A configurar a build de testes...)
 
-	TARGET = VolanteAlphaQT_testes
+	TARGET = LukHudX_testes
 	# run command before compiling 
 	#go to 
 	system(gengetopt --input=./test/args.ggo --output-dir=./test -F args)

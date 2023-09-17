@@ -238,7 +238,7 @@ store::~store(){
 		closeSerial();
 		QDateTime now = QDateTime::currentDateTime();
                 QString dateStr = now.toString("hhmmss_dd-MM-yyyy");
-                dateStr.append("serialLog.txt");
+                dateStr.append("serialLog.bin");
                 QFile file(dateStr);
 		if (file.open(QIODevice::WriteOnly)) {
 			file.write(serialLog);

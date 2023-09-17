@@ -23,7 +23,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           path: bin
           workflow: ${{ github.event.workflow_run.workflow_id }}
-          workflow_conclusion: completed
+          #workflow_conclusion: completed
           name: LukHudX_testes
       # open ssh connection to the server
       - name: Setup permissions

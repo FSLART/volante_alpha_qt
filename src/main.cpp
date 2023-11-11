@@ -5,7 +5,14 @@
 * IDK who developed the "default" main.cpp, but it was not me. 
 * @b Don't touch this unless you know what you are doing, theres very "few" things to "properly" implement here.
 **/
+#ifdef __LART_T14__
+#include "src/tfortwindow.h"
+#endif
+
+#ifdef __LART_T24__
 #include "mainwindow.h"
+#endif
+
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
@@ -25,9 +32,14 @@ int main(int argc, char *argv[]){
         }
     }
 	
-	MainWindow w;
-    w.show();
-
-    return a.exec();
+	#ifdef __LART_T24__
+		MainWindow w;
+		w.show();
+	#endif
+	#ifdef __LART_T14__
+		TfortWindow w; 
+		w.show();
+    #endif
+	return a.exec();
 
 }

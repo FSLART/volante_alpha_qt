@@ -7,8 +7,8 @@
 * @author João Vieira
 * This piece of software was developed for the T24e project belonging to the LART Team
 **/
-#include "mainwindow.h"
-#include "./ui_mainwindow.h"
+#include "tfortwindow.h"
+#include "./ui_tfortwindow.h"
 #include "./store.h"
 #include <cstddef>
 #include <qmainwindow.h>
@@ -19,9 +19,9 @@ static store* store_ref;
 * @brief Constructor for the MainWindow Class.
 *        @b Connects @b **most** variables from the store to the FLabels on the screen.
 **/
-MainWindow::MainWindow(QWidget *parent, QString serialDev)
+TfortWindow::TfortWindow(QWidget *parent, QString serialDev)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow){
+    , ui(new Ui::TfortWindow){
 
     store_ref = new store(serialDev);
 
@@ -40,28 +40,24 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
 	    *        The magic occurs in qmake through the DEFINES variable.
 		* @see bson_var.h
 		**/
-	
-		#ifdef __LART_T24__
-			FLabel* Soc_Label = this->findChild<FLabel*>("Soc_Label");
-			FLabel* BatteryTemperature_Label = this->findChild<FLabel*>("BatteryTemperature_Label");
-			FLabel* InverterTemperature_Label = this->findChild<FLabel*>("InverterTemperature_Label");
-			FLabel* Power_Label = this->findChild<FLabel*>("Power_Label");
-			//TODO change representation of laptime
-			FLabel* LapTime_Label = this->findChild<FLabel*>("LapTime_Label");
-			FLabel* DiffTime_Label = this->findChild<FLabel*>("DiffTime_Label");
-			FLabel* LapCount_Label = this->findChild<FLabel*>("LapCount_Label");
-			//FLabel* TyreTemperature_Label = this->findChild<FLabel*>("TyreTemperature_Label");
-			connect(store_ref, &store::socChanged, Soc_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
-			connect(store_ref, &store::batteryTemperatureChanged, BatteryTemperature_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
-                        connect(store_ref, &store::inverterTemperatureChanged, InverterTemperature_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
-                        connect(store_ref, &store::powerChanged, Power_Label, (void (FLabel::*)(short, short))&FLabel::setVisual);
-			connect(store_ref, &store::lapTimeChanged, LapTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);
-			connect(store_ref, &store::diffLapTimeChanged, DiffTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);
-                        connect(store_ref, &store::lapCountChanged, LapCount_Label, (void (FLabel::*)(short, short))&FLabel::setVisual);
-			//connect(store_ref, &store::tyreTemperatureChanged, TyreTemperature_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
+		#ifdef __LART_T14__
+			FLabel* OilPressure_Label = this->findChild<FLabel*>("OilPressure_Label");
+			FLabel* OilTemperature_Label = this->findChild<FLabel*>("OilTemperature_Label");
+			FLabel* DataLogger_Label = this->findChild<FLabel*>("DataLogger_Label");
+			FLabel* Lambda_Label = this->findChild<FLabel*>("Lambda_Label");
+			FLabel* TcSlip_Label = this->findChild<FLabel*>("TcSlip_Label");
+			FLabel* TcLaunch_Label = this->findChild<FLabel*>("TcLaunch_Label");
 
+			connect(store_ref, &store::dataLoggerChanged, DataLogger_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
+			connect(store_ref, &store::lambdaChanged, Lambda_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
+			connect(store_ref, &store::tcSlipChanged, TcSlip_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
+			connect(store_ref, &store::tcLaunchChanged, TcLaunch_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
 
+			connect(store_ref, &store::oilPressureChanged, OilPressure_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
+			connect(store_ref, &store::oilTemperatureChanged, OilTemperature_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
 		#endif
+		
+
 		
 }
 
@@ -71,14 +67,14 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
 * 		 <em> with great power comes great *frickery... This function is by reference and should be used for startup stuff</em> 
 * @returns a pointer to the store object
 **/
-store* MainWindow::getStore(){
+store* TfortWindow::getStore(){
     return store_ref;
 }
 /**
 * @brief Destructor for the MainWindow Class.
 *        @b Deletes the store object. which can cause some odd behaviour to happen
 **/
-MainWindow::~MainWindow(){
+TfortWindow::~TfortWindow(){
     store_ref->~store(); 
     delete ui;
 }

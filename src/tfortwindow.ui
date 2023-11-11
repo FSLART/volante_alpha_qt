@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>TfortWindow</class>
+ <widget class="TfortWindow" name="TfortWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -474,6 +474,14 @@
    <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>367</width>
+     <height>245</height>
+    </rect>
+   </property>
    <property name="sizePolicy">
     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
      <horstretch>1</horstretch>
@@ -618,7 +626,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0">
         <property name="spacing">
          <number>6</number>
         </property>
@@ -639,6 +647,12 @@
         </property>
         <item>
          <widget class="ContaMudancas" name="contamudancas" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -666,7 +680,16 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>3</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
@@ -679,6 +702,12 @@
    <class>FLabel</class>
    <extends>QLabel</extends>
    <header location="global">src/flabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TfortWindow</class>
+   <extends>QWidget</extends>
+   <header>src/tfortwindow.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

@@ -10,7 +10,11 @@
 #endif
 
 #ifdef __LART_T24__
+#ifdef __LART_DEBUG__
+#include "voidsterdebugwindow.h"
+#else
 #include "mainwindow.h"
+#endif
 #endif
 
 #include <QApplication>
@@ -32,9 +36,13 @@ int main(int argc, char *argv[]){
         }
     }
 	
-	#ifdef __LART_T24__
-		MainWindow w;
-		w.show();
+    #ifdef __LART_T24__
+#ifdef __LART_DEBUG__
+
+#else
+    MainWindow w;
+        w.show();
+#endif
 	#endif
 	#ifdef __LART_T14__
 		TfortWindow w; 

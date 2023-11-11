@@ -33,9 +33,11 @@ HEADERS += \
 		src/contarotacoes.h \
 		src/contamudancas.h \
 		src/mainwindow.h \
+		src/tfortwindow.h\
+		src/voidsterdebugwindow.h
 	#Biz Logic
 		src/store.h \
-    src/tfortwindow.h
+    
 
 SOURCES += \
 	#Constants Macros Aux stuff
@@ -47,10 +49,12 @@ SOURCES += \
 		src/mainwindow.cpp \
 	#Biz Logic
 		src/store.cpp \
-    src/tfortwindow.cpp
+    	src/tfortwindow.cpp \
+		src/voidsterdebugwindow.cpp
 
 FORMS += src/mainwindow.ui \
-    src/tfortwindow.ui
+    src/tfortwindow.ui \
+	src/voidsterdebugwindow.ui
 
 TRANSLATIONS += src/LukHudX_1_en_US.ts
 
@@ -73,7 +77,7 @@ test{
 		test/tst_contarotacoes.h \
 		test/tst_contamudancas.h \
 		test/tst_serialport.h \
-		test/tst_flabels.h
+		test/tst_flabels.h 
 
 	
 		

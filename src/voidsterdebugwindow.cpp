@@ -7,8 +7,10 @@
 * @author João Vieira
 * This piece of software was developed for the T24e project belonging to the LART Team
 **/
-#include "voidsterdebugwindow.h"
-#include "./ui_voidsterdebugwindow.h"
+
+        #include "voidsterdebugwindow.h"
+        #include "./ui_voidsterdebugwindow.h"
+
 #include "./store.h"
 #include <cstddef>
 #include <qmainwindow.h>
@@ -19,6 +21,7 @@ static store* store_ref;
 * @brief Constructor for the MainWindow Class.
 *        @b Connects @b **most** variables from the store to the FLabels on the screen.
 **/
+
 VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
     : QMainWindow(parent)
     , ui(new Ui::VoidsterdebugWindow){

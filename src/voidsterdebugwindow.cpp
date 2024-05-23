@@ -32,12 +32,6 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
     //store_ref->setParent(this);
     //store_ref->requestSlotAttachment();
 		
-		FLabel* EngineTemperature_Label= this->findChild<FLabel*>("EngineTemperature_Label");
-		FLabel* BatteryVoltage_Label = this->findChild<FLabel*>("BatteryVoltage_Label");
-		FLabel* VehicleSpeed_Label = this->findChild<FLabel*>("VehicleSpeed_Label");
-		connect(store_ref, &store::engineTemperatureChanged, EngineTemperature_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
-		connect(store_ref, &store::batteryVoltageChanged, BatteryVoltage_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
-		connect(store_ref, &store::vehicleSpeedChanged, VehicleSpeed_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
 		/**
 		* @brief bellow is the spaggeti code thats preprocessed to permit portable use between vehicles 
 	    *        The magic occurs in qmake through the DEFINES variable.
@@ -45,23 +39,7 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
 		**/
 		#ifdef __LART_T24__
 		#ifdef __LART_DEBUG__
-			FLabel* Soc_Label = this->findChild<FLabel*>("Soc_Label");
-			FLabel* BatteryTemperature_Label = this->findChild<FLabel*>("BatteryTemperature_Label");
-			FLabel* InverterTemperature_Label = this->findChild<FLabel*>("InverterTemperature_Label");
-			FLabel* Power_Label = this->findChild<FLabel*>("Power_Label");
-			//TODO change representation of laptime
-			FLabel* LapTime_Label = this->findChild<FLabel*>("LapTime_Label");
-			FLabel* DiffTime_Label = this->findChild<FLabel*>("DiffTime_Label");
-			FLabel* LapCount_Label = this->findChild<FLabel*>("LapCount_Label");
-			//FLabel* TyreTemperature_Label = this->findChild<FLabel*>("TyreTemperature_Label");
-			connect(store_ref, &store::socChanged, Soc_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
-			connect(store_ref, &store::batteryTemperatureChanged, BatteryTemperature_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
-                        connect(store_ref, &store::inverterTemperatureChanged, InverterTemperature_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
-                        connect(store_ref, &store::powerChanged, Power_Label, (void (FLabel::*)(short, short))&FLabel::setVisual);
-			connect(store_ref, &store::lapTimeChanged, LapTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);
-			connect(store_ref, &store::diffLapTimeChanged, DiffTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);
-                        connect(store_ref, &store::lapCountChanged, LapCount_Label, (void (FLabel::*)(short, short))&FLabel::setVisual);
-			//connect(store_ref, &store::tyreTemperatureChanged, TyreTemperature_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
+
 		#endif
 
 		#endif

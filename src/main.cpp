@@ -38,7 +38,8 @@ int main(int argc, char *argv[]){
 	
     #ifdef __LART_T24__
 #ifdef __LART_DEBUG__
-
+    VoidsterdebugWindow debugWindow;
+    debugWindow.show();
 #else
     MainWindow w;
         w.show();

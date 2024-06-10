@@ -1,15 +1,15 @@
 /**
-* @file mainwindow.cpp
-* @brief This file contains the logic for the MainWindow class
-* @see mainwindow.h
+* @file voidsterdebugwindow.cpp
+* @brief This file contains the logic for the VoidsterDebugWindow class
+* @see voidsterdebugwindow.h
 * @see store.h
 * @see flabel.h
 * @author João Vieira
 * This piece of software was developed for the T24e project belonging to the LART Team
 **/
 
-        #include "voidsterdebugwindow.h"
-        #include "./ui_voidsterdebugwindow.h"
+#include "voidsterdebugwindow.h"
+#include "./ui_voidsterdebugwindow.h"
 
 #include "./store.h"
 #include <cstddef>
@@ -17,11 +17,11 @@
 #include "flabel.h"
 
 static store* store_ref;
+
 /**
-* @brief Constructor for the MainWindow Class.
+* @brief Constructor for the VoidsterdebugWindow Class.
 *        @b Connects @b **most** variables from the store to the FLabels on the screen.
 **/
-
 VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
     : QMainWindow(parent)
     , ui(new Ui::VoidsterdebugWindow){
@@ -37,11 +37,55 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
 	    *        The magic occurs in qmake through the DEFINES variable.
 		* @see bson_var.h
 		**/
+
+
 		#ifdef __LART_T24__
 		#ifdef __LART_DEBUG__
 
-		#endif
+            FLabel* TotalPowerDraw_Label  = this->findChild<FLabel*>("TotalPowerDraw_Label");
+            FLabel* InverterVoltage_Label = this->findChild<FLabel*>("InverterVoltage_Label");
+            FLabel* SOC_Label             = this->findChild<FLabel*>("SOC_Label");
+            FLabel* DTConstraints_Label   = this->findChild<FLabel*>("DTConstraints_Label");
 
+            FLabel* ShutdownCircuit_label = this->findChild<FLabel*>("ShutdownCircuit_label");
+
+            FLabel* VcuStatePower_Label   = this->findChild<FLabel*>("VcuStatePower_Label");
+            FLabel* VcuState_label        = this->findChild<FLabel*>("VcuState_label");
+
+            FLabel* TcuStatePower_Label   = this->findChild<FLabel*>("TcuStatePower_Label");
+            FLabel* TcuState_Label        = this->findChild<FLabel*>("TcuState_Label"); 
+
+            FLabel* Datalogger_Label      = this->findChild<FLabel*>("Datalogger_Label");
+
+            FLabel* TelemetryValue_Label  = this->findChild<FLabel*>("TelemetryValue_Label");
+            FLabel* Telemetry_Label       = this->findChild<FLabel*>("Telemetry_Label");
+
+            FLabel* Driverless_Label      = this->findChild<FLabel*>("Driverless_Label");
+            
+
+            TotalPowerDraw_Label->setText("Isto é um teste 1");
+            InverterVoltage_Label->setText("Isto é um teste 1");
+            SOC_Label->setText("Isto é um teste 3");
+            DTConstraints_Label->setText("Isto é um teste 4");
+
+            ShutdownCircuit_label->setText("S");
+
+            VcuStatePower_Label->setText("VP");
+            VcuState_label->setText("VL");
+
+            TcuStatePower_Label->setText("TP");
+            TcuState_Label->setText("TL");
+            
+            Datalogger_Label->setText("DL");
+
+            TelemetryValue_Label->setText("TV");
+            Telemetry_Label->setText("TL");
+            
+            Driverless_Label->setText("DL");
+
+            
+
+		#endif
 		#endif
 		
 }
@@ -56,7 +100,7 @@ store* VoidsterdebugWindow::getStore(){
     return store_ref;
 }
 /**
-* @brief Destructor for the MainWindow Class.
+* @brief Destructor for the VoidsterdebugWindow Class.
 *        @b Deletes the store object. which can cause some odd behaviour to happen
 **/
 VoidsterdebugWindow::~VoidsterdebugWindow(){

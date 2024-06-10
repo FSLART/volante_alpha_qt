@@ -12,6 +12,7 @@
 #ifdef __LART_T24__
 #ifdef __LART_DEBUG__
 #include "voidsterdebugwindow.h"
+#include "voidsterdebugwindow2.h"
 #else
 #include "mainwindow.h"
 #endif
@@ -38,8 +39,14 @@ int main(int argc, char *argv[]){
 	
     #ifdef __LART_T24__
 #ifdef __LART_DEBUG__
+    
     VoidsterdebugWindow debugWindow;
     debugWindow.show();
+
+    /*
+    VoidsterdebugWindow2 debugWindow2;
+    debugWindow2.show();
+    */
 #else
     MainWindow w;
         w.show();

@@ -580,7 +580,7 @@
            </spacer>
           </item>
           <item row="10" column="0">
-           <widget class="QLabel" name="DTConstraints_Label">
+           <widget class="FLabel" name="DTConstraints_Label">
             <property name="text">
              <string>Limit: 80.000</string>
             </property>
@@ -634,7 +634,7 @@
        </spacer>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
+       <layout class="QVBoxLayout" name="RigthVerticalLayout">
         <property name="sizeConstraint">
          <enum>QLayout::SetDefaultConstraint</enum>
         </property>
@@ -655,31 +655,12 @@
           <property name="spacing">
            <number>1</number>
           </property>
-          <item row="3" column="1">
-           <widget class="QLabel" name="label_8">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Source Code Pro</family>
-              <pointsize>11</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="label_3">
+           <widget class="QLabel" name="VcuState_Prefix">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>19</height>
              </size>
             </property>
             <property name="font">
@@ -697,11 +678,11 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLabel" name="label_4">
+           <widget class="FLabel" name="VcuStatePower_Label">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>19</height>
              </size>
             </property>
             <property name="font">
@@ -719,11 +700,11 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="label_5">
+           <widget class="QLabel" name="TcuState_Prefix">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>19</height>
              </size>
             </property>
             <property name="font">
@@ -741,30 +722,32 @@
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QLabel" name="label_12">
+           <widget class="FLabel" name="Driverless_Label">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>19</height>
              </size>
             </property>
             <property name="font">
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
              </font>
             </property>
             <property name="text">
-             <string>TextLabel</string>
+             <string>Acceleration</string>
             </property>
            </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QLabel" name="label_9">
+           <widget class="QLabel" name="Telemetry_Prefix">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>19</height>
              </size>
             </property>
             <property name="font">
@@ -774,7 +757,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Ola:  </string>
+             <string>Telemetry() : </string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -782,11 +765,11 @@
            </widget>
           </item>
           <item row="5" column="0">
-           <widget class="QLabel" name="label_11">
+           <widget class="QLabel" name="Driverless_Prefix">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>19</height>
              </size>
             </property>
             <property name="font">
@@ -796,7 +779,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Ola:  </string>
+             <string>Driverless(#) : </string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -804,11 +787,11 @@
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLabel" name="label_6">
+           <widget class="FLabel" name="TcuStatePower_Label">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>19</height>
              </size>
             </property>
             <property name="font">
@@ -818,16 +801,16 @@
              </font>
             </property>
             <property name="text">
-             <string>TextLabel</string>
+             <string>~2W </string>
             </property>
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QLabel" name="label_7">
+           <widget class="QLabel" name="Datalogger_Prefix">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>19</height>
              </size>
             </property>
             <property name="font">
@@ -837,7 +820,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Ola:  </string>
+             <string>Datalogger() : </string>
             </property>
             <property name="alignment">
              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -845,11 +828,11 @@
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QLabel" name="label_10">
+           <widget class="FLabel" name="TelemetryValue_Label">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>19</height>
              </size>
             </property>
             <property name="font">
@@ -859,12 +842,18 @@
              </font>
             </property>
             <property name="text">
-             <string>TextLabel</string>
+             <string>2k^/1k</string>
             </property>
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QLabel" name="label_13">
+           <widget class="FLabel" name="VcuState_label">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>19</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <family>Source Code Pro</family>
@@ -879,11 +868,11 @@
            </widget>
           </item>
           <item row="0" column="2">
-           <widget class="QLabel" name="label_2">
+           <widget class="FLabel" name="ShutdownCircuit_label">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>19</height>
              </size>
             </property>
             <property name="font">
@@ -900,11 +889,11 @@
            </widget>
           </item>
           <item row="0" column="0">
-           <widget class="QLabel" name="label">
+           <widget class="QLabel" name="ShutdownCircuit_Prefix">
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>19</height>
              </size>
             </property>
             <property name="font">
@@ -922,7 +911,13 @@
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QLabel" name="label_14">
+           <widget class="FLabel" name="TcuState_Label">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>19</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <family>Source Code Pro</family>
@@ -933,6 +928,65 @@
             </property>
             <property name="text">
              <string>OFF</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="FLabel" name="Datalogger_Label">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>19</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Source Code Pro</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>OFF</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="FLabel" name="DataloggerPower_Label">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>19</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Source Code Pro</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="FLabel" name="Telemetry_Label">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>19</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Source Code Pro</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>UP/D</string>
             </property>
            </widget>
           </item>

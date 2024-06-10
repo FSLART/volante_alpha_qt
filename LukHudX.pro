@@ -35,8 +35,10 @@ HEADERS += \
 		src/mainwindow.h \
 		src/tfortwindow.h\
                 src/voidsterdebugwindow.h \
+				src/voidsterdebugwindow2.h
 	#Biz Logic
-                src/store.h
+                src/store.h \
+    
     
 
 SOURCES += \
@@ -50,11 +52,13 @@ SOURCES += \
 	#Biz Logic
 		src/store.cpp \
     	src/tfortwindow.cpp \
-		src/voidsterdebugwindow.cpp
+		src/voidsterdebugwindow.cpp \
+    src/voidsterdebugwindow2.cpp
 
 FORMS += src/mainwindow.ui \
     src/tfortwindow.ui \
-	src/voidsterdebugwindow.ui
+	src/voidsterdebugwindow.ui \
+    src/voidsterdebugwindow2.ui
 
 TRANSLATIONS += src/LukHudX_1_en_US.ts
 

@@ -35,9 +35,9 @@ HEADERS += \
 		src/mainwindow.h \
 		src/tfortwindow.h\
                 src/voidsterdebugwindow.h \
-				src/voidsterdebugwindow2.h
+                src/voidsterdebugwindow2.h \
 	#Biz Logic
-                src/store.h \
+                src/store.h
     
     
 

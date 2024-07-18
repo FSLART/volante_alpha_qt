@@ -344,16 +344,21 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			}
                          if(j.contains(BSON_POWER)){
                                 short temp =  j[BSON_POWER];
-                this->setPower(temp);
+                                this->setPower(temp);
 			}
 			if(j.contains(BSON_LAPTIME)){
 				this->setLapTime(j[BSON_LAPTIME]);
 			}
-            if(j.contains(BSON_LAPCOUNT)){
-                                short temp = j[BSON_LAPCOUNT];
-                this->setLapCount(temp);
+                        if(j.contains(BSON_LAPCOUNT)){
+                                            short temp = j[BSON_LAPCOUNT];
+                            this->setLapCount(temp);
 
 			}
+                        if(j.contains(BSON_HV)){
+                                short temp = j[BSON_HV];
+                            this->setHV(temp); ;
+
+                        }
 			//if(j.contains(BSON_TYRETEMPERATURE)){
 			//	this->setTyreTemperature(j[BSON_TYRETEMPERATURE]);
 			//}
@@ -635,6 +640,14 @@ short store::getLapCount() const{
 	return this->m_lapCount;
 }
 /**
+* @brief getter for the high voltage variable
+* @return The high voltage variable
+ */
+short store::getHV() const{
+	return this->m_highVoltage;
+}
+
+/**
 * @brief getter for the tyre temperature variable
 * @return The tyre temperature variable
 **/
@@ -709,6 +722,16 @@ void store::setLapCount(short lapCount){
 	this->m_lapCount=lapCount;
 	emit lapCountChanged(this->m_lapCount, oldLapCount);
 }
+/**
+* @brief setter for the high voltage variable
+* @param hv The new value for the high voltage variable
+**/
+void store::setHV(short hv){
+	short oldHV = this->m_highVoltage;
+	this->m_highVoltage=hv;
+	emit hvChanged(this->m_highVoltage, oldHV);
+}
+
 //void store::setTyreTemperature(int tyreTemperature){
 //	int oldTyreTemperature = this->m_tyreTemperature;
 //	this->m_tyreTemperature=tyreTemperature;

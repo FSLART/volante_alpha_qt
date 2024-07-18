@@ -468,7 +468,7 @@
    <string>LukHudX</string>
   </property>
   <property name="layoutDirection">
-   <enum>Qt::LeftToRight</enum>
+   <enum>Qt::LayoutDirection::LeftToRight</enum>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
@@ -488,7 +488,7 @@
         <item>
          <layout class="QGridLayout" name="LeftGridLayout">
           <property name="sizeConstraint">
-           <enum>QLayout::SetDefaultConstraint</enum>
+           <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
           </property>
           <item row="1" column="0">
            <widget class="FLabel" name="TotalPowerDraw_Label">
@@ -496,7 +496,7 @@
              <string>55320 / 44300 W (-1%/s)</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
             <property name="wordWrap">
              <bool>false</bool>
@@ -512,7 +512,7 @@
              <string>50% (5 hours of juice left)</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -522,14 +522,14 @@
              <string>620 V (+5%)</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
            </widget>
           </item>
           <item row="2" column="0">
            <spacer name="TotalPowerDraw_Spacer">
             <property name="orientation">
-             <enum>Qt::Vertical</enum>
+             <enum>Qt::Orientation::Vertical</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -549,7 +549,7 @@
           <item row="5" column="0">
            <spacer name="InverterVoltage_Spacer">
             <property name="orientation">
-             <enum>Qt::Vertical</enum>
+             <enum>Qt::Orientation::Vertical</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -569,7 +569,7 @@
           <item row="8" column="0">
            <spacer name="SOC_Spacer">
             <property name="orientation">
-             <enum>Qt::Vertical</enum>
+             <enum>Qt::Orientation::Vertical</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -585,7 +585,7 @@
              <string>Limit: 80.000</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -599,7 +599,7 @@
           <item row="11" column="0">
            <spacer name="DTConstraints_Spacer">
             <property name="orientation">
-             <enum>Qt::Vertical</enum>
+             <enum>Qt::Orientation::Vertical</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -612,7 +612,7 @@
           <item row="0" column="0">
            <widget class="QLabel" name="TotalPowerDraw_Prefix">
             <property name="text">
-             <string>Total Power Draw(Curr/Exp):</string>
+             <string>Total Power Draw(Curr):</string>
             </property>
            </widget>
           </item>
@@ -623,7 +623,7 @@
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -636,7 +636,7 @@
       <item>
        <layout class="QVBoxLayout" name="RigthVerticalLayout">
         <property name="sizeConstraint">
-         <enum>QLayout::SetDefaultConstraint</enum>
+         <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
         </property>
         <property name="leftMargin">
          <number>10</number>
@@ -673,7 +673,7 @@
              <string>VCU State() : </string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -717,7 +717,7 @@
              <string>TCU State() : </string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -733,7 +733,6 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -760,7 +759,7 @@
              <string>Telemetry() : </string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -782,7 +781,7 @@
              <string>Driverless(#) : </string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -823,7 +822,7 @@
              <string>Datalogger() : </string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -858,7 +857,6 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -879,7 +877,6 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -906,7 +903,7 @@
              <string>Shutdown Circuit() : </string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -922,7 +919,6 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -943,7 +939,6 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -1017,7 +1012,7 @@
      <x>0</x>
      <y>0</y>
      <width>668</width>
-     <height>33</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

@@ -1,4 +1,4 @@
-/**
+                        /**
 + @file flabel.cpp
 * @brief This file contains all the logic that customizes the behaviour of most Text Labels on screen.
 * @see flabel.h
@@ -22,7 +22,29 @@ void FLabel::setVisual(QString newValue, QString oldValue=""){
 	(void)oldValue;
 	this->setText(newValue);
 }
+/**
+ * @brief TODO
+ **/
+void FLabel::setAveragedVisualChangeSec(float newValue, float oldValue){
+    this->_counts++;
+    _alpha = (float)((this->_counts * newValue) + (1.0 - this->_counts) * oldValue);
+    float truenewvalue = (float)((float)(_alpha/_counts));
+    auto rateOfChange = (truenewvalue-oldValue)/oldValue * 100;
+    this->setText(QString::number(truenewvalue)+" / "+QString::number(newValue)+ " W"+" ("+QString::number(rateOfChange)+"%)");
+}
 
+void FLabel::setAveragedVisualChangeSec(short newValue, short oldValue){
+    this->_counts++;
+    this->_alpha = (float)( (this->_counts * newValue) + (1.0 - this->_counts) * _alpha);
+    short truenewvalue = ((short)(_alpha/_counts));
+    short rateOfChange =100;
+    if(oldValue!=0){
+        rateOfChange = ((short)((truenewvalue-oldValue)/oldValue)) * 100;
+    }
+
+        //TODO URGENT fix units
+    this->setText(QString::number(truenewvalue)+" / "+QString::number(oldValue)+ " W"+" ("+QString::number(rateOfChange)+"%)");
+}
 /**
 * @brief Handles the visual representation of an int value
 * @param newValue The new value, that will be displayed

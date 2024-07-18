@@ -61,9 +61,14 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
             FLabel* Telemetry_Label       = this->findChild<FLabel*>("Telemetry_Label");
 
             FLabel* Driverless_Label      = this->findChild<FLabel*>("Driverless_Label");
-            
+            connect(store_ref, &store::powerChanged, TotalPowerDraw_Label, (void (FLabel::*)(short, short))&FLabel::setAveragedVisualChangeSec);
 
-            TotalPowerDraw_Label->setText("Isto é um teste 1");
+            connect(store_ref, &store::socChanged, SOC_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
+            //connect(store_ref, &store::batteryTemperatureChanged, )
+            connect(store_ref, &store::hvChanged,InverterVoltage_Label, (void (FLabel::*)(short, short))&FLabel::setVisual );
+
+
+            /*TotalPowerDraw_Label->setText("Isto é um teste 1");
             InverterVoltage_Label->setText("Isto é um teste 1");
             SOC_Label->setText("Isto é um teste 3");
             DTConstraints_Label->setText("Isto é um teste 4");
@@ -82,7 +87,7 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
             Telemetry_Label->setText("TL");
             
             Driverless_Label->setText("DL");
-
+*/
             
 
 		#endif

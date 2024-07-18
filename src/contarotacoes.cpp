@@ -77,6 +77,7 @@ void ContaRotacoes::handleChangedValue(int newValue, int oldValue){
 	(void)oldValue;
 	// value< m_maxValue || this should be in the if for better data quality but in case of a ill fate, it might be interesting to see the values
 	if( newValue >= 0){
+
 		this->m_value = newValue;
 		this->update();
 	}

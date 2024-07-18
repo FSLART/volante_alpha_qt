@@ -19,12 +19,20 @@ class FLabel : public QLabel{
 	Q_OBJECT;
 	public:
             explicit FLabel(QWidget *parent = nullptr);
+
 	public slots:
 		void setVisual(int newValue, int oldValue);
 		void setVisual(QTime newValue, QTime oldValue); 
 		void setVisual(float newValue, float oldValue);
-        void setVisual(short newValue, short oldValue);
-		void setVisual(QString newValue, QString oldValue);
+                void setVisual(short newValue, short oldValue);
+                void setVisual(QString newValue, QString oldValue);
+                void setAveragedVisualChangeSec(float newValue,float oldValue);
+                void setAveragedVisualChangeSec(short newValue,short oldValue);
+        private:
+                //used for rolling averages
+                int _counts = 0;
+                float _alpha = 0;
+
 
 };
 #endif // FLABEL_H

@@ -46,7 +46,7 @@
 		#ifdef __LART_DEPLOY__
 			#define DEFAULT_DEVICE "/dev/ttyS3"
 		#else
-            #define DEFAULT_DEVICE "/dev/ttyACM0"
+            #define DEFAULT_DEVICE "/dev/ttyUSB0"
 		#endif
 	#endif
 #else
@@ -142,13 +142,17 @@ class store: public QObject{
 			short getPower() const;
 			int getLapTime() const;
 			short getLapCount() const;
-			//int getTyreTemperature() const;
-			void setSoc(float soc);
+                        short getHV() const;
+
+                        //int getTyreTemperature() const;
+
+                        void setSoc(float soc);
 			void setBatteryTemperature(float batteryTemperature);
 			void setInverterTemperature(int inverterTemperature);
 			void setPower(short power);
 			void setLapTime(int lapTime);
 			void setLapCount(short lapCount);
+                        void setHV(short hv);
 			//void setTyreTemperature(int tyreTemperature);
 		#endif
 
@@ -184,7 +188,9 @@ class store: public QObject{
 			void lapTimeChanged(QTime newLapTime, QTime oldLapTime);
 			void diffLapTimeChanged(QTime newDiffLapTime, QTime oldDiffLapTime);
 			void lapCountChanged(short newLapCount, short oldLapCount);
-			//void tyreTemperatureChanged(int newTyreTemperature, int oldTyreTemperature); 
+                        void hvChanged(short newHV, short oldHV );
+
+                        //void tyreTemperatureChanged(int newTyreTemperature, int oldTyreTemperature);
 		#endif
 
     private:
@@ -210,6 +216,7 @@ class store: public QObject{
 			short m_power=0;
 			int m_lapTime=0;
 			short m_lapCount=0;
+			short m_highVoltage=0; 
 			//int m_tyreTemperature=0;
 		#endif
 

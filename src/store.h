@@ -217,6 +217,7 @@ class store: public QObject{
 			int m_lapTime=0;
 			short m_lapCount=0;
 			short m_highVoltage=0; 
+            int page = 0;
 			//int m_tyreTemperature=0;
 		#endif
 

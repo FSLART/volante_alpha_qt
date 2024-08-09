@@ -43,10 +43,11 @@ int main(int argc, char *argv[]){
     VoidsterdebugWindow debugWindow;
     debugWindow.show();
 
-    /*
+
+
     VoidsterdebugWindow2 debugWindow2;
     debugWindow2.show();
-    */
+
 #else
     MainWindow w;
         w.show();

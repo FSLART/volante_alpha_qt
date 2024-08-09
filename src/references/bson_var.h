@@ -30,7 +30,8 @@
 	#define BSON_POWER "pow"
 	#define BSON_LAPCOUNT "lap_c"
 	#define BSON_LAPTIME "lap_t"
-        #define BSON_HV "hv"
+    #define BSON_HV "hv"
+    #define BSON_PAGE "page"
 #endif 
 
 

@@ -362,6 +362,12 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			//if(j.contains(BSON_TYRETEMPERATURE)){
 			//	this->setTyreTemperature(j[BSON_TYRETEMPERATURE]);
 			//}
+          /*  if(j.contains(BSON_PAGE)){
+                if(j[BSON_PAGE] == 0){
+                    MainWindow w;
+                        w.show();
+                }
+            }*/
 
 
 		#endif

@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
 		**/
 	
 		#ifdef __LART_T24__
-			FLabel* Soc_Label = this->findChild<FLabel*>("Soc_Label");
+            FLabel* Soc_Label = this->findChild<FLabel*>("Soc_Label");
 			FLabel* BatteryTemperature_Label = this->findChild<FLabel*>("BatteryTemperature_Label");
 			FLabel* InverterTemperature_Label = this->findChild<FLabel*>("InverterTemperature_Label");
 			FLabel* Power_Label = this->findChild<FLabel*>("Power_Label");

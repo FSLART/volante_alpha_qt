@@ -15,7 +15,6 @@
 #include <cstddef>
 #include <qmainwindow.h>
 #include "flabel.h"
-
 static store* store_ref;
 
 /**
@@ -59,15 +58,16 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
 
             FLabel* TelemetryValue_Label  = this->findChild<FLabel*>("TelemetryValue_Label");
             FLabel* Telemetry_Label       = this->findChild<FLabel*>("Telemetry_Label");
+            ContaRotacoes * ContaRotacoes_Comp = this->findChild<ContaRotacoes*>("contaRotacoes");
 
             FLabel* Driverless_Label      = this->findChild<FLabel*>("Driverless_Label");
             connect(store_ref, &store::powerChanged, TotalPowerDraw_Label, (void (FLabel::*)(short, short))&FLabel::setAveragedVisualChangeSec);
-
+            connect(store_ref,&store::rpmChanged, ContaRotacoes_Comp, &ContaRotacoes::handleChangedValue);
             connect(store_ref, &store::socChanged, SOC_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
             //connect(store_ref, &store::batteryTemperatureChanged, )
             connect(store_ref, &store::hvChanged,InverterVoltage_Label, (void (FLabel::*)(short, short))&FLabel::setVisual );
 
-
+            //connect(store_ref, &store::rpmChanged,VcuState_label,(void(FLabel::*)(short,short))&FLabel::setVisual);
             /*TotalPowerDraw_Label->setText("Isto é um teste 1");
             InverterVoltage_Label->setText("Isto é um teste 1");
             SOC_Label->setText("Isto é um teste 3");
@@ -92,7 +92,7 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
 
 		#endif
 		#endif
-		
+    //  store_ref->setHV(10);
 }
 
 

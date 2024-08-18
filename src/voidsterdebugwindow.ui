@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>668</width>
-    <height>489</height>
+    <height>515</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -490,6 +490,74 @@
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
+          <item row="6" column="0">
+           <widget class="QLabel" name="SOC_Prefix">
+            <property name="text">
+             <string>SOC(%):</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="FLabel" name="DTConstraints_Label">
+            <property name="text">
+             <string>Limit: 80.000</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="DTConstraints_Prefix">
+            <property name="text">
+             <string>Enabled DT Constraints</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <spacer name="DTConstraints_Spacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="7" column="0">
+           <widget class="FLabel" name="SOC_Label">
+            <property name="text">
+             <string>50% (5 hours of juice left)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <spacer name="InverterVoltage_Spacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="4" column="0">
+           <widget class="FLabel" name="InverterVoltage_Label">
+            <property name="text">
+             <string>620 V (+5%)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="TotalPowerDraw_Prefix">
+            <property name="text">
+             <string>Total Power Draw(Curr):</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0">
            <widget class="FLabel" name="TotalPowerDraw_Label">
             <property name="text">
@@ -503,22 +571,8 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="0">
-           <widget class="FLabel" name="SOC_Label">
-            <property name="text">
-             <string>50% (5 hours of juice left)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="FLabel" name="InverterVoltage_Label">
-            <property name="text">
-             <string>620 V (+5%)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <spacer name="TotalPowerDraw_Spacer">
+          <item row="8" column="0">
+           <spacer name="SOC_Spacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -537,8 +591,8 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <spacer name="InverterVoltage_Spacer">
+          <item row="2" column="0">
+           <spacer name="TotalPowerDraw_Spacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -549,60 +603,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="DTConstraints_Prefix">
-            <property name="text">
-             <string>Enabled DT Constraints</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <spacer name="SOC_Spacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="10" column="0">
-           <widget class="FLabel" name="DTConstraints_Label">
-            <property name="text">
-             <string>Limit: 80.000</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="SOC_Prefix">
-            <property name="text">
-             <string>SOC(%):</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="0">
-           <spacer name="DTConstraints_Spacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="TotalPowerDraw_Prefix">
-            <property name="text">
-             <string>Total Power Draw(Curr):</string>
-            </property>
-           </widget>
           </item>
          </layout>
         </item>

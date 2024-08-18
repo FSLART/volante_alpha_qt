@@ -85,7 +85,7 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
 
             TelemetryValue_Label->setText("TV");
             Telemetry_Label->setText("TL");
-            
+
             Driverless_Label->setText("DL");
 */
             

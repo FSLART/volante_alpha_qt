@@ -13,6 +13,7 @@
 #ifdef __LART_DEBUG__
 #include "voidsterdebugwindow.h"
 #include "voidsterdebugwindow2.h"
+#include "mainwindow.h"
 #else
 #include "mainwindow.h"
 #endif
@@ -45,8 +46,10 @@ int main(int argc, char *argv[]){
 
 
 
-    VoidsterdebugWindow2 debugWindow2;
-    debugWindow2.show();
+   //VoidsterdebugWindow2 debugWindow2;
+    //debugWindow2.show();
+    MainWindow w;
+        w.show();
 
 #else
     MainWindow w;

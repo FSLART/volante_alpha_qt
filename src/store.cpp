@@ -421,6 +421,38 @@ void store::setRpm(int rpm){
         this->scribeError(__LART_STORE_SETRPM_ERROR__, store::error_severity::MINOR);
     }
 }
+
+
+
+
+/**
+* @brief getter for the menu variable
+* @return The menu variable
+**/
+int store::getMenu() const{
+    return this->m_menu;
+}
+
+
+
+/**
+* @brief setter for the menu variable
+* @param menu The new value for the menu variable
+**/
+void store::setMenu(int menu){
+    if(menu>=0){
+        if(menu !=this->m_menu){
+            int oldMenu = this->m_menu;
+            this->m_menu=menu;
+            emit menuChanged(this->m_menu, oldMenu);
+        }
+    }else{
+        this->scribeError(__LART_STORE_SETRPM_ERROR__, store::error_severity::MINOR);
+    }
+}
+
+
+
 /**
 * @brief getter for the engine temperature variable
 * @return The engine temperature variable
@@ -470,6 +502,7 @@ void store::setVehicleSpeed(int vehicleVelocity){
 	int oldVehicleVelocity = this->m_vehicleVelocity;
 	this->m_vehicleVelocity=vehicleVelocity;
 	emit vehicleSpeedChanged(this->m_vehicleVelocity, oldVehicleVelocity);
+    qDebug() << "Emitindo vehicleSpeedChanged com velocidade:" << m_vehicleVelocity;
 }
 
 

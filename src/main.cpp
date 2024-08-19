@@ -8,7 +8,7 @@
 #ifdef __LART_T14__
 #include "src/tfortwindow.h"
 #endif
-
+#include "pilot.h"
 #ifdef __LART_T24__
 #ifdef __LART_DEBUG__
 #include "voidsterdebugwindow.h"
@@ -40,20 +40,23 @@ int main(int argc, char *argv[]){
 	
     #ifdef __LART_T24__
 #ifdef __LART_DEBUG__
-    
-    VoidsterdebugWindow debugWindow;
-    debugWindow.show();
 
+   // VoidsterdebugWindow debugWindow;
+   // debugWindow.show();
+
+    PilotWindow pl;
+    pl.show();
 
 
    //VoidsterdebugWindow2 debugWindow2;
     //debugWindow2.show();
-    MainWindow w;
-        w.show();
+    //MainWindow w;
+        //w.show();
 
 #else
     MainWindow w;
         w.show();
+
 #endif
 	#endif
 	#ifdef __LART_T14__

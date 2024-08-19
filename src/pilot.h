@@ -8,7 +8,7 @@
 
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class PilotWindow; }
+namespace Ui { class pilot; }
 QT_END_NAMESPACE
 
 class PilotWindow : public QMainWindow
@@ -19,10 +19,11 @@ public:
     PilotWindow(QWidget *parent = nullptr, QString serialDev=nullptr);
     store* getStore();
     ~PilotWindow();
+    void switch_screen(int menu);
 
 private:
 
-    Ui::PilotWindow *ui;
+    Ui::pilot *ui;
 };
 
 

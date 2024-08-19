@@ -9,15 +9,17 @@
 **/
 
 #include "pilot.h"
-#include "./ui_voidsterdebugwindow.h"
+#include "./ui_pilot.h"
 
 #include "./store.h"
 #include <cstddef>
 #include <qmainwindow.h>
 #include "flabel.h"
 #include "QLCDNumber"
+#include "qprogressbar.h"
 static store* store_ref;
 
+#include "voidsterdebugwindow.h"
 
 
 /**
@@ -26,11 +28,14 @@ static store* store_ref;
 **/
 PilotWindow::PilotWindow(QWidget *parent, QString serialDev)
     : QMainWindow(parent)
-    , ui(new Ui::~PilotWindow){
+    , ui(new Ui::pilot)  // This correctly matches the class name in the .ui file
+{
+    ui->setupUi(this);
+    setWindowTitle("Pilotamos");
+
 
     store_ref = new store(serialDev);
 
-    ui->setupUi(this);
     //store_ref->setParent(this);
     //store_ref->requestSlotAttachment();
 
@@ -41,10 +46,55 @@ PilotWindow::PilotWindow(QWidget *parent, QString serialDev)
         **/
 
 
-        #ifdef __LART_T24__
-            QLCDNumber* SPEED_DISPLAY  = this->findChild<QLCDNumber*>("SPEED_DISPLAY");
-            connect(store_ref, &store::rpmChanged, SPEED_DISPLAY, (void (QLCDNumber::*)(short, short))&QLCDNumber::setAveragedVisualChangeSec);
+            QLCDNumber* SPEED_DISPLAY = this->findChild<QLCDNumber*>("SPEED_DISPLAY");
+            QLCDNumber* INVERTER_TEMP_DISPLAY = this->findChild<QLCDNumber*>("INVERTER_TEMP_DISPLAY");
+            QLCDNumber* MOTOR_TEMP_DISPLAY = this->findChild<QLCDNumber*>("MOTOR_TEMP_DISPLAY");
+            QLCDNumber* ACUMULATOR_TEMP_DISPLAY = this->findChild<QLCDNumber*>("ACUMULATOR_TEMP_DISPLAY");
 
+
+            QProgressBar* HV_SOC_BAR = this->findChild<QProgressBar*>("HV_SOC_BAR");
+            QProgressBar* LV_SOC_BAR = this->findChild<QProgressBar*>("LV_SOC_BAR");
+            QProgressBar* POWER_SOC_BAR = this->findChild<QProgressBar*>("POWER_SOC_BAR");
+            QProgressBar* CONSUMED_POWER_BAR = this->findChild<QProgressBar*>("CONSUMED_POWER_BAR");
+
+
+
+
+
+            connect(store_ref, &store::vehicleSpeedChanged, [SPEED_DISPLAY](int m_vehicleVelocity) {
+                        SPEED_DISPLAY->display(m_vehicleVelocity);});
+
+
+            //connect(store_ref, &store::rpmChanged,SPEED_DISPLAY, (void (QLCDNumber::*)(short, short))&QLCDNumber::show;
+            connect(store_ref, &store::vehicleSpeedChanged, INVERTER_TEMP_DISPLAY, QOverload<int>::of(&QLCDNumber::display));
+            INVERTER_TEMP_DISPLAY->show();
+
+
+            connect(store_ref, &store::vehicleSpeedChanged, MOTOR_TEMP_DISPLAY, QOverload<int>::of(&QLCDNumber::display));
+            MOTOR_TEMP_DISPLAY->show();
+
+            connect(store_ref, &store::vehicleSpeedChanged, ACUMULATOR_TEMP_DISPLAY, QOverload<int>::of(&QLCDNumber::display));
+            INVERTER_TEMP_DISPLAY->show();
+
+
+
+
+
+            connect(store_ref,&store::socChanged,[HV_SOC_BAR](int soc){
+               HV_SOC_BAR->setValue(soc);
+            });
+
+            connect(store_ref,&store::socChanged,[LV_SOC_BAR](int soc){
+               LV_SOC_BAR->setValue(soc);
+            });
+
+            connect(store_ref,&store::socChanged,[POWER_SOC_BAR](int soc){
+               POWER_SOC_BAR->setValue(soc);
+            });
+
+            connect(store_ref,&store::socChanged,[CONSUMED_POWER_BAR](int soc){
+               CONSUMED_POWER_BAR->setValue(soc);
+            });
 }
 
 
@@ -66,3 +116,5 @@ PilotWindow::~PilotWindow(){
     store_ref->~store();
     delete ui;
 }
+
+

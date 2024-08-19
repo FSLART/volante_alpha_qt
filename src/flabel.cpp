@@ -12,6 +12,10 @@
 FLabel::FLabel(QWidget *parent) : QLabel(parent){
 	
 }
+
+
+
+
 /**
 * @brief Handles the visual representation of a QString value
 * @param newValue The new value, that will be displayed
@@ -97,3 +101,5 @@ void FLabel::setVisual(QTime newValue, QTime oldValue=QTime(0,0,0,0)){
 	
 	this->setText(newValue.toString("mm:ss.zzz"));
 }
+
+

@@ -109,12 +109,14 @@ class store: public QObject{
 		//getters and setters
 		QSerialPort::BaudRate getBaudRate() const;
 		//getters wire variables
-		int getRpm() const;
+        int getRpm() const;
+        int getMenu() const;
 		int getEngineTemperature() const;
 		float getBatteryVoltage() const;
 		int getVehicleSpeed() const;
 		//setters wire variables
 		void setRpm(int rpm);
+        void setMenu(int menu);
 		void setEngineTemperature(int engineTemperature);
 		void setBatteryVoltage(float batteryVoltage);
 		void setVehicleSpeed(int vehicleVelocity);
@@ -167,7 +169,8 @@ class store: public QObject{
 		int closeSerial();
 
 	signals:
-		void rpmChanged(int newRpm, int oldRpm);
+        void rpmChanged(int newRpm, int oldRpm);
+        void menuChanged(int newMenu, int oldMenu);
 		void engineTemperatureChanged(int newEngineTemperature, int oldEngineTemperature);
 		void batteryVoltageChanged(float newBatteryVoltage, float oldBatteryVoltage); 
 		void vehicleSpeedChanged(int newVehicleSpeed, int oldVehicleSpeed);
@@ -200,6 +203,7 @@ class store: public QObject{
 		int m_engineTemperature=0;
 		float m_batteryVoltage=0;
 		int m_vehicleVelocity=0;
+        int m_menu = 0;
 		#ifdef __LART_T14__
 			int m_gearShift=0;
 			float m_oilPressure=0;

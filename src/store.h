@@ -48,7 +48,8 @@
 		#ifdef __LART_DEPLOY__
 			#define DEFAULT_DEVICE "/dev/ttyS3"
 		#else
-            #define DEFAULT_DEVICE "/dev/ttyUSB0"
+            //#define DEFAULT_DEVICE "/dev/ttyUSB0"
+            #define DEFAULT_DEVICE "/dev/ttyS3"
             //#define DEFAULT_DEVICE "/dev/ttyACM0"
 		#endif
 	#endif

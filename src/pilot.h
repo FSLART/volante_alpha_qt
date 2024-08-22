@@ -24,7 +24,14 @@ public:
 private:
 
     Ui::pilot *ui;
+
+/*public slots:
+    void handleValueChanged(int newValue);
+*/
 };
+
+
+
 
 
 #endif // PILOT_H

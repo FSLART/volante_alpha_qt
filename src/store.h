@@ -36,6 +36,8 @@
 #include <QVBoxLayout>
 #include <nlohmann/json.hpp>
 #include "references/bson_var.h"
+#include "QtWidgets"
+#include "QMessageBox"
 /**
 * @brief Go big or go home, :) 
 **/
@@ -47,6 +49,7 @@
 			#define DEFAULT_DEVICE "/dev/ttyS3"
 		#else
             #define DEFAULT_DEVICE "/dev/ttyUSB0"
+            //#define DEFAULT_DEVICE "/dev/ttyACM0"
 		#endif
 	#endif
 #else
@@ -120,6 +123,7 @@ class store: public QObject{
 		void setEngineTemperature(int engineTemperature);
 		void setBatteryVoltage(float batteryVoltage);
 		void setVehicleSpeed(int vehicleVelocity);
+        void updateValue(int newValue);
 		#ifdef __LART_T14__
 			int getGearShift() const;			
 			float getOilPressure() const;
@@ -139,8 +143,10 @@ class store: public QObject{
 		#endif
 		#ifdef __LART_T24__
 			float getSoc() const;
+            float getPowerLimit() const;
 			float getBatteryTemperature() const;
-			int getInverterTemperature() const;
+            int getInverterTemperature() const;
+            int getmotorTemperature() const;
 			short getPower() const;
 			int getLapTime() const;
 			short getLapCount() const;
@@ -148,18 +154,21 @@ class store: public QObject{
 
                         //int getTyreTemperature() const;
 
-                        void setSoc(float soc);
+            void setSoc(float soc);
+            void setPowerLimit(float powerl);
 			void setBatteryTemperature(float batteryTemperature);
-			void setInverterTemperature(int inverterTemperature);
+            void setInverterTemperature(int inverterTemperature);
+            void setmotorTemperature(int inverterTemperature);
 			void setPower(short power);
 			void setLapTime(int lapTime);
 			void setLapCount(short lapCount);
-                        void setHV(short hv);
+            void setHV(short hv);
 			//void setTyreTemperature(int tyreTemperature);
 		#endif
 
 		void setBaudRate(QSerialPort::BaudRate baud);
 
+        static bool initialized;
 	protected:
         int startGeneralErrorLog(uint depth=0);
 		void stopGeneralErrorLog();
@@ -169,6 +178,7 @@ class store: public QObject{
 		int closeSerial();
 
 	signals:
+        void valueChanged(int newValue);
         void rpmChanged(int newRpm, int oldRpm);
         void menuChanged(int newMenu, int oldMenu);
 		void engineTemperatureChanged(int newEngineTemperature, int oldEngineTemperature);
@@ -185,8 +195,10 @@ class store: public QObject{
 		#endif
 		#ifdef __LART_T24__
 			void socChanged(float newSoc, float oldSoc);
+            void power_limitChanged(float newlimit, float oldlimit);
 			void batteryTemperatureChanged(float newBatteryTemperature, float oldBatteryTemperature);
-			void inverterTemperatureChanged(int newInverterTemperature, int oldInverterTemperature);
+            void inverterTemperatureChanged(int newInverterTemperature, int oldInverterTemperature);
+            void motorTemperatureChanged(int newmotorTemperature, int oldmotorTemperature);
 			void powerChanged(short newPower, short oldPower);
 			void lapTimeChanged(QTime newLapTime, QTime oldLapTime);
 			void diffLapTimeChanged(QTime newDiffLapTime, QTime oldDiffLapTime);
@@ -194,7 +206,7 @@ class store: public QObject{
                         void hvChanged(short newHV, short oldHV );
 
                         //void tyreTemperatureChanged(int newTyreTemperature, int oldTyreTemperature);
-		#endif
+        #endif
 
     private:
 		QSerialPort::BaudRate baud;
@@ -215,8 +227,10 @@ class store: public QObject{
 		#endif
 		#ifdef __LART_T24__
 			float m_stateOfCharge=0;
+            float m_power_limit = 0;
 			float m_batteryTemperature=0;
-			int m_inverterTemperature=0;
+            int m_inverterTemperature=0;
+            int m_motorTemperature=0;
 			short m_power=0;
 			int m_lapTime=0;
 			short m_lapCount=0;

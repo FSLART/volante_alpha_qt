@@ -20,5 +20,10 @@ public:
 private:
 
     Ui::VoidsterdebugWindow *ui;
+
+/*
+public slots:
+    void handleValueChanged(int newValue);
+*/
 };
 #endif // VOIDSTERDEBUGWINDOW_H

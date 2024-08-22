@@ -12,8 +12,9 @@
 **/
 #define BSON_RPM "rpm"
 #define BSON_VEHICLESPEED "vel"
-#define BSON_ENGINETEMPERATURE "eng_t"
+#define BSON_MOTORTEMPERATURE "eng_t"
 #define BSON_BATTERYVOLTAGE "bat_v"
+
 #ifdef __LART_T14__
     #define BSON_GEARSHIFT "gear"
     #define BSON_OILPRESSURE "oil_p"
@@ -31,7 +32,8 @@
 	#define BSON_LAPCOUNT "lap_c"
 	#define BSON_LAPTIME "lap_t"
     #define BSON_HV "hv"
-    #define BSON_PAGE "page"
+    #define BSON_MENU "menu"
+    #define BSON_POWER_LIMIT "power_available"
 #endif 
 
 

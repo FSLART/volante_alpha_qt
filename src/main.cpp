@@ -22,7 +22,11 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
+//static store* store_ref;
+//void check_menu(int i);
 
+//VoidsterdebugWindow debugWindow;
+//PilotWindow pl;
 	
 int main(int argc, char *argv[]){
 
@@ -37,12 +41,16 @@ int main(int argc, char *argv[]){
             break;
         }
     }
-	
+
+
     #ifdef __LART_T24__
 #ifdef __LART_DEBUG__
 
-   // VoidsterdebugWindow debugWindow;
+
    // debugWindow.show();
+   /* QObject::connect(store_ref,&store::menuChanged,[](int value){
+        check_menu(value);
+    });*/
 
     PilotWindow pl;
     pl.show();
@@ -66,3 +74,21 @@ int main(int argc, char *argv[]){
 	return a.exec();
 
 }
+
+/*void check_menu(int i)
+{
+
+    switch (i) {
+        case 0:
+        pl.show();
+        debugWindow.hide();
+        break;
+    case 1:
+        pl.hide();
+        debugWindow.show();
+        break;
+    default:
+        break;
+    }
+}
+*/

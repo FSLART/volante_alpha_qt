@@ -15,6 +15,7 @@
 #include <cstddef>
 #include <qmainwindow.h>
 #include "flabel.h"
+#include "pilot.h"
 static store* store_ref;
 
 /**
@@ -66,6 +67,7 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
             connect(store_ref, &store::socChanged, SOC_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
             //connect(store_ref, &store::batteryTemperatureChanged, )
             connect(store_ref, &store::hvChanged,InverterVoltage_Label, (void (FLabel::*)(short, short))&FLabel::setVisual );
+            //QObject::connect(store_ref,&store::menuChanged,this,&VoidsterdebugWindow::handleValueChanged);
 
             //connect(store_ref, &store::rpmChanged,VcuState_label,(void(FLabel::*)(short,short))&FLabel::setVisual);
             /*TotalPowerDraw_Label->setText("Isto é um teste 1");
@@ -109,6 +111,24 @@ store* VoidsterdebugWindow::getStore(){
 *        @b Deletes the store object. which can cause some odd behaviour to happen
 **/
 VoidsterdebugWindow::~VoidsterdebugWindow(){
-    store_ref->~store(); 
+    //store_ref->~store();
+    delete store_ref;
     delete ui;
 }
+
+/*
+void VoidsterdebugWindow::handleValueChanged(int newValue) {
+    // Close the current window
+    if(store_ref->getMenu() == 0)
+    {
+
+        delete store_ref;
+        PilotWindow  *pl = new PilotWindow();
+        this->close();
+        pl->show();
+
+    }
+
+    }
+
+*/

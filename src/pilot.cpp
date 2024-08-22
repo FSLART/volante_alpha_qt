@@ -34,8 +34,9 @@ PilotWindow::PilotWindow(QWidget *parent, QString serialDev)
     setWindowTitle("Pilotamos");
 
 
-    store_ref = new store(serialDev);
 
+
+    store_ref = new store(serialDev);
     //store_ref->setParent(this);
     //store_ref->requestSlotAttachment();
 
@@ -66,11 +67,11 @@ PilotWindow::PilotWindow(QWidget *parent, QString serialDev)
 
 
             //connect(store_ref, &store::rpmChanged,SPEED_DISPLAY, (void (QLCDNumber::*)(short, short))&QLCDNumber::show;
-            connect(store_ref, &store::vehicleSpeedChanged, INVERTER_TEMP_DISPLAY, QOverload<int>::of(&QLCDNumber::display));
+            connect(store_ref, &store::inverterTemperatureChanged, INVERTER_TEMP_DISPLAY, QOverload<int>::of(&QLCDNumber::display));
             INVERTER_TEMP_DISPLAY->show();
 
 
-            connect(store_ref, &store::vehicleSpeedChanged, MOTOR_TEMP_DISPLAY, QOverload<int>::of(&QLCDNumber::display));
+            connect(store_ref, &store::motorTemperatureChanged, MOTOR_TEMP_DISPLAY, QOverload<int>::of(&QLCDNumber::display));
             MOTOR_TEMP_DISPLAY->show();
 
             connect(store_ref, &store::vehicleSpeedChanged, ACUMULATOR_TEMP_DISPLAY, QOverload<int>::of(&QLCDNumber::display));
@@ -88,13 +89,14 @@ PilotWindow::PilotWindow(QWidget *parent, QString serialDev)
                LV_SOC_BAR->setValue(soc);
             });
 
-            connect(store_ref,&store::socChanged,[POWER_SOC_BAR](int soc){
-               POWER_SOC_BAR->setValue(soc);
+            connect(store_ref,&store::power_limitChanged,[POWER_SOC_BAR](int powerlimit){
+               POWER_SOC_BAR->setValue(powerlimit);
             });
 
             connect(store_ref,&store::socChanged,[CONSUMED_POWER_BAR](int soc){
                CONSUMED_POWER_BAR->setValue(soc);
             });
+//            QObject::connect(store_ref,&store::menuChanged,this,&PilotWindow::handleValueChanged);
 }
 
 
@@ -114,7 +116,24 @@ store* PilotWindow::getStore(){
 **/
 PilotWindow::~PilotWindow(){
     store_ref->~store();
+    //delete store_ref;
     delete ui;
 }
 
 
+/*void PilotWindow::handleValueChanged(int newValue) {
+    // Close the current window
+
+    if(store_ref->getMenu() == 1)
+    {
+        delete store_ref;
+        VoidsterdebugWindow *debugWindow = new VoidsterdebugWindow();
+        this->close();
+        debugWindow->show();
+
+    }
+
+}
+
+
+*/

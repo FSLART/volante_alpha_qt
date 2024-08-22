@@ -11,8 +11,11 @@
 #include "mainwindow.h"
 #include "references/bson_var.h"
 #include "flabel.h"
-
-
+#include "pilot.h"
+#include "voidsterdebugwindow.h"
+#include "qdebug.h"
+//VoidsterdebugWindow debugWindow;
+//PilotWindow pl;
 using json = nlohmann::json;
 /**
 * @brief Arguably the boilerplate code, necessary to run an Asynchronous Serial Uart communication. Also responsible for handling @b slots and other callback logic
@@ -20,8 +23,8 @@ using json = nlohmann::json;
 *      wow the above was suggested by copilot. how many times did people have issues with this?
 **/
 int store::setupSerial() {
-	
-	QSerialPort* serial= new QSerialPort();
+
+    QSerialPort* serial= new QSerialPort();
 	serial->setPortName(this->dev);
 	serial->setBaudRate(this->baud);
 	serial->setDataBits(QSerialPort::Data8);
@@ -155,7 +158,12 @@ store::store( QString dev, QSerialPort::BaudRate baud, QObject *parent): QObject
 	}else{
 		this->dev = dev;
 	}
-	setupSerial();
+   // if(store::initialized){
+        setupSerial();
+   // }
+   // store::initialized = true;
+
+
     //int8_t retries = LOG_MAX_RETRIES;
     //TODO wtf? retry system
     startGeneralErrorLog();
@@ -284,9 +292,9 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			this->setRpm(j[BSON_RPM]);
 		}
 
-		if(j.contains(BSON_ENGINETEMPERATURE)){
+        /*if(j.contains(BSON_ENGINETEMPERATURE)){
 			this->setEngineTemperature(j[BSON_ENGINETEMPERATURE]);
-		}
+        }*/
 		
 		if(j.contains(BSON_BATTERYVOLTAGE)){
 			EncodingUnion t;
@@ -328,11 +336,50 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			}
 		#endif
 		#ifdef __LART_T24__
-			if(j.contains(BSON_SOC)){
-				EncodingUnion t;
-				t.encoded=j[BSON_SOC];
-				this->setSoc(t.decoded);
-			}
+            if(j.contains(BSON_MENU))
+            {
+                int t;
+                t =j[BSON_MENU];
+                this->setMenu(t);
+                if(m_menu != t)
+                {
+                    //store::closeSerial();
+                    //VoidsterdebugWindow debugWindow;
+                    //PilotWindow pl;
+                   // VoidsterdebugWindow debugWindow = new VoidsterdebugWindow();
+                    //PilotWindow pl = new PilotWindow();
+                    switch(t)
+                    {
+                    case 0:
+                        //pl.show();
+
+                        break;
+                    case 1:
+                       // debugWindow.show();
+                        //QMessageBox::information(nullptr, "Menu 0", "Menu 0 has been selected.");
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+            if(j.contains(BSON_SOC)){
+                EncodingUnion t;
+                t.encoded=j[BSON_SOC];
+                this->setSoc(t.decoded);
+            }
+            if(j.contains(BSON_MOTORTEMPERATURE)){
+               // EncodingUnion t;
+               // t.encoded=j[BSON_MOTORTEMPERATURE];
+               // this->setmotorTemperature(t.decoded);
+                this->setmotorTemperature(j[BSON_MOTORTEMPERATURE]);
+            }
+            if(j.contains(BSON_POWER_LIMIT)){
+                EncodingUnion t;
+                t.encoded=j[BSON_POWER_LIMIT];
+                this->setPowerLimit(t.decoded);
+                qDebug()<< t.decoded;
+            }
 			
 			if(j.contains(BSON_BATTERYTEMPERATURE)){
 				EncodingUnion t;
@@ -340,7 +387,8 @@ void store::parseBson(std::vector<std::uint8_t> v){
 				this->setBatteryTemperature(t.decoded);
 			}
 			if(j.contains(BSON_INVERTERTEMPERATURE)){
-				this->setInverterTemperature(j[BSON_INVERTERTEMPERATURE]);
+                int temp = j[BSON_INVERTERTEMPERATURE];
+                this->setInverterTemperature(temp);
 			}
                          if(j.contains(BSON_POWER)){
                                 short temp =  j[BSON_POWER];
@@ -399,6 +447,7 @@ int store::closeSerial(){
     }
     return 0;
 }
+
 /**
 * @brief getter for the rpm variable
 * @return The rpm variable
@@ -406,6 +455,17 @@ int store::closeSerial(){
 int store::getRpm() const{
 	return this->m_rotationsPerMinute;
 }
+
+
+void store::updateValue(int newValue) {
+    if (m_menu != newValue) {
+        m_menu = newValue;
+        emit valueChanged(m_menu);  // Emitir o sinal de mudança
+    }
+}
+
+
+
 /**
 * @brief setter for the rpm variable
 * @param rpm The new value for the rpm variable
@@ -641,8 +701,19 @@ void store::setTcLaunch(int tcLaunch){
 * @return The state of charge variable
 **/
 float store::getSoc() const{
-	return this->m_stateOfCharge;
+    return this->m_stateOfCharge;
 }
+
+
+/**
+* @brief getter for the state of charge variable
+* @return The state of charge variable
+**/
+float store::getPowerLimit() const{
+    return this->m_power_limit;
+}
+
+
 /**
 * @brief getter for the battery temperature variable
 * @return The battery temperature variable
@@ -655,14 +726,18 @@ float store::getBatteryTemperature() const{
 * @return The inverter temperature variable
 **/
 int store::getInverterTemperature() const{
-	return this->m_inverterTemperature;
+    return this->m_inverterTemperature;
+}
+
+int store::getmotorTemperature() const{
+    return this->m_motorTemperature;
 }
 /**
 * @brief getter for the power variable
 * @return The power variable
 **/
 short store::getPower() const{
-	return this->m_power;
+    return this->m_power_limit;
 }
 /**
 * @brief getter for the lap time  @b Double-Word Integer variable,
@@ -698,10 +773,25 @@ short store::getHV() const{
 * @param soc The new value for the state of charge variable
 **/
 void store::setSoc(float soc){
-	float oldSoc = this->m_stateOfCharge;
-	this->m_stateOfCharge=soc;
-	emit socChanged(this->m_stateOfCharge, oldSoc);
+    float oldSoc = this->m_stateOfCharge;
+    this->m_stateOfCharge=soc;
+    emit socChanged(this->m_stateOfCharge, oldSoc);
 }
+
+
+
+
+/**
+* @brief setter for the power limit
+* @param power limit The new value for the state of charge variable
+**/
+void store::setPowerLimit(float powerl){
+    float oldlimit = this->m_power_limit;
+    this->m_power_limit=powerl;
+    emit power_limitChanged(this->m_power_limit, oldlimit);
+}
+
+
 /**
 * @brief setter for the battery temperature variable
 * @param batteryTemperature The new value for the battery temperature variable
@@ -716,9 +806,17 @@ void store::setBatteryTemperature(float batteryTemperature){
 * @param inverterTemperature The new value for the inverter temperature variable
 **/
 void store::setInverterTemperature(int inverterTemperature){
-	int oldInverterTemperature = this->m_inverterTemperature;
-	this->m_inverterTemperature=inverterTemperature;
-	emit inverterTemperatureChanged(this->m_inverterTemperature, oldInverterTemperature);
+    int oldInverterTemperature = this->m_inverterTemperature;
+    this->m_inverterTemperature=inverterTemperature;
+    emit inverterTemperatureChanged(this->m_inverterTemperature, oldInverterTemperature);
+}
+
+
+void store::setmotorTemperature(int motorTemperature){
+    int oldmotorTemperature = this->m_motorTemperature;
+    this->m_motorTemperature=motorTemperature;
+    emit motorTemperatureChanged(this->m_motorTemperature, oldmotorTemperature);
+    qDebug()<<motorTemperature;
 }
 /**
 * @brief setter for the power variable

@@ -25,9 +25,9 @@ private:
 
     Ui::pilot *ui;
 
-/*public slots:
+public slots:
     void handleValueChanged(int newValue);
-*/
+
 };
 
 

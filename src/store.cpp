@@ -343,19 +343,19 @@ void store::parseBson(std::vector<std::uint8_t> v){
                 this->setMenu(t);
                 if(m_menu != t)
                 {
-                    //store::closeSerial();
-                    //VoidsterdebugWindow debugWindow;
-                    //PilotWindow pl;
+                    store::closeSerial();
+                    VoidsterdebugWindow debugWindow;
+                    PilotWindow pl;
                    // VoidsterdebugWindow debugWindow = new VoidsterdebugWindow();
                     //PilotWindow pl = new PilotWindow();
                     switch(t)
                     {
                     case 0:
-                        //pl.show();
+                        pl.show();
 
                         break;
                     case 1:
-                       // debugWindow.show();
+                        debugWindow.show();
                         //QMessageBox::information(nullptr, "Menu 0", "Menu 0 has been selected.");
                         break;
                     default:
@@ -367,6 +367,11 @@ void store::parseBson(std::vector<std::uint8_t> v){
                 EncodingUnion t;
                 t.encoded=j[BSON_SOC];
                 this->setSoc(t.decoded);
+            }
+            if(j.contains(BSON_LV_SOC)){
+                EncodingUnion t;
+                t.encoded=j[BSON_LV_SOC];
+                this->setLV_Soc(t.decoded);
             }
             if(j.contains(BSON_MOTORTEMPERATURE)){
                // EncodingUnion t;
@@ -707,6 +712,15 @@ float store::getSoc() const{
 
 /**
 * @brief getter for the state of charge variable
+* @return The lv state of charge variable
+**/
+float store::getLV_Soc() const{
+    return this->m_lv_stateOfCharge;
+}
+
+
+/**
+* @brief getter for the state of charge variable
 * @return The state of charge variable
 **/
 float store::getPowerLimit() const{
@@ -776,6 +790,21 @@ void store::setSoc(float soc){
     float oldSoc = this->m_stateOfCharge;
     this->m_stateOfCharge=soc;
     emit socChanged(this->m_stateOfCharge, oldSoc);
+}
+
+
+
+
+
+
+/**
+* @brief setter for the state of charge variable
+* @param LV_soc The new value for the state of charge variable
+**/
+void store::setLV_Soc(float soc){
+    float oldSoc = this->m_lv_stateOfCharge;
+    this->m_stateOfCharge=soc;
+    emit socChanged(this->m_lv_stateOfCharge, oldSoc);
 }
 
 

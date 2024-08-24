@@ -85,7 +85,7 @@ PilotWindow::PilotWindow(QWidget *parent, QString serialDev)
                HV_SOC_BAR->setValue(soc);
             });
 
-            connect(store_ref,&store::socChanged,[LV_SOC_BAR](int soc){
+            connect(store_ref,&store::lvsocChanged,[LV_SOC_BAR](int soc){
                LV_SOC_BAR->setValue(soc);
             });
 

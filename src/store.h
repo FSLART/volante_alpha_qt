@@ -143,7 +143,8 @@ class store: public QObject{
 
 		#endif
 		#ifdef __LART_T24__
-			float getSoc() const;
+            float getSoc() const;
+            float getLV_Soc() const;
             float getPowerLimit() const;
 			float getBatteryTemperature() const;
             int getInverterTemperature() const;
@@ -156,6 +157,7 @@ class store: public QObject{
                         //int getTyreTemperature() const;
 
             void setSoc(float soc);
+            void setLV_Soc(float soc);
             void setPowerLimit(float powerl);
 			void setBatteryTemperature(float batteryTemperature);
             void setInverterTemperature(int inverterTemperature);
@@ -195,7 +197,8 @@ class store: public QObject{
 			void tcLaunchChanged(int newTcLaunch, int oldTcLaunch);  
 		#endif
 		#ifdef __LART_T24__
-			void socChanged(float newSoc, float oldSoc);
+            void socChanged(float newSoc, float oldSoc);
+            void lvsocChanged(float newSoc, float oldSoc);
             void power_limitChanged(float newlimit, float oldlimit);
 			void batteryTemperatureChanged(float newBatteryTemperature, float oldBatteryTemperature);
             void inverterTemperatureChanged(int newInverterTemperature, int oldInverterTemperature);
@@ -228,6 +231,7 @@ class store: public QObject{
 		#endif
 		#ifdef __LART_T24__
 			float m_stateOfCharge=0;
+            float m_lv_stateOfCharge = 0;
             float m_power_limit = 0;
 			float m_batteryTemperature=0;
             int m_inverterTemperature=0;

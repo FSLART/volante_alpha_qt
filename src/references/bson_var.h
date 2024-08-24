@@ -14,6 +14,7 @@
 #define BSON_VEHICLESPEED "vel"
 #define BSON_MOTORTEMPERATURE "eng_t"
 #define BSON_BATTERYVOLTAGE "bat_v"
+#define BSON_IGNITION "ignition"
 
 #ifdef __LART_T14__
     #define BSON_GEARSHIFT "gear"
@@ -34,6 +35,7 @@
     #define BSON_HV "hv"
     #define BSON_MENU "menu"
     #define BSON_POWER_LIMIT "power_available"
+    #define BSON_LV_SOC "lv_soc"
 #endif 
 
 

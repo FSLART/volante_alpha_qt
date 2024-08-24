@@ -89,6 +89,7 @@ PilotWindow::PilotWindow(QWidget *parent, QString serialDev)
                LV_SOC_BAR->setValue(soc);
             });
 
+
             connect(store_ref,&store::power_limitChanged,[POWER_SOC_BAR](int powerlimit){
                POWER_SOC_BAR->setValue(powerlimit);
             });

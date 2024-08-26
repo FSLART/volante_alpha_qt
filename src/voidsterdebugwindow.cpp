@@ -62,9 +62,11 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
             FLabel* Telemetry_Label       = this->findChild<FLabel*>("Telemetry_Label");
             ContaRotacoes * ContaRotacoes_Comp = this->findChild<ContaRotacoes*>("contaRotacoes");
 
-            QLabel* Accumulator_Voltage_Label = this->findChild<QLabel*>("Accumulator_voltage");
-            QLabel* Max_cell_temp_label = this->findChild<QLabel*>("cellmax_temp");
-
+            FLabel* Accumulator_Voltage_Label = this->findChild<FLabel*>("Accumulator_voltage");
+            FLabel* Max_cell_temp_label = this->findChild<FLabel*>("cellmax_temp");
+            FLabel* Min_cell_temp_label = this->findChild<FLabel*>("cell_min_temp");
+            FLabel* Max_cell_voltage = this->findChild<FLabel*>("cell_voltage_max");
+            FLabel* Min_cell_voltage = this->findChild<FLabel*>("Cell_voltage_min");
 
 
 
@@ -74,8 +76,11 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
             connect(store_ref, &store::socChanged, SOC_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
             //connect(store_ref, &store::batteryTemperatureChanged, )
             connect(store_ref, &store::hvChanged,InverterVoltage_Label, (void (FLabel::*)(short, short))&FLabel::setVisual );
-            connect(store_ref, &store::bat_voltageChanged,Accumulator_Voltage_Label, (void (QLabel::*)(short, short))&FLabel::setText );
-            connect(store_ref, &store::max_cell_tempChanged,Max_cell_temp_label, (void (QLabel::*)(int, int))&QLabel::setText );
+            connect(store_ref, &store::bat_voltageChanged,Accumulator_Voltage_Label, (void (FLabel::*)(short, short))&FLabel::setVisual );
+            connect(store_ref, &store::max_cell_tempChanged,Max_cell_temp_label, (void (FLabel::*)(int, int))&FLabel::setVisual );
+            connect(store_ref,&store::min_cell_tempChanged,Min_cell_temp_label,(void (FLabel::*)(int, int))&FLabel::setVisual);
+            connect(store_ref, &store::max_cell_voltageChanged,Max_cell_voltage, (void (FLabel::*)(int, int))&FLabel::setVisual );
+            connect(store_ref, &store::min_cell_voltageChanged,Min_cell_voltage, (void (FLabel::*)(int, int))&FLabel::setVisual );
             //QObject::connect(store_ref,&store::menuChanged,this,&VoidsterdebugWindow::handleValueChanged);
 
             //connect(store_ref, &store::rpmChanged,VcuState_label,(void(FLabel::*)(short,short))&FLabel::setVisual);

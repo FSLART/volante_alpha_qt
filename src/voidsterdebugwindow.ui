@@ -496,7 +496,7 @@
              <number>1</number>
             </property>
             <item row="1" column="0">
-             <widget class="QLabel" name="cell_voltage_min_Prefix">
+             <widget class="FLabel" name="cell_voltage_min_Prefix">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -509,14 +509,14 @@
              </widget>
             </item>
             <item row="2" column="2">
-             <widget class="QLabel" name="Cell_voltage_min">
+             <widget class="FLabel" name="Cell_voltage_min">
               <property name="text">
                <string>0 V</string>
               </property>
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QLabel" name="label_5">
+             <widget class="FLabel" name="label_5">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -529,7 +529,7 @@
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QLabel" name="cell_voltage_max">
+             <widget class="FLabel" name="cell_voltage_max">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -686,7 +686,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLabel" name="cellmax_temp">
+             <widget class="FLabel" name="cellmax_temp">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                 <horstretch>0</horstretch>
@@ -699,7 +699,7 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="cell_min_temp">
+             <widget class="FLabel" name="cell_min_temp">
               <property name="text">
                <string>0 º</string>
               </property>

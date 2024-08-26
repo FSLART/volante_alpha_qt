@@ -490,10 +490,63 @@
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
+          <item row="10" column="0">
+           <layout class="QGridLayout" name="gridLayout_6">
+            <property name="spacing">
+             <number>1</number>
+            </property>
+            <item row="1" column="0">
+             <widget class="QLabel" name="cell_voltage_min_Prefix">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>MAX: </string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLabel" name="Cell_voltage_min">
+              <property name="text">
+               <string>0 V</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>MIN: </string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLabel" name="cell_voltage_max">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>0 V</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
           <item row="7" column="0">
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Cell max temperature</string>
+             <string>Cell temperature</string>
             </property>
            </widget>
           </item>
@@ -511,7 +564,21 @@
             </property>
            </widget>
           </item>
-          <item row="15" column="0">
+          <item row="0" column="0">
+           <widget class="QLabel" name="TotalPowerDraw_Prefix">
+            <property name="text">
+             <string>Total Power Draw(Curr):</string>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="0">
+           <widget class="FLabel" name="SOC_Label">
+            <property name="text">
+             <string>50% (5 hours of juice left)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="0">
            <spacer name="DTConstraints_Spacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -524,31 +591,10 @@
             </property>
            </spacer>
           </item>
-          <item row="11" column="0">
-           <widget class="FLabel" name="SOC_Label">
-            <property name="text">
-             <string>50% (5 hours of juice left)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="TotalPowerDraw_Prefix">
-            <property name="text">
-             <string>Total Power Draw(Curr):</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0">
+          <item row="15" column="0">
            <widget class="QLabel" name="SOC_Prefix">
             <property name="text">
              <string>SOC(%):</string>
-            </property>
-           </widget>
-          </item>
-          <item row="13" column="0">
-           <widget class="QLabel" name="DTConstraints_Prefix">
-            <property name="text">
-             <string>Enabled DT Constraints</string>
             </property>
            </widget>
           </item>
@@ -565,12 +611,38 @@
             </property>
            </spacer>
           </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Cell voltage</string>
+            </property>
+           </widget>
+          </item>
           <item row="5" column="0">
            <widget class="QLabel" name="label">
             <property name="text">
              <string>Accumulator Voltage:</string>
             </property>
            </widget>
+          </item>
+          <item row="17" column="0">
+           <spacer name="SOC_Spacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item row="1" column="0">
            <widget class="FLabel" name="TotalPowerDraw_Label">
@@ -585,25 +657,55 @@
             </property>
            </widget>
           </item>
-          <item row="12" column="0">
-           <spacer name="SOC_Spacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="14" column="0">
-           <widget class="FLabel" name="DTConstraints_Label">
-            <property name="text">
-             <string>Limit: 80.000</string>
-            </property>
-           </widget>
+          <item row="8" column="0">
+           <layout class="QGridLayout" name="gridLayout_7">
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_8">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>MIN: </string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>MAX: </string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="cellmax_temp">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>0 º</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="cell_min_temp">
+              <property name="text">
+               <string>0 º</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item row="6" column="0">
            <widget class="QLabel" name="Accumulator_voltage">
@@ -612,7 +714,7 @@
             </property>
            </widget>
           </item>
-          <item row="9" column="0">
+          <item row="14" column="0">
            <spacer name="InverterVoltage_Spacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -624,13 +726,6 @@
              </size>
             </property>
            </spacer>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="max_cell_temp">
-            <property name="text">
-             <string> 0º</string>
-            </property>
-           </widget>
           </item>
          </layout>
         </item>

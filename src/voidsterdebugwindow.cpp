@@ -44,6 +44,8 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
 
             FLabel* TotalPowerDraw_Label  = this->findChild<FLabel*>("TotalPowerDraw_Label");
             FLabel* InverterVoltage_Label = this->findChild<FLabel*>("InverterVoltage_Label");
+            FLabel* Accumulator_Voltage_Label = this->findChild<FLabel*>("Accumulator_Voltage");
+            FLabel* Max_cell_temp_label = this->findChild<FLabel*>("max_cell_temp");
             FLabel* SOC_Label             = this->findChild<FLabel*>("SOC_Label");
             FLabel* DTConstraints_Label   = this->findChild<FLabel*>("DTConstraints_Label");
 
@@ -67,6 +69,8 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
             connect(store_ref, &store::socChanged, SOC_Label, (void (FLabel::*)(float, float))&FLabel::setVisual);
             //connect(store_ref, &store::batteryTemperatureChanged, )
             connect(store_ref, &store::hvChanged,InverterVoltage_Label, (void (FLabel::*)(short, short))&FLabel::setVisual );
+            connect(store_ref, &store::bat_voltageChanged,Accumulator_Voltage_Label, (void (FLabel::*)(short, short))&FLabel::setVisual );
+            connect(store_ref, &store::max_cell_tempChanged,Max_cell_temp_label, (void (FLabel::*)(short, short))&FLabel::setVisual );
             //QObject::connect(store_ref,&store::menuChanged,this,&VoidsterdebugWindow::handleValueChanged);
 
             //connect(store_ref, &store::rpmChanged,VcuState_label,(void(FLabel::*)(short,short))&FLabel::setVisual);

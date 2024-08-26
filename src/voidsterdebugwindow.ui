@@ -490,28 +490,28 @@
           <property name="sizeConstraint">
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
-          <item row="6" column="0">
-           <widget class="QLabel" name="SOC_Prefix">
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>SOC(%):</string>
+             <string>Cell max temperature</string>
             </property>
            </widget>
           </item>
-          <item row="10" column="0">
-           <widget class="FLabel" name="DTConstraints_Label">
+          <item row="3" column="0">
+           <widget class="QLabel" name="InverterVoltage_Prefix">
             <property name="text">
-             <string>Limit: 80.000</string>
+             <string>Inverter Voltage:</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="DTConstraints_Prefix">
+          <item row="4" column="0">
+           <widget class="FLabel" name="InverterVoltage_Label">
             <property name="text">
-             <string>Enabled DT Constraints</string>
+             <string>620 V (+5%)</string>
             </property>
            </widget>
           </item>
-          <item row="11" column="0">
+          <item row="15" column="0">
            <spacer name="DTConstraints_Spacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -524,15 +524,36 @@
             </property>
            </spacer>
           </item>
-          <item row="7" column="0">
+          <item row="11" column="0">
            <widget class="FLabel" name="SOC_Label">
             <property name="text">
              <string>50% (5 hours of juice left)</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <spacer name="InverterVoltage_Spacer">
+          <item row="0" column="0">
+           <widget class="QLabel" name="TotalPowerDraw_Prefix">
+            <property name="text">
+             <string>Total Power Draw(Curr):</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="SOC_Prefix">
+            <property name="text">
+             <string>SOC(%):</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="0">
+           <widget class="QLabel" name="DTConstraints_Prefix">
+            <property name="text">
+             <string>Enabled DT Constraints</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <spacer name="TotalPowerDraw_Spacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -544,17 +565,10 @@
             </property>
            </spacer>
           </item>
-          <item row="4" column="0">
-           <widget class="FLabel" name="InverterVoltage_Label">
+          <item row="5" column="0">
+           <widget class="QLabel" name="label">
             <property name="text">
-             <string>620 V (+5%)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="TotalPowerDraw_Prefix">
-            <property name="text">
-             <string>Total Power Draw(Curr):</string>
+             <string>Accumulator Voltage:</string>
             </property>
            </widget>
           </item>
@@ -571,7 +585,7 @@
             </property>
            </widget>
           </item>
-          <item row="8" column="0">
+          <item row="12" column="0">
            <spacer name="SOC_Spacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -584,15 +598,22 @@
             </property>
            </spacer>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="InverterVoltage_Prefix">
+          <item row="14" column="0">
+           <widget class="FLabel" name="DTConstraints_Label">
             <property name="text">
-             <string>Inverter Voltage:</string>
+             <string>Limit: 80.000</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <spacer name="TotalPowerDraw_Spacer">
+          <item row="6" column="0">
+           <widget class="QLabel" name="Accumulator_voltage">
+            <property name="text">
+             <string> 0 V</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <spacer name="InverterVoltage_Spacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
@@ -603,6 +624,13 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="max_cell_temp">
+            <property name="text">
+             <string> 0º</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>

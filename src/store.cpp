@@ -296,9 +296,9 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			this->setEngineTemperature(j[BSON_ENGINETEMPERATURE]);
         }*/
 		
-		if(j.contains(BSON_BATTERYVOLTAGE)){
+        if(j.contains(BSON_HV_BATTERYVOLTAGE)){
 			EncodingUnion t;
-			t.encoded=j[BSON_BATTERYVOLTAGE]; 
+            t.encoded=j[BSON_HV_BATTERYVOLTAGE];
 			this->setBatteryVoltage(t.decoded);
 		}
 		if(j.contains(BSON_VEHICLESPEED)){
@@ -379,6 +379,12 @@ void store::parseBson(std::vector<std::uint8_t> v){
                // this->setmotorTemperature(t.decoded);
                 this->setmotorTemperature(j[BSON_MOTORTEMPERATURE]);
             }
+            if(j.contains(BSON_MAX_CELL_TEMP)){
+               // EncodingUnion t;
+               // t.encoded=j[BSON_MOTORTEMPERATURE];
+               // this->setmotorTemperature(t.decoded);
+                this->setmotorTemperature(j[BSON_MAX_CELL_TEMP]);
+            }
             if(j.contains(BSON_POWER_LIMIT)){
                 EncodingUnion t;
                 t.encoded=j[BSON_POWER_LIMIT];
@@ -410,6 +416,11 @@ void store::parseBson(std::vector<std::uint8_t> v){
                         if(j.contains(BSON_HV)){
                                 short temp = j[BSON_HV];
                             this->setHV(temp); ;
+
+                        }
+                        if(j.contains(BSON_HV_BATTERYVOLTAGE)){
+                                short temp = j[BSON_HV_BATTERYVOLTAGE];
+                            this->setBatteryVoltage(temp); ;
 
                         }
 			//if(j.contains(BSON_TYRETEMPERATURE)){
@@ -541,16 +552,16 @@ void store::setEngineTemperature(int engineTemperature){
 * @return The battery voltage variable
 **/
 float store::getBatteryVoltage() const{
-	return this->m_batteryVoltage;
+    return this->m_battery_voltage;
 }
 /**
 * @brief setter for the battery voltage variable
 * @param batteryVoltage The new value for the battery voltage variable
 **/
 void store::setBatteryVoltage(float batteryVoltage){
-	float oldBatteryVoltage = this->m_batteryVoltage;
-	this->m_batteryVoltage=batteryVoltage;
-	emit batteryVoltageChanged(this->m_batteryVoltage, oldBatteryVoltage);
+    float oldBatteryVoltage = this->m_battery_voltage;
+    this->m_battery_voltage=batteryVoltage;
+    emit batteryVoltageChanged(this->m_battery_voltage, oldBatteryVoltage);
 }
 /**
 * @brief getter for the vehicle speed variable
@@ -743,6 +754,10 @@ int store::getInverterTemperature() const{
     return this->m_inverterTemperature;
 }
 
+int store::getmax_cell_temp() const{
+    return this->m_cell_max_temp;
+}
+
 int store::getmotorTemperature() const{
     return this->m_motorTemperature;
 }
@@ -772,7 +787,11 @@ short store::getLapCount() const{
 * @return The high voltage variable
  */
 short store::getHV() const{
-	return this->m_highVoltage;
+    return this->m_highVoltage;
+}
+
+short store::getbatv() const{
+    return this->m_battery_voltage;
 }
 
 /**
@@ -893,9 +912,15 @@ void store::setLapCount(short lapCount){
 * @param hv The new value for the high voltage variable
 **/
 void store::setHV(short hv){
-	short oldHV = this->m_highVoltage;
-	this->m_highVoltage=hv;
-	emit hvChanged(this->m_highVoltage, oldHV);
+    short oldHV = this->m_highVoltage;
+    this->m_highVoltage=hv;
+    emit hvChanged(this->m_highVoltage, oldHV);
+}
+
+void store::setbatv(short hv){
+    short oldHV = this->m_battery_voltage;
+    this->m_battery_voltage=hv;
+    emit hvChanged(this->m_battery_voltage, oldHV);
 }
 
 //void store::setTyreTemperature(int tyreTemperature){

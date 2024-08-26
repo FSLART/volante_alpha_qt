@@ -152,7 +152,9 @@ class store: public QObject{
 			short getPower() const;
 			int getLapTime() const;
 			short getLapCount() const;
-                        short getHV() const;
+            short getHV() const;
+            short getbatv() const;
+            int getmax_cell_temp() const;
 
                         //int getTyreTemperature() const;
 
@@ -166,6 +168,8 @@ class store: public QObject{
 			void setLapTime(int lapTime);
 			void setLapCount(short lapCount);
             void setHV(short hv);
+            void setbatv(short hv);
+            void setmax_cell_temp(int temp);
 			//void setTyreTemperature(int tyreTemperature);
 		#endif
 
@@ -207,7 +211,9 @@ class store: public QObject{
 			void lapTimeChanged(QTime newLapTime, QTime oldLapTime);
 			void diffLapTimeChanged(QTime newDiffLapTime, QTime oldDiffLapTime);
 			void lapCountChanged(short newLapCount, short oldLapCount);
-                        void hvChanged(short newHV, short oldHV );
+            void hvChanged(short newHV, short oldHV );
+            void bat_voltageChanged(short newhv, short oldhv);
+            void max_cell_tempChanged(int newInverterTemperature, int oldInverterTemperature);
 
                         //void tyreTemperatureChanged(int newTyreTemperature, int oldTyreTemperature);
         #endif
@@ -217,7 +223,7 @@ class store: public QObject{
         QFile errorLog;
 		int m_rotationsPerMinute=0;
 		int m_engineTemperature=0;
-		float m_batteryVoltage=0;
+        //float m_batteryVoltage=0;
 		int m_vehicleVelocity=0;
         int m_menu = 0;
 		#ifdef __LART_T14__
@@ -241,6 +247,8 @@ class store: public QObject{
 			short m_lapCount=0;
 			short m_highVoltage=0; 
             int page = 0;
+            short m_battery_voltage = 0;
+            int m_cell_max_temp = 0;
 			//int m_tyreTemperature=0;
 		#endif
 

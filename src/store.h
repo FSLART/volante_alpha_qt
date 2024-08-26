@@ -155,6 +155,9 @@ class store: public QObject{
             short getHV() const;
             short getbatv() const;
             int getmax_cell_temp() const;
+            int getmin_cell_temp() const;
+            int get_max_cell_voltage() const;
+            int get_min_cell_voltage() const;
 
                         //int getTyreTemperature() const;
 
@@ -170,6 +173,9 @@ class store: public QObject{
             void setHV(short hv);
             void setbatv(short hv);
             void setmax_cell_temp(int temp);
+            void setmin_cell_temp(int temp);
+            void setmax_cell_voltage(int voltage);
+            void setmin_cell_voltage(int voltage);
 			//void setTyreTemperature(int tyreTemperature);
 		#endif
 
@@ -213,7 +219,10 @@ class store: public QObject{
 			void lapCountChanged(short newLapCount, short oldLapCount);
             void hvChanged(short newHV, short oldHV );
             void bat_voltageChanged(short newhv, short oldhv);
-            void max_cell_tempChanged(int newInverterTemperature, int oldInverterTemperature);
+            void max_cell_voltageChanged(int new_cell_v, int old_cell_v);
+            void min_cell_voltageChanged(int new_cell_v, int old_cell_v);
+            void max_cell_tempChanged(int new_temp, int old_temp);
+            void min_cell_tempChanged(int new_temp, int old_temp);
 
                         //void tyreTemperatureChanged(int newTyreTemperature, int oldTyreTemperature);
         #endif
@@ -241,14 +250,17 @@ class store: public QObject{
             float m_power_limit = 0;
 			float m_batteryTemperature=0;
             int m_inverterTemperature=0;
+            int m_cell_min_temp = 0;
+            int m_cell_max_temp = 0;
             int m_motorTemperature=0;
 			short m_power=0;
 			int m_lapTime=0;
 			short m_lapCount=0;
 			short m_highVoltage=0; 
             int page = 0;
-            short m_battery_voltage = 0;
-            int m_cell_max_temp = 0;
+            int m_battery_voltage = 0;
+            int m_min_cell_voltage = 0;
+            int m_max_cell_voltage = 0;
 			//int m_tyreTemperature=0;
 		#endif
 

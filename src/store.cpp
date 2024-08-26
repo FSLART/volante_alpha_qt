@@ -383,8 +383,18 @@ void store::parseBson(std::vector<std::uint8_t> v){
                // EncodingUnion t;
                // t.encoded=j[BSON_MOTORTEMPERATURE];
                // this->setmotorTemperature(t.decoded);
-                this->setmotorTemperature(j[BSON_MAX_CELL_TEMP]);
+                this->setmax_cell_temp(j[BSON_MAX_CELL_TEMP]);
             }
+            if(j.contains(BSON_MIN_CELL_TEMP)){
+                this->setmin_cell_temp(j[BSON_MIN_CELL_TEMP]);
+            }
+            if(j.contains(BSON_MIN_VOLTAGE)){
+                this->setmin_cell_voltage(j[BSON_MIN_VOLTAGE]);
+            }
+            if(j.contains(BSON_MAX_VOLTAGE)){
+                this->setmax_cell_voltage(j[BSON_MAX_VOLTAGE]);
+            }
+
             if(j.contains(BSON_POWER_LIMIT)){
                 EncodingUnion t;
                 t.encoded=j[BSON_POWER_LIMIT];
@@ -758,6 +768,22 @@ int store::getmax_cell_temp() const{
     return this->m_cell_max_temp;
 }
 
+int store::get_max_cell_voltage() const{
+    return this->m_max_cell_voltage;
+}
+
+
+int store::get_min_cell_voltage() const{
+    return this->m_min_cell_voltage;
+}
+
+
+
+
+int store::getmin_cell_temp() const{
+    return this->m_cell_min_temp;
+}
+
 int store::getmotorTemperature() const{
     return this->m_motorTemperature;
 }
@@ -793,6 +819,8 @@ short store::getHV() const{
 short store::getbatv() const{
     return this->m_battery_voltage;
 }
+
+
 
 /**
 * @brief getter for the tyre temperature variable
@@ -866,6 +894,25 @@ void store::setmotorTemperature(int motorTemperature){
     emit motorTemperatureChanged(this->m_motorTemperature, oldmotorTemperature);
     qDebug()<<motorTemperature;
 }
+
+
+
+
+void store::setmax_cell_temp(int temp){
+    int oldtemp = this->m_cell_max_temp;
+    this->m_cell_max_temp=temp;
+    emit max_cell_tempChanged(this->m_cell_max_temp, oldtemp);
+}
+
+
+
+void store::setmin_cell_temp(int temp){
+    int oldtemp = this->m_cell_min_temp;
+    this->m_cell_min_temp=temp;
+    emit min_cell_tempChanged(this->m_cell_min_temp, oldtemp);
+}
+
+
 /**
 * @brief setter for the power variable
 * @param power The new value for the power variable
@@ -917,11 +964,25 @@ void store::setHV(short hv){
     emit hvChanged(this->m_highVoltage, oldHV);
 }
 
-void store::setbatv(short hv){
-    short oldHV = this->m_battery_voltage;
-    this->m_battery_voltage=hv;
-    emit hvChanged(this->m_battery_voltage, oldHV);
+
+
+
+void store::setmax_cell_voltage(int voltage){
+    short oldHV = this->m_max_cell_voltage;
+    this->m_max_cell_voltage=voltage;
+    emit hvChanged(this->m_max_cell_voltage, oldHV);
 }
+
+
+
+void store::setmin_cell_voltage(int voltage){
+    short oldHV = this->m_min_cell_voltage;
+    this->m_min_cell_voltage=voltage;
+    emit hvChanged(this->m_min_cell_voltage, oldHV);
+}
+
+
+
 
 //void store::setTyreTemperature(int tyreTemperature){
 //	int oldTyreTemperature = this->m_tyreTemperature;

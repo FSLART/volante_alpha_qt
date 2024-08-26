@@ -38,6 +38,9 @@
     #define BSON_LV_SOC "lv_soc"
     #define BSON_HV_BATTERYVOLTAGE "hv_bat"
     #define BSON_MAX_CELL_TEMP "max_cell_temp"
+    #define BSON_MIN_CELL_TEMP "min_cell_temp"
+    #define BSON_MIN_VOLTAGE "min_cell_v"
+    #define BSON_MAX_VOLTAGE "max_cell_v"
 #endif 
 
 

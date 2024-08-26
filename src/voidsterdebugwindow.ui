@@ -468,7 +468,7 @@
    <string>LukHudX</string>
   </property>
   <property name="layoutDirection">
-   <enum>Qt::LeftToRight</enum>
+   <enum>Qt::LayoutDirection::LeftToRight</enum>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
@@ -488,8 +488,15 @@
         <item>
          <layout class="QGridLayout" name="LeftGridLayout">
           <property name="sizeConstraint">
-           <enum>QLayout::SetDefaultConstraint</enum>
+           <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
           </property>
+          <item row="6" column="0">
+           <widget class="QLabel" name="Accumulator_voltage">
+            <property name="text">
+             <string> 0 V</string>
+            </property>
+           </widget>
+          </item>
           <item row="10" column="0">
            <layout class="QGridLayout" name="gridLayout_6">
             <property name="spacing">
@@ -543,106 +550,12 @@
             </item>
            </layout>
           </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Cell temperature</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="InverterVoltage_Prefix">
-            <property name="text">
-             <string>Inverter Voltage:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="FLabel" name="InverterVoltage_Label">
-            <property name="text">
-             <string>620 V (+5%)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="TotalPowerDraw_Prefix">
-            <property name="text">
-             <string>Total Power Draw(Curr):</string>
-            </property>
-           </widget>
-          </item>
           <item row="16" column="0">
            <widget class="FLabel" name="SOC_Label">
             <property name="text">
              <string>50% (5 hours of juice left)</string>
             </property>
            </widget>
-          </item>
-          <item row="18" column="0">
-           <spacer name="DTConstraints_Spacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="15" column="0">
-           <widget class="QLabel" name="SOC_Prefix">
-            <property name="text">
-             <string>SOC(%):</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <spacer name="TotalPowerDraw_Spacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="label_4">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Cell voltage</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Accumulator Voltage:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="17" column="0">
-           <spacer name="SOC_Spacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
           </item>
           <item row="1" column="0">
            <widget class="FLabel" name="TotalPowerDraw_Label">
@@ -656,6 +569,86 @@
              <number>-1</number>
             </property>
            </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="TotalPowerDraw_Prefix">
+            <property name="text">
+             <string>Total Power Draw(Curr):</string>
+            </property>
+           </widget>
+          </item>
+          <item row="17" column="0">
+           <spacer name="SOC_Spacer">
+            <property name="orientation">
+             <enum>Qt::Orientation::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="InverterVoltage_Prefix">
+            <property name="text">
+             <string>Inverter Voltage:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <spacer name="TotalPowerDraw_Spacer">
+            <property name="orientation">
+             <enum>Qt::Orientation::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Accumulator Voltage:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="0">
+           <spacer name="InverterVoltage_Spacer">
+            <property name="orientation">
+             <enum>Qt::Orientation::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Cell temperature</string>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="0">
+           <spacer name="DTConstraints_Spacer">
+            <property name="orientation">
+             <enum>Qt::Orientation::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
           </item>
           <item row="8" column="0">
            <layout class="QGridLayout" name="gridLayout_7">
@@ -707,25 +700,32 @@
             </item>
            </layout>
           </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="Accumulator_voltage">
+          <item row="4" column="0">
+           <widget class="FLabel" name="InverterVoltage_Label">
             <property name="text">
-             <string> 0 V</string>
+             <string>620 V (+5%)</string>
             </property>
            </widget>
           </item>
-          <item row="14" column="0">
-           <spacer name="InverterVoltage_Spacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
+          <item row="15" column="0">
+           <widget class="QLabel" name="SOC_Prefix">
+            <property name="text">
+             <string>SOC(%):</string>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-           </spacer>
+            <property name="text">
+             <string>Cell voltage</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -734,7 +734,7 @@
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
-         <enum>Qt::Vertical</enum>
+         <enum>Qt::Orientation::Vertical</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -747,7 +747,7 @@
       <item>
        <layout class="QVBoxLayout" name="RigthVerticalLayout">
         <property name="sizeConstraint">
-         <enum>QLayout::SetDefaultConstraint</enum>
+         <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
         </property>
         <property name="leftMargin">
          <number>10</number>
@@ -895,7 +895,6 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -954,7 +953,6 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -975,7 +973,6 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -996,7 +993,6 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -1017,7 +1013,6 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -1088,7 +1083,7 @@
         <item>
          <spacer name="horizontalSpacer_2">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -1097,6 +1092,16 @@
            </size>
           </property>
          </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap resource="../Imagens.qrc">:/src/squared3.png</pixmap>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0">
@@ -1133,10 +1138,10 @@
             <item row="0" column="0">
              <spacer name="horizontalSpacer_3">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
+               <enum>QSizePolicy::Policy::Fixed</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -1181,6 +1186,8 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../Imagens.qrc"/>
+ </resources>
  <connections/>
 </ui>

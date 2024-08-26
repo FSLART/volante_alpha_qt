@@ -135,3 +135,6 @@ release_armv7Cortex{
 	
 
 }
+
+RESOURCES += \
+    Imagens.qrc

@@ -52,14 +52,14 @@ int main(int argc, char *argv[]){
         check_menu(value);
     });*/
 
-    PilotWindow pl;
-    pl.show();
+    //PilotWindow pl;
+    //pl.show();
     //MainWindow m;
     //m.show();
 
 
-    //VoidsterdebugWindow debugWindow;
-     //debugWindow.show();
+    VoidsterdebugWindow debugWindow;
+    debugWindow.show();
 
    //VoidsterdebugWindow2 debugWindow2;
     //debugWindow2.show();

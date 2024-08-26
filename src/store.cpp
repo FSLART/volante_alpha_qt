@@ -30,7 +30,7 @@ int store::setupSerial() {
 	serial->setDataBits(QSerialPort::Data8);
 	serial->setStopBits(QSerialPort::OneStop);
 	//serial->setParity(QSerialPort::OddParity);
-	serial->setFlowControl(QSerialPort::NoFlowControl);
+    serial->setFlowControl(QSerialPort::NoFlowControl);
 	if (!serial->open(QIODevice::ReadWrite)) {
         qDebug() << "Can't open " << this->dev << ", error code" << serial->error();
         serialLog.append("||Can't open " + this->dev + ", error code" + serial->errorString()+"||");

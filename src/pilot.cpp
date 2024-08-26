@@ -97,7 +97,7 @@ PilotWindow::PilotWindow(QWidget *parent, QString serialDev)
             connect(store_ref,&store::socChanged,[CONSUMED_POWER_BAR](int soc){
                CONSUMED_POWER_BAR->setValue(soc);
             });
-//            QObject::connect(store_ref,&store::menuChanged,this,&PilotWindow::handleValueChanged);
+            //QObject::connect(store_ref,&store::menuChanged,this,&PilotWindow::handleValueChanged);
 }
 
 

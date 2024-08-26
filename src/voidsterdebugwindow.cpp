@@ -44,7 +44,7 @@ VoidsterdebugWindow::VoidsterdebugWindow(QWidget *parent, QString serialDev)
 
             FLabel* TotalPowerDraw_Label  = this->findChild<FLabel*>("TotalPowerDraw_Label");
             FLabel* InverterVoltage_Label = this->findChild<FLabel*>("InverterVoltage_Label");
-            FLabel* Accumulator_Voltage_Label = this->findChild<FLabel*>("Accumulator_Voltage");
+            FLabel* Accumulator_Voltage_Label = this->findChild<FLabel*>("Accumulator_voltage");
             FLabel* Max_cell_temp_label = this->findChild<FLabel*>("max_cell_temp");
             FLabel* SOC_Label             = this->findChild<FLabel*>("SOC_Label");
             FLabel* DTConstraints_Label   = this->findChild<FLabel*>("DTConstraints_Label");

@@ -222,7 +222,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QLabel" name="label_4">
+           <widget class="FLabel" name="label_4">
             <property name="font">
              <font>
               <family>Fira Mono</family>
@@ -239,7 +239,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_3">
+           <widget class="FLabel" name="label_3">
             <property name="font">
              <font>
               <family>Fira Mono</family>
@@ -284,7 +284,7 @@
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QLabel" name="Consumed_Label">
+               <widget class="FLabel" name="Consumed_Label">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                   <horstretch>0</horstretch>
@@ -342,7 +342,7 @@
                </widget>
               </item>
               <item row="0" column="0">
-               <widget class="QLabel" name="speed_Label">
+               <widget class="FLabel" name="speed_Label">
                 <property name="minimumSize">
                  <size>
                   <width>194</width>
@@ -394,6 +394,13 @@
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">src/flabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../Imagens.qrc"/>
  </resources>

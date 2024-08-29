@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>src/squared3.png</file>
+        <file>src/Horizontal_Grey.png</file>
+        <file>resize.png</file>
     </qresource>
 </RCC>

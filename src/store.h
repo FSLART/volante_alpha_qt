@@ -67,6 +67,8 @@ typedef union {
 #define LOG_MAX_RETRIES 4
 // this is a constant pretty much dont touch it..
 #define BSON_SKIP_BYTES 9
+
+
 /**
 *	@class store
 *   @brief A class containing the various data, logic, journals required to reliably transmit or represent firmware driven variables graphically.
@@ -82,49 +84,49 @@ class store: public QObject{
 	// TODO well now its too late to remove this, but check what this does. Its a leftover of learning, and was presumed to be boylerplate
     Q_PROPERTY(int  m_rotationsPerMinute READ getRpm WRITE setRpm NOTIFY rpmChanged);
 
-
+    enum error_severity {
+        INFO=0,
+        WARNING=1,
+        MINOR=2,
+        MAJOR=3,
+        CRITICAL=100
+    };
 
 	public:
-        enum error_severity {
-            INFO=0,
-            WARNING=1,
-            MINOR=2,
-            MAJOR=3,
-            CRITICAL=100
-        };
-        QString dev;
+
+                QString dev;
 		QSerialPort* port=nullptr;
 		void handleReadyRead();
 		void forceRead(qint64 len);
-		void handleError(QSerialPort::SerialPortError serialPortError);
-		
+		void handleError(QSerialPort::SerialPortError serialPortError);	
 		QByteArray serialLog;
 		QByteArray lastMessage;
 		QByteArray bufferMessage;
 		char * markerBSON_WARNING=nullptr; 
-		
 		void parseBson(std::vector<std::uint8_t> v);
                 void bsonMining();
                 int requestSlotAttachment();
-        qint64 scribeError(QString error, error_severity severity=error_severity::INFO);
-        explicit store(QString dev="", QSerialPort::BaudRate baud = QSerialPort::Baud115200, QObject *parent = nullptr);
+                qint64 scribeError(QString error, error_severity severity=error_severity::INFO);
+                explicit store(QString dev="", QSerialPort::BaudRate baud = QSerialPort::Baud115200, QObject *parent = nullptr);
 		~store();
-		
+                void appendKeyValuePersistency(QString key, QJsonValue value);
+                void loadPersistency();
+                void storePersistency();
 		//getters and setters
 		QSerialPort::BaudRate getBaudRate() const;
 		//getters wire variables
-        int getRpm() const;
-        int getMenu() const;
+                int getRpm() const;
+                int getMenu() const;
 		int getEngineTemperature() const;
 		float getBatteryVoltage() const;
 		int getVehicleSpeed() const;
 		//setters wire variables
 		void setRpm(int rpm);
-        void setMenu(int menu);
+                void setMenu(int menu);
 		void setEngineTemperature(int engineTemperature);
 		void setBatteryVoltage(float batteryVoltage);
 		void setVehicleSpeed(int vehicleVelocity);
-        void updateValue(int newValue);
+                void updateValue(int newValue);
 		#ifdef __LART_T14__
 			int getGearShift() const;			
 			float getOilPressure() const;
@@ -149,27 +151,25 @@ class store: public QObject{
 			float getBatteryTemperature() const;
             int getInverterTemperature() const;
             int getmotorTemperature() const;
-			short getPower() const;
-			int getLapTime() const;
-			short getLapCount() const;
+            short getPower() const;
+            int getLapTime() const;
+            short getLapCount() const;
             short getHV() const;
             short getbatv() const;
             int getmax_cell_temp() const;
             int getmin_cell_temp() const;
             int get_max_cell_voltage() const;
             int get_min_cell_voltage() const;
-
-                        //int getTyreTemperature() const;
-
+            int getTyreTemperature() const;
             void setSoc(float soc);
             void setLV_Soc(float soc);
             void setPowerLimit(float powerl);
-			void setBatteryTemperature(float batteryTemperature);
+            void setBatteryTemperature(float batteryTemperature);
             void setInverterTemperature(int inverterTemperature);
             void setmotorTemperature(int inverterTemperature);
-			void setPower(short power);
-			void setLapTime(int lapTime);
-			void setLapCount(short lapCount);
+            void setPower(short power);
+            void setLapTime(int lapTime);
+            void setLapCount(short lapCount);
             void setHV(short hv);
             void setbatv(short hv);
             void setmax_cell_temp(int temp);
@@ -183,7 +183,8 @@ class store: public QObject{
 
         static bool initialized;
 	protected:
-        int startGeneralErrorLog(uint depth=0);
+                QJsonDocument persistent_json;
+                int startGeneralErrorLog(uint depth=0);
 		void stopGeneralErrorLog();
                 int setupSerial();
         //        bool setSlots=false;
@@ -191,9 +192,9 @@ class store: public QObject{
 		int closeSerial();
 
 	signals:
-        void valueChanged(int newValue);
-        void rpmChanged(int newRpm, int oldRpm);
-        void menuChanged(int newMenu, int oldMenu);
+                void valueChanged(int newValue);
+                void rpmChanged(int newRpm, int oldRpm);
+                void menuChanged(int newMenu, int oldMenu);
 		void engineTemperatureChanged(int newEngineTemperature, int oldEngineTemperature);
 		void batteryVoltageChanged(float newBatteryVoltage, float oldBatteryVoltage); 
 		void vehicleSpeedChanged(int newVehicleSpeed, int oldVehicleSpeed);
@@ -207,34 +208,34 @@ class store: public QObject{
 			void tcLaunchChanged(int newTcLaunch, int oldTcLaunch);  
 		#endif
 		#ifdef __LART_T24__
-            void socChanged(float newSoc, float oldSoc);
-            void lvsocChanged(float newSoc, float oldSoc);
-            void power_limitChanged(float newlimit, float oldlimit);
+                        void socChanged(float newSoc, float oldSoc);
+                        void lvsocChanged(float newSoc, float oldSoc);
+                        void power_limitChanged(float newlimit, float oldlimit);
 			void batteryTemperatureChanged(float newBatteryTemperature, float oldBatteryTemperature);
-            void inverterTemperatureChanged(int newInverterTemperature, int oldInverterTemperature);
-            void motorTemperatureChanged(int newmotorTemperature, int oldmotorTemperature);
+                        void inverterTemperatureChanged(int newInverterTemperature, int oldInverterTemperature);
+                        void motorTemperatureChanged(int newmotorTemperature, int oldmotorTemperature);
 			void powerChanged(short newPower, short oldPower);
 			void lapTimeChanged(QTime newLapTime, QTime oldLapTime);
 			void diffLapTimeChanged(QTime newDiffLapTime, QTime oldDiffLapTime);
 			void lapCountChanged(short newLapCount, short oldLapCount);
-            void hvChanged(short newHV, short oldHV );
-            void bat_voltageChanged(short newhv, short oldhv);
-            void max_cell_voltageChanged(int new_cell_v, int old_cell_v);
-            void min_cell_voltageChanged(int new_cell_v, int old_cell_v);
-            void max_cell_tempChanged(int new_temp, int old_temp);
-            void min_cell_tempChanged(int new_temp, int old_temp);
+                        void hvChanged(short newHV, short oldHV );
+                        void bat_voltageChanged(short newhv, short oldhv);
+                        void max_cell_voltageChanged(int new_cell_v, int old_cell_v);
+                        void min_cell_voltageChanged(int new_cell_v, int old_cell_v);
+                        void max_cell_tempChanged(int new_temp, int old_temp);
+                        void min_cell_tempChanged(int new_temp, int old_temp);
 
                         //void tyreTemperatureChanged(int newTyreTemperature, int oldTyreTemperature);
         #endif
 
     private:
 		QSerialPort::BaudRate baud;
-        QFile errorLog;
+                QFile errorLog;
 		int m_rotationsPerMinute=0;
 		int m_engineTemperature=0;
-        //float m_batteryVoltage=0;
+                //float m_batteryVoltage=0;
 		int m_vehicleVelocity=0;
-        int m_menu = 0;
+                int m_menu = 0;
 		#ifdef __LART_T14__
 			int m_gearShift=0;
 			float m_oilPressure=0;
@@ -246,21 +247,21 @@ class store: public QObject{
 		#endif
 		#ifdef __LART_T24__
 			float m_stateOfCharge=0;
-            float m_lv_stateOfCharge = 0;
-            float m_power_limit = 0;
+                        float m_lv_stateOfCharge = 0;
+                        float m_power_limit = 0;
 			float m_batteryTemperature=0;
-            int m_inverterTemperature=0;
-            int m_cell_min_temp = 0;
-            int m_cell_max_temp = 0;
-            int m_motorTemperature=0;
+                        int m_inverterTemperature=0;
+                        int m_cell_min_temp = 0;
+                        int m_cell_max_temp = 0;
+                        int m_motorTemperature=0;
 			short m_power=0;
 			int m_lapTime=0;
 			short m_lapCount=0;
 			short m_highVoltage=0; 
-            int page = 0;
-            int m_battery_voltage = 0;
-            int m_min_cell_voltage = 0;
-            int m_max_cell_voltage = 0;
+                        int page = 0;
+                        int m_battery_voltage = 0;
+                        int m_min_cell_voltage = 0;
+                        int m_max_cell_voltage = 0;
 			//int m_tyreTemperature=0;
 		#endif
 

@@ -54,12 +54,12 @@ int main(int argc, char *argv[]){
 
     //PilotWindow pl;
     //pl.show();
-    //MainWindow m;
-    //m.show();
+    MainWindow m;
+    m.show();
 
 
-    VoidsterdebugWindow debugWindow;
-    debugWindow.show();
+ //   VoidsterdebugWindow debugWindow;
+ //   debugWindow.show();
 
    //VoidsterdebugWindow2 debugWindow2;
     //debugWindow2.show();

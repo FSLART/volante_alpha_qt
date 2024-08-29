@@ -86,6 +86,23 @@ int store::startGeneralErrorLog(uint depth){
     return 0;
 }
 /**
+ * @brief Appends a Key Value pair to the persistency file on volatile memory
+ * @param key
+ * @param value
+ */
+void store::appendKeyValuePersistency(QString key, QJsonValue value){
+    persistent_json.object().insert(key, value);
+}
+void store::loadPersistency(){
+    QString homeDir = QDir::homePath();
+
+    // Define the path to the JSON file in the home directory
+    QString filePath = homeDir + "/yourfile.json";
+}
+void store::storePersistency(){
+
+}
+/**
 * @brief Stops the error logging system / journal, if it exists, closes it.
 * @return 0 if success, 1 if failure
 

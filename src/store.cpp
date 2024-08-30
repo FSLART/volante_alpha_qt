@@ -491,7 +491,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
 
 
 		#endif
-	
+}
 	} catch (json::parse_error& e) {
 		scribeError("An error occurred while parsing the BSON data, error: " + QString::fromStdString(e.what()), error_severity::MINOR);
         //TODO study if bellow is better or worse.
@@ -499,7 +499,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
 
 
 	}
-    
+
 
 }
 /**

@@ -38,6 +38,7 @@
 #include "references/bson_var.h"
 #include "QtWidgets"
 #include "QMessageBox"
+#include <vector>
 /**
 * @brief Go big or go home, :) 
 **/
@@ -102,6 +103,7 @@ class store: public QObject{
 		QByteArray serialLog;
 		QByteArray lastMessage;
 		QByteArray bufferMessage;
+                std::vector<QMainWindow *> ref_windows;
 		char * markerBSON_WARNING=nullptr; 
 		void parseBson(std::vector<std::uint8_t> v);
                 void bsonMining();
@@ -127,6 +129,7 @@ class store: public QObject{
 		void setBatteryVoltage(float batteryVoltage);
 		void setVehicleSpeed(int vehicleVelocity);
                 void updateValue(int newValue);
+
 		#ifdef __LART_T14__
 			int getGearShift() const;			
 			float getOilPressure() const;
@@ -182,7 +185,8 @@ class store: public QObject{
 		void setBaudRate(QSerialPort::BaudRate baud);
 
         static bool initialized;
-	protected:
+    protected:
+
                 QJsonDocument persistent_json;
                 int startGeneralErrorLog(uint depth=0);
 		void stopGeneralErrorLog();

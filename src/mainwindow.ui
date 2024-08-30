@@ -341,7 +341,7 @@
        <number>0</number>
       </property>
       <item>
-       <spacer name="vs_4">
+       <spacer name="vs_2">
         <property name="orientation">
          <enum>Qt::Orientation::Vertical</enum>
         </property>
@@ -434,26 +434,37 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="FLabel" name="label_4">
-            <property name="font">
+         <layout class="QGridLayout" name="lap_layout">
+          <item row="1" column="1">
+           <widget class="QLabel" name="DiffBestLap_label">
+            <property name="text">
+             <string>00:00:00</string>
+            </property>
+			 <property name="font">
              <font>
               <family>Fira Mono</family>
               <pointsize>32</pointsize>
               <bold>true</bold>
              </font>
             </property>
+           </widget>
+          </item>
+		   <item row="1" column="0">
+           <widget class="QLabel" name="IgnitionTime_label">
             <property name="text">
-             <string>0</string>
+             <string>00:00:00</string>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
+			 <property name="font">
+             <font>
+              <family>Fira Mono</family>
+              <pointsize>32</pointsize>
+              <bold>true</bold>
+             </font>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="FLabel" name="label_3">
+          <item row="2" column="1">
+           <widget class="FLabel" name="DiffLastLap_label">
             <property name="font">
              <font>
               <family>Fira Mono</family>
@@ -463,6 +474,23 @@
             </property>
             <property name="text">
              <string>00:00:00</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="FLabel" name="LapCount_label">
+            <property name="font">
+             <font>
+              <family>Fira Mono</family>
+              <pointsize>32</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>0</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
@@ -551,7 +579,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>kW</string>
+                 <string>kWh</string>
                 </property>
                </widget>
               </item>

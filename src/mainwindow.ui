@@ -437,38 +437,27 @@
          <layout class="QGridLayout" name="lap_layout">
           <item row="1" column="1">
            <widget class="QLabel" name="DiffBestLap_label">
-            <property name="text">
-             <string>00:00:00</string>
-            </property>
-			 <property name="font">
-             <font>
-              <family>Fira Mono</family>
-              <pointsize>32</pointsize>
-              <bold>true</bold>
-             </font>
-            </property>
-           </widget>
-          </item>
-		   <item row="1" column="0">
-           <widget class="QLabel" name="IgnitionTime_label">
-            <property name="text">
-             <string>00:00:00</string>
-            </property>
-			 <property name="font">
-             <font>
-              <family>Fira Mono</family>
-              <pointsize>32</pointsize>
-              <bold>true</bold>
-             </font>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="FLabel" name="DiffLastLap_label">
             <property name="font">
              <font>
               <family>Fira Mono</family>
-              <pointsize>32</pointsize>
+              <pointsize>22</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>+00:00.000</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="IgnitionTime_label">
+            <property name="font">
+             <font>
+              <family>Fira Mono</family>
+              <pointsize>22</pointsize>
               <bold>true</bold>
              </font>
             </property>
@@ -480,12 +469,29 @@
             </property>
            </widget>
           </item>
+          <item row="2" column="1">
+           <widget class="FLabel" name="DiffLastLap_label">
+            <property name="font">
+             <font>
+              <family>Fira Mono</family>
+              <pointsize>22</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>-00:00.000</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="0">
            <widget class="FLabel" name="LapCount_label">
             <property name="font">
              <font>
               <family>Fira Mono</family>
-              <pointsize>32</pointsize>
+              <pointsize>22</pointsize>
               <bold>true</bold>
              </font>
             </property>

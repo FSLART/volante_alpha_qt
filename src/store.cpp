@@ -157,6 +157,8 @@ qint64 store::scribeError(QString error, error_severity severity){
 	}catch(...){
 		//TODO handle exception graphically
 		qDebug() << "An exception occurred while trying to write to the error log";
+        QMessageBox *msgBox = new QMessageBox(QMessageBox::Warning, "Warning", error, QMessageBox::NoButton);
+        msgBox->setStandardButtons(QMessageBox::NoButton);
 	}
 
 	return ret;
@@ -411,10 +413,21 @@ void store::parseBson(std::vector<std::uint8_t> v){
                 EncodingUnion t;
                 t.encoded=j[BSON_LV_SOC];
                 this->setLV_Soc(t.decoded);
+                if(t.decoded<= LV_SOC_WARNING && error_map.find("Low voltage SOC warning") != error_map.end()){
+                    error_map["Low voltage SOC warning"] = j[BSON_MOTORTEMPERATURE];
+                    scribeError("Low voltage SOC warning",WARNING);
+                }
+                else{
+                    if(error_map.find("Low voltage SOC warning") == error_map.end()){
+                        error_map.erase("Low voltage SOC warning");
+                    }
+
+
+
             }
             if(j.contains(BSON_MOTORTEMPERATURE)){
                 this->setmotorTemperature(j[BSON_MOTORTEMPERATURE]);
-                if(j[BSON_MOTORTEMPERATURE]>= 75 && error_map.find("Motor temperature warning") != error_map.end()){
+                if(j[BSON_MOTORTEMPERATURE]>= MOTOR_TEMPERATURE_WARNING && error_map.find("Motor temperature warning") != error_map.end()){
                     error_map["Motor temperature warning"] = j[BSON_MOTORTEMPERATURE];
                     scribeError("Motor temperature warning",WARNING);
                 }

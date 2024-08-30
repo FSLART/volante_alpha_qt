@@ -24,6 +24,7 @@
 #include <QTranslator>
 //static store* store_ref;
 //void check_menu(int i);
+#include<QMessageBox>
 
 //VoidsterdebugWindow debugWindow;
 //PilotWindow pl;
@@ -54,9 +55,14 @@ int main(int argc, char *argv[]){
 
     //PilotWindow pl;
     //pl.show();
+    QMessageBox *msgBox = new QMessageBox(QMessageBox::Warning, "ERRO", "bateria baixa !!!", QMessageBox::NoButton);
+    msgBox->setStandardButtons(QMessageBox::NoButton);
+    msgBox->show();
     MainWindow m;
     m.show();
+   //QMessageBox::information(nullptr, "ERRO", "bateria baixa !!!");
 
+    msgBox->close();
 
  //   VoidsterdebugWindow debugWindow;
  //   debugWindow.show();

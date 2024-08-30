@@ -413,10 +413,18 @@ void store::parseBson(std::vector<std::uint8_t> v){
                 this->setLV_Soc(t.decoded);
             }
             if(j.contains(BSON_MOTORTEMPERATURE)){
-               // EncodingUnion t;
-               // t.encoded=j[BSON_MOTORTEMPERATURE];
-               // this->setmotorTemperature(t.decoded);
                 this->setmotorTemperature(j[BSON_MOTORTEMPERATURE]);
+                if(j[BSON_MOTORTEMPERATURE]>= 75 && error_map.find("Motor temperature warning") != error_map.end()){
+                    error_map["Motor temperature warning"] = j[BSON_MOTORTEMPERATURE];
+                    scribeError("Motor temperature warning",WARNING);
+                }
+                else{
+                    if(error_map.find("Motor temperature warning") == error_map.end()){
+                        error_map.erase("Motor temperature warning");
+                    }
+
+                }
+
             }
             if(j.contains(BSON_MAX_CELL_TEMP)){
                // EncodingUnion t;

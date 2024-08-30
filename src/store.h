@@ -262,11 +262,13 @@ class store: public QObject{
 			int m_lapTime=0;
 			short m_lapCount=0;
 			short m_highVoltage=0; 
-                        int page = 0;
-                        int m_battery_voltage = 0;
-                        int m_min_cell_voltage = 0;
-                        int m_max_cell_voltage = 0;
+            int page = 0;
+            int m_battery_voltage = 0;
+            int m_min_cell_voltage = 0;
+            int m_max_cell_voltage = 0;
 			//int m_tyreTemperature=0;
+            std::unordered_map<string, int> error_map;
+
 		#endif
 
         

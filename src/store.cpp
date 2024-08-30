@@ -370,28 +370,14 @@ void store::parseBson(std::vector<std::uint8_t> v){
                     switch(t)
                     {
                     case 0:
-						MainWindow* temp_ref;
-					    //Verify if position 0 is empty
-						if(ref_windows[0] == nullptr){
-							//store currently displayed window
-							MainWindow temp;
-							temp_ref = &temp;
 
-							ref_windows[0] = temp_ref;
-							
-						}else{
-							temp_ref = ref_windows[0];
-							
 
-						}
-						temp_ref->show();
-                        break;
                     case 1:
-						VoidsterdebugWindow* temp_ref;
+                                                QMainWindow* temp_ref;
 						if(ref_windows[1] == nullptr){
 							VoidsterdebugWindow temp;
-							temp_ref = &temp;
-							ref_windows[1] = temp_ref;
+                                                        temp_ref = &temp;
+                                                        ref_windows[1] = temp_ref;
 						}else{
 							temp_ref = ref_windows[1];
 						}

@@ -267,14 +267,14 @@ class store: public QObject{
             int m_min_cell_voltage = 0;
             int m_max_cell_voltage = 0;
 			//int m_tyreTemperature=0;
-            std::unordered_map<string, int> error_map;
+            std::unordered_map<std::string, int> error_map;
 
 		#endif
 
         
         
         
-        
+
         
 
 };

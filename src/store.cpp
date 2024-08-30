@@ -353,7 +353,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
 				this->setOilTemperature(t.decoded);
 			}
 		#endif
-		
+        #ifdef __LART_T24__
             if(j.contains(BSON_MENU))
             {
                 int t;

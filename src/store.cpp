@@ -121,7 +121,8 @@ void store::stopGeneralErrorLog(){
 }
 /**
 * @brief Writes an error to the error log
-* @param error The error message
+* @param error The
+* error message
 * @param severity The severity of the error
 * @return The number of bytes written to the file
 * @see store.h
@@ -143,7 +144,7 @@ qint64 store::scribeError(QString error, error_severity severity){
 		QString dateStr = now.toString("hh:mm:ss dd-MM-yyyy");
 		error.prepend(dateStr + " |" + QString::number(severity) + "|*_");
 
-        ret= errorLog.write(error.toUtf8()+"|EOL|\n");
+                ret= errorLog.write(error.toUtf8()+"|EOL|\n");
 		if (severity>=error_severity::CRITICAL){
 			//TODO handle exception graphically
 			
@@ -352,7 +353,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
 				this->setOilTemperature(t.decoded);
 			}
 		#endif
-		#ifdef __LART_T24__
+		
             if(j.contains(BSON_MENU))
             {
                 int t;
@@ -360,20 +361,41 @@ void store::parseBson(std::vector<std::uint8_t> v){
                 this->setMenu(t);
                 if(m_menu != t)
                 {
-                    store::closeSerial();
-                    VoidsterdebugWindow debugWindow;
-                    PilotWindow pl;
+                    store::closeSerial();	
+					
                    // VoidsterdebugWindow debugWindow = new VoidsterdebugWindow();
                     //PilotWindow pl = new PilotWindow();
                     switch(t)
                     {
                     case 0:
-                        pl.show();
+						MainWindow* temp_ref;
+					    //Verify if position 0 is empty
+						if(ref_windows[0] == nullptr){
+							//store currently displayed window
+							MainWindow temp;
+							temp_ref = &temp;
 
+							ref_windows[0] = temp_ref;
+							
+						}else{
+							temp_ref = ref_windows[0];
+							
+
+						}
+						temp_ref->show();
                         break;
                     case 1:
-                        debugWindow.show();
-                        //QMessageBox::information(nullptr, "Menu 0", "Menu 0 has been selected.");
+						VoidsterdebugWindow* temp_ref;
+						if(ref_windows[1] == nullptr){
+							VoidsterdebugWindow temp;
+							temp_ref = &temp;
+							ref_windows[1] = temp_ref;
+						}else{
+							temp_ref = ref_windows[1];
+						}
+						temp_ref->show();
+
+                        
                         break;
                     default:
                         break;
@@ -549,6 +571,7 @@ void store::setMenu(int menu){
             this->m_menu=menu;
             emit menuChanged(this->m_menu, oldMenu);
         }
+
     }else{
         this->scribeError(__LART_STORE_SETRPM_ERROR__, store::error_severity::MINOR);
     }

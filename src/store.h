@@ -148,6 +148,10 @@ class store: public QObject{
 
 		#endif
 		#ifdef __LART_T24__
+            #define MOTOR_TEMPERATURE_WARNING 75
+            #define LV_SOC_WARNING 30
+            #define HV_SOC_WARNING 30
+
             float getSoc() const;
             float getLV_Soc() const;
             float getPowerLimit() const;

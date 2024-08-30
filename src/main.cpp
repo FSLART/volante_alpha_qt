@@ -62,7 +62,7 @@ int main(int argc, char *argv[]){
     m.show();
    //QMessageBox::information(nullptr, "ERRO", "bateria baixa !!!");
 
-    msgBox->close();
+    msgBox->hide();
 
  //   VoidsterdebugWindow debugWindow;
  //   debugWindow.show();

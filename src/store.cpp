@@ -373,11 +373,11 @@ void store::parseBson(std::vector<std::uint8_t> v){
 
 
                     case 1:
-                                                QMainWindow* temp_ref;
+                        QMainWindow* temp_ref;
 						if(ref_windows[1] == nullptr){
 							VoidsterdebugWindow temp;
-                                                        temp_ref = &temp;
-                                                        ref_windows[1] = temp_ref;
+                            temp_ref = &temp;
+                            ref_windows[1] = temp_ref;
 						}else{
 							temp_ref = ref_windows[1];
 						}
@@ -394,13 +394,21 @@ void store::parseBson(std::vector<std::uint8_t> v){
                 EncodingUnion t;
                 t.encoded=j[BSON_SOC];
                 this->setSoc(t.decoded);
+                if(t.decoded<= HV_SOC_WARNING && error_map.find("SOC warning") != error_map.end()){
+                    error_map["SOC warning"] = t.decoded;
+                    scribeError("SOC warning",WARNING);
+                }
+                else{
+                    if(error_map.find("SOC warning") == error_map.end()){
+                        error_map.erase("SOC warning");
+                    }
             }
             if(j.contains(BSON_LV_SOC)){
                 EncodingUnion t;
                 t.encoded=j[BSON_LV_SOC];
                 this->setLV_Soc(t.decoded);
                 if(t.decoded<= LV_SOC_WARNING && error_map.find("Low voltage SOC warning") != error_map.end()){
-                    error_map["Low voltage SOC warning"] = j[BSON_MOTORTEMPERATURE];
+                    error_map["Low voltage SOC warning"] = t.decoded;
                     scribeError("Low voltage SOC warning",WARNING);
                 }
                 else{
@@ -456,6 +464,14 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			if(j.contains(BSON_INVERTERTEMPERATURE)){
                 int temp = j[BSON_INVERTERTEMPERATURE];
                 this->setInverterTemperature(temp);
+                if(t.decoded<= INVERTER_TEMPERATURE_WARNING && error_map.find("Inverter temperature warning") != error_map.end()){
+                    error_map["Inverter temperature warning"] = t.decoded;
+                    scribeError("Inverter temperature warning",WARNING);
+                }
+                else{
+                    if(error_map.find("Inverter temperature warning") == error_map.end()){
+                        error_map.erase("Inverter temperature warning");
+                    }
 			}
                          if(j.contains(BSON_POWER)){
                                 short temp =  j[BSON_POWER];

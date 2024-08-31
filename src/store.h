@@ -149,6 +149,7 @@ class store: public QObject{
 		#endif
 		#ifdef __LART_T24__
             #define MOTOR_TEMPERATURE_WARNING 75
+            #define INVERTER_TEMPERATURE_WARNING 50
             #define LV_SOC_WARNING 30
             #define HV_SOC_WARNING 30
 

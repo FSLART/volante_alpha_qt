@@ -398,6 +398,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
                     error_map["SOC warning"] = t.decoded;
                     scribeError("SOC warning",WARNING);
                 }
+            }
                 else{
                     if(error_map.find("SOC warning") == error_map.end()){
                         error_map.erase("SOC warning");
@@ -425,6 +426,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
                     error_map["Motor temperature warning"] = j[BSON_MOTORTEMPERATURE];
                     scribeError("Motor temperature warning",WARNING);
                 }
+            }
                 else{
                     if(error_map.find("Motor temperature warning") == error_map.end()){
                         error_map.erase("Motor temperature warning");
@@ -464,8 +466,8 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			if(j.contains(BSON_INVERTERTEMPERATURE)){
                 int temp = j[BSON_INVERTERTEMPERATURE];
                 this->setInverterTemperature(temp);
-                if(t.decoded<= INVERTER_TEMPERATURE_WARNING && error_map.find("Inverter temperature warning") != error_map.end()){
-                    error_map["Inverter temperature warning"] = t.decoded;
+                if(temp<= INVERTER_TEMPERATURE_WARNING && error_map.find("Inverter temperature warning") != error_map.end()){
+                    error_map["Inverter temperature warning"] = temp;
                     scribeError("Inverter temperature warning",WARNING);
                 }
                 else{

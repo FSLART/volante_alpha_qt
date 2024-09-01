@@ -221,6 +221,9 @@
     <pointsize>12</pointsize>
    </font>
   </property>
+  <property name="cursor">
+   <cursorShape>BlankCursor</cursorShape>
+  </property>
   <property name="windowTitle">
    <string>LukHudX</string>
   </property>
@@ -287,7 +290,7 @@
          <number>30</number>
         </property>
         <item>
-         <widget class="QProgressBar" name="PowerLimitBar">
+         <widget class="QProgressBar" name="ConsumedPowerBar">
           <property name="minimumSize">
            <size>
             <width>100</width>
@@ -445,7 +448,7 @@
              </font>
             </property>
             <property name="text">
-             <string>+00:00.000</string>
+             <string>__</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
@@ -453,7 +456,7 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="IgnitionTime_label">
+           <widget class="QLabel" name="AbsoluteTime_Label">
             <property name="font">
              <font>
               <family>Fira Mono</family>
@@ -462,7 +465,7 @@
              </font>
             </property>
             <property name="text">
-             <string>00:00:00</string>
+             <string>__</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
@@ -479,7 +482,7 @@
              </font>
             </property>
             <property name="text">
-             <string>-00:00.000</string>
+             <string>__</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
@@ -496,7 +499,7 @@
              </font>
             </property>
             <property name="text">
-             <string>0</string>
+             <string>__</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
@@ -512,7 +515,7 @@
             <item>
              <layout class="QFormLayout" name="formLayout">
               <item row="0" column="1">
-               <widget class="QLabel" name="Velocity_Suffix">
+               <widget class="QLabel" name="Speed_Suffix">
                 <property name="maximumSize">
                  <size>
                   <width>200</width>
@@ -532,7 +535,7 @@
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="FLabel" name="Consumed_Label">
+               <widget class="FLabel" name="PowerLimit_Label">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                   <horstretch>0</horstretch>
@@ -559,12 +562,12 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>80</string>
+                 <string>__</string>
                 </property>
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QLabel" name="Consumed_Suffix">
+               <widget class="QLabel" name="PowerLimit_Suffix">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -590,7 +593,7 @@
                </widget>
               </item>
               <item row="0" column="0">
-               <widget class="FLabel" name="speed_Label">
+               <widget class="FLabel" name="Speed_Label">
                 <property name="minimumSize">
                  <size>
                   <width>194</width>
@@ -611,7 +614,7 @@
                  </font>
                 </property>
                 <property name="text">
-                 <string>100</string>
+                 <string>__</string>
                 </property>
                </widget>
               </item>

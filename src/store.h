@@ -206,6 +206,7 @@ class store: public QObject{
 		void engineTemperatureChanged(int newEngineTemperature, int oldEngineTemperature);
 		void batteryVoltageChanged(float newBatteryVoltage, float oldBatteryVoltage); 
 		void vehicleSpeedChanged(int newVehicleSpeed, int oldVehicleSpeed);
+        void diffLapTimeChanged(int lap_time, int old_lap_time);
 		#ifdef __LART_T14__
 			void gearShiftChanged(int newGearShift, int oldGearShift);
 			void oilTemperatureChanged(float newOilTemperature, float oldOilTemperature); 
@@ -225,7 +226,7 @@ class store: public QObject{
             void powerChanged(short newPower, short oldPower);
                         void diffLastLapTimeChanged(QTime newDiffLastLapTime, QTime oldDiffLastLapTime);
                         void diffBestLapTimeChanged(QTime newdiffBestLapTime, QTime olddiffBestLapTime);
-                        void absoluteTimeChanged(QTime newTimeChanged, QTime old);
+                        void lapTimeChanged(QTime newTimeChanged, QTime old);
                         void lapCountChanged(short newLapCount, short oldLapCount);
                         void hvChanged(short newHV, short oldHV );
                         void bat_voltageChanged(short newhv, short oldhv);

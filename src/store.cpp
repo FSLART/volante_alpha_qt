@@ -989,8 +989,8 @@ void store::setLapTime(int lapTime){
 
 	
 
-	emit diffLapTimeChanged(diffTime, oldDiffTime);
-	emit lapTimeChanged(time, oldtime);
+    emit diffLastLapTimeChanged(diffTime, oldDiffTime);
+    emit lapTimeChanged(time, oldtime);
 }
 /**
 * @brief setter for the lap count variable

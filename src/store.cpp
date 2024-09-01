@@ -373,11 +373,11 @@ void store::parseBson(std::vector<std::uint8_t> v){
 
 
                     case 1:
-                                                QMainWindow* temp_ref;
+                        QMainWindow* temp_ref;
 						if(ref_windows[1] == nullptr){
 							VoidsterdebugWindow temp;
-                                                        temp_ref = &temp;
-                                                        ref_windows[1] = temp_ref;
+                            temp_ref = &temp;
+                            ref_windows[1] = temp_ref;
 						}else{
 							temp_ref = ref_windows[1];
 						}

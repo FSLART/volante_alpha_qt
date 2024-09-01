@@ -466,7 +466,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			if(j.contains(BSON_INVERTERTEMPERATURE)){
                 int temp = j[BSON_INVERTERTEMPERATURE];
                 this->setInverterTemperature(temp);
-                if(temp>= INVERTER_TEMPERATURE_WARNING && error_map.find("Inverter temperature warning") != error_map.end()){
+                if(temp<= INVERTER_TEMPERATURE_WARNING && error_map.find("Inverter temperature warning") != error_map.end()){
                     error_map["Inverter temperature warning"] = temp;
                     scribeError("Inverter temperature warning",WARNING);
                 }
@@ -481,10 +481,9 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			}
 			if(j.contains(BSON_LAPTIME)){
 				this->setLapTime(j[BSON_LAPTIME]);
-			}
+            }
                         if(j.contains(BSON_LAPCOUNT)){
-                                            short temp = j[BSON_LAPCOUNT];
-                            this->setLapCount(temp);
+                            this->setLapCount(j[BSON_LAPCOUNT]);
 
 			}
                         if(j.contains(BSON_HV)){

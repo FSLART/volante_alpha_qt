@@ -223,10 +223,11 @@ class store: public QObject{
 			void batteryTemperatureChanged(float newBatteryTemperature, float oldBatteryTemperature);
                         void inverterTemperatureChanged(int newInverterTemperature, int oldInverterTemperature);
                         void motorTemperatureChanged(int newmotorTemperature, int oldmotorTemperature);
-			void powerChanged(short newPower, short oldPower);
-			void lapTimeChanged(QTime newLapTime, QTime oldLapTime);
-			void diffLapTimeChanged(QTime newDiffLapTime, QTime oldDiffLapTime);
-			void lapCountChanged(short newLapCount, short oldLapCount);
+            void powerChanged(short newPower, short oldPower);
+                        void diffLastLapTimeChanged(QTime newDiffLastLapTime, QTime oldDiffLastLapTime);
+                        void diffBestLapTimeChanged(QTime newdiffBestLapTime, QTime olddiffBestLapTime);
+                        void absoluteTimeChanged(QTime newTimeChanged, QTime old);
+                        void lapCountChanged(short newLapCount, short oldLapCount);
                         void hvChanged(short newHV, short oldHV );
                         void bat_voltageChanged(short newhv, short oldhv);
                         void max_cell_voltageChanged(int new_cell_v, int old_cell_v);

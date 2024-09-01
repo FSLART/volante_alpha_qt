@@ -43,9 +43,11 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
 			//TODO change representation of laptime
                 FLabel* LapTime_Label = this->findChild<FLabel*>("AbsoluteTime_Label");
                 FLabel* HV_voltage_label = this->findChild<FLabel*>("HV_voltage_label");
+                FLabel* SOC_label = this->findChild<FLabel*>("SOC_label");
                 FLabel* DiffBestLap_label = this->findChild<FLabel*>("DiffBestLap_label");
                 FLabel* DiffLastLap_label = this->findChild<FLabel*>("DiffLastLap_label");
                 FLabel* LapCount_label = this->findChild<FLabel*>("LapCount_label");
+                FLabel* POWER_label = this->findChild<FLabel*>("POWER_label");
 			//FLabel* TyreTemperature_Label = this->findChild<FLabel*>("TyreTemperature_Label");
             connect(store_ref,&store::socChanged,[Soc_Label](int soc){
                Soc_Label->setValue(soc);
@@ -55,8 +57,10 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
             });
 
             connect(store_ref, &store::vehicleSpeedChanged, VehicleSpeed_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
+            connect(store_ref, &store::socChanged, SOC_label, (void (FLabel::*)(int, int))&FLabel::setVisual);
             connect(store_ref,&store::hvChanged,HV_voltage_label,(void (FLabel::*)(int,int))&FLabel::setVisual);
             connect(store_ref, &store::power_limitChanged, PowerLimit_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
+            connect(store_ref, &store::powerChanged, POWER_label, (void (FLabel::*)(int, int))&FLabel::setVisual);
             connect(store_ref, &store::lapTimeChanged, LapTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);
             //
             //connect(store_ref, &store::diffLapTimeChanged, DiffTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);

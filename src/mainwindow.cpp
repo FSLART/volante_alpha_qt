@@ -37,33 +37,39 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
 	
 		#ifdef __LART_T24__
             QProgressBar* Soc_Label = this->findChild<QProgressBar*>("SOCLimitBar");
-            QProgressBar* ConsumedPowerBar = this->findChild<QProgressBar*>("ConsumedPowerBar");
+            QProgressBar* Power_Consumed = this->findChild<QProgressBar*>("ConsumedPowerBar");
 
             FLabel* PowerLimit_Label = this->findChild<FLabel*>("PowerLimit_Label");
 			//TODO change representation of laptime
-                FLabel* AbsoluteTime_Label = this->findChild<FLabel*>("AbsoluteTime_Label");
+                FLabel* LapTime_Label = this->findChild<FLabel*>("AbsoluteTime_Label");
+                FLabel* HV_voltage_label = this->findChild<FLabel*>("HV_voltage_label");
+                FLabel* SOC_label = this->findChild<FLabel*>("SOC_label");
                 FLabel* DiffBestLap_label = this->findChild<FLabel*>("DiffBestLap_label");
                 FLabel* DiffLastLap_label = this->findChild<FLabel*>("DiffLastLap_label");
                 FLabel* LapCount_label = this->findChild<FLabel*>("LapCount_label");
+                FLabel* POWER_label = this->findChild<FLabel*>("POWER_label");
 			//FLabel* TyreTemperature_Label = this->findChild<FLabel*>("TyreTemperature_Label");
             connect(store_ref,&store::socChanged,[Soc_Label](int soc){
                Soc_Label->setValue(soc);
             });
-            connect(store_ref,&store::powerChanged,[ConsumedPowerBar](short power){
-               PowerLimit_Label->setValue(power);
+            connect(store_ref,&store::powerChanged,[Power_Consumed](short power){
+               Power_Consumed->setValue(power);
             });
 
             connect(store_ref, &store::vehicleSpeedChanged, VehicleSpeed_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
-
+            connect(store_ref, &store::socChanged, SOC_label, (void (FLabel::*)(int, int))&FLabel::setVisual);
+            connect(store_ref,&store::hvChanged,HV_voltage_label,(void (FLabel::*)(int,int))&FLabel::setVisual);
             connect(store_ref, &store::power_limitChanged, PowerLimit_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
+            connect(store_ref, &store::powerChanged, POWER_label, (void (FLabel::*)(int, int))&FLabel::setVisual);
             connect(store_ref, &store::lapTimeChanged, LapTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);
-            connect(store_ref, &store::diffLapTimeChanged, DiffTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);
-            connect(store_ref, &store::absoluteTimeChanged, AbsoluteTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);
-            connect(store_ref, &store::lapCountChanged, LapCount_Label, (void (FLabel::*)(short, short))&FLabel::setVisual);
+            //
+            //connect(store_ref, &store::diffLapTimeChanged, DiffTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);
+            //connect(store_ref, &store::absoluteTimeChanged, AbsoluteTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);
+            //connect(store_ref, &store::lapCountChanged, LapCount_Label, (void (FLabel::*)(short, short))&FLabel::setVisual);
 
 
 		#endif
-        connect(store_ref, &store::engineTemperatureChanged,EngineTemperature_Label,(void(FLabel::*)(int,int))&FLabel::setVisual);
+        //connect(store_ref, &store::engineTemperatureChanged,EngineTemperature_Label,(void(FLabel::*)(int,int))&FLabel::setVisual);
 }
 
 

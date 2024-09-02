@@ -70,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
 
 		#endif
         //connect(store_ref, &store::engineTemperatureChanged,EngineTemperature_Label,(void(FLabel::*)(int,int))&FLabel::setVisual);
+
 }
 
 

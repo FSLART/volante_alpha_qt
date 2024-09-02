@@ -108,7 +108,8 @@ class store: public QObject{
 		void parseBson(std::vector<std::uint8_t> v);
                 void bsonMining();
                 int requestSlotAttachment();
-                qint64 scribeError(QString error, error_severity severity=error_severity::INFO);
+
+                qint64 scribeError(QString error, error_severity severity=error_severity::INFO, QString errorDesc="");
                 explicit store(QString dev="", QSerialPort::BaudRate baud = QSerialPort::Baud115200, QObject *parent = nullptr);
 		~store();
                 void appendKeyValuePersistency(QString key, QJsonValue value);
@@ -199,6 +200,7 @@ class store: public QObject{
         //        bool setSlots=false;
         //        int setupSlots();
 		int closeSerial();
+                std::vector<QMessageBox *> messageList;
 
 	signals:
                 void valueChanged(int newValue);

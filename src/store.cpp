@@ -18,6 +18,13 @@
 //PilotWindow pl;
 using json = nlohmann::json;
 /**
+ *
+    QMessageBox *msgBox = new QMessageBox(QMessageBox::Warning, "ERRO", "bateria baixa !!!", QMessageBox::NoButton);
+
+    msgBox->setStandardButtons(QMessageBox::NoButton);
+    msgBox->show();
+**/
+/**
 * @brief Arguably the boilerplate code, necessary to run an Asynchronous Serial Uart communication. Also responsible for handling @b slots and other callback logic
 * @see https://doc.qt.io/qt-5/qtserialport-creaderasync-example.html
 *      wow the above was suggested by copilot. how many times did people have issues with this?
@@ -32,9 +39,9 @@ int store::setupSerial() {
 	//serial->setParity(QSerialPort::OddParity);
     serial->setFlowControl(QSerialPort::NoFlowControl);
 	if (!serial->open(QIODevice::ReadWrite)) {
-        qDebug() << "Can't open " << this->dev << ", error code" << serial->error();
-        serialLog.append("||Can't open " + this->dev + ", error code" + serial->errorString()+"||");
-		return 1;
+            scribeError("Serial Error",error_severity::MAJOR, "Can't open " + this->dev  + ", error code" + serial->error());
+
+            return 1;
 	}
 
         this->port = serial;
@@ -127,7 +134,7 @@ void store::stopGeneralErrorLog(){
 * @return The number of bytes written to the file
 * @see store.h
 **/
-qint64 store::scribeError(QString error, error_severity severity){
+qint64 store::scribeError(QString error, error_severity severity, QString errorDesc){
 	qint64 ret = 0;
 	//check if error is initialized if not
 	if(error==nullptr){
@@ -145,6 +152,10 @@ qint64 store::scribeError(QString error, error_severity severity){
 		error.prepend(dateStr + " |" + QString::number(severity) + "|*_");
 
                 ret= errorLog.write(error.toUtf8()+"|EOL|\n");
+                QMessageBox *msgBox = new QMessageBox(QMessageBox::Warning, error,errorDesc, QMessageBox::NoButton);
+                msgBox->setStandardButtons(QMessageBox::NoButton);
+                msgBox->show();
+                messageList.push_back(msgBox);
 		if (severity>=error_severity::CRITICAL){
 			//TODO handle exception graphically
 			
@@ -157,12 +168,14 @@ qint64 store::scribeError(QString error, error_severity severity){
 	}catch(...){
 		//TODO handle exception graphically
 		qDebug() << "An exception occurred while trying to write to the error log";
-        QMessageBox *msgBox = new QMessageBox(QMessageBox::Warning, "Warning", error, QMessageBox::NoButton);
-        msgBox->setStandardButtons(QMessageBox::NoButton);
+                QMessageBox *msgBox = new QMessageBox(QMessageBox::Warning, "Messaging system has failed", error, QMessageBox::NoButton);
+                msgBox->setStandardButtons(QMessageBox::NoButton);
 	}
 
 	return ret;
 }
+
+
 /**
 * @brief Constructor of the store class, responsible for setting up communications and the error log
 * @param dev The device to be used, defaults to DEFAULT_DEVICE

@@ -14,6 +14,7 @@
 #include "pilot.h"
 #include "voidsterdebugwindow.h"
 #include "qdebug.h"
+
 //VoidsterdebugWindow debugWindow;
 //PilotWindow pl;
 using json = nlohmann::json;
@@ -127,9 +128,7 @@ void store::stopGeneralErrorLog(){
     }
 }
 void store::closeLastNotification(){
-    //messageList.begin()->hide() ;
-    auto k = messageList.find(onDisplay.front());
-    //messageList.erase();
+    history.front()->hide();
 }
 /**
 * @brief Writes an error to the error log
@@ -150,19 +149,28 @@ qint64 store::scribeError(QString error, error_severity severity, QString errorD
         if(!errorLog.isOpen()){
 			startGeneralErrorLog();
 		}
-
+                QString alert=error;
 		//append a timestamp to the error and write it to the file
 		QDateTime now = QDateTime::currentDateTime();
 		QString dateStr = now.toString("hh:mm:ss dd-MM-yyyy");
 		error.prepend(dateStr + " |" + QString::number(severity) + "|*_");
 
-                ret= errorLog.write(error.toUtf8()+"|EOL|\n");
-                QMessageBox *msgBox = new QMessageBox(QMessageBox::Warning, error,errorDesc, QMessageBox::NoButton);
-                msgBox->setStandardButtons(QMessageBox::NoButton);
-                msgBox->show();
+                ret= errorLog.write(error.toUtf8()+"|"+errorDesc.toUtf8()+"|EOL|\n");
 
-                messageList.insert({error, msgBox});
-		if (severity>=error_severity::CRITICAL){
+
+
+
+
+                if(messageList.find(alert) == messageList.end()){
+                    QMessageBox *msgBox = new QMessageBox(QMessageBox::Warning, error,errorDesc, QMessageBox::NoButton);
+                    messageList.insert({alert,msgBox});
+                    history.push_back(msgBox);
+                    msgBox->setStandardButtons(QMessageBox::NoButton);
+                    msgBox->show();
+                }
+
+
+                if (severity>=error_severity::CRITICAL){
 			//freeze the program for 3 secs
                         this->thread()->msleep(3000);
 			//its pretty much garanteed but just in case
@@ -289,7 +297,8 @@ store::~store(){
 			file.close();
 		}else{
 			//TODO figure out if this is able to handle out of disk exceptions. Not that it will ever reach it but still...
-			scribeError("Failed to write serial log to file", error_severity::MAJOR);
+            scribeError(__LART_STORE_ERROR_TITLE_SCRIBE, error_severity::MAJOR, "Failed to write serial log to file");
+
 		}
 
 		stopGeneralErrorLog();
@@ -336,9 +345,9 @@ void store::parseBson(std::vector<std::uint8_t> v){
 		
         if(j.contains(BSON_HV_BATTERYVOLTAGE)){
 			EncodingUnion t;
-            t.encoded=j[BSON_HV_BATTERYVOLTAGE];
+             t.encoded=j[BSON_HV_BATTERYVOLTAGE];
 			this->setBatteryVoltage(t.decoded);
-		}
+    }
 		if(j.contains(BSON_VEHICLESPEED)){
 			this->setVehicleSpeed(j[BSON_VEHICLESPEED]);
 		}
@@ -461,7 +470,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
             if(j.contains(BSON_INVERTERTEMPERATURE)){
                 int temp = j[BSON_INVERTERTEMPERATURE];
                 this->setInverterTemperature(temp);
-                if(temp<= INVERTER_TEMPERATURE_WARNING){
+                if(temp>= INVERTER_TEMPERATURE_WARNING){
                     scribeError(__LART_STORE_ERROR_TITLE_INVERTER,WARNING, "Inverter Temperature Warning, avoid running throthle continuously");
                 }
             }
@@ -497,7 +506,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
 		#endif
 
 	} catch (json::parse_error& e) {
-		scribeError("An error occurred while parsing the BSON data, error: " + QString::fromStdString(e.what()), error_severity::MINOR);
+        scribeError(__LART_STORE_ERROR_TITLE_SCRIBE,  error_severity::MINOR, "An error occurred while parsing the BSON data, error: " + QString::fromStdString(e.what()));
         //TODO study if bellow is better or worse.
 		//lastMessage.clear();
 

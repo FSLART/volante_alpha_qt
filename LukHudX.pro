@@ -27,6 +27,7 @@ RCC_DIR = build
 # Input
 HEADERS += \
 	#Constants Macros Aux stuff
+    header_fix.h \
     src/mainwindow.h \
     src/pilot.h \
 		src/references/bson_var.h \

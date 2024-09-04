@@ -51,7 +51,7 @@
                 #else
                     #define DEFAULT_DEVICE "/dev/ttyS3"
                 #endif
-	#endif
+    #endif
 #else
     #define DEFAULT_DEVICE "/dev/ttyS3"
 #endif
@@ -148,7 +148,7 @@ class store: public QObject{
 
 		#endif
 		#ifdef __LART_T24__
-            #define MOTOR_TEMPERATURE_WARNING 75
+            #define MOTOR_TEMPERATURE_WARNING 100
             #define INVERTER_TEMPERATURE_WARNING 50
             #define LV_SOC_WARNING 30
             #define HV_SOC_WARNING 30
@@ -198,8 +198,9 @@ class store: public QObject{
 		void stopGeneralErrorLog();
                 int setupSerial();
 		int closeSerial();
+                std::vector< QMessageBox *> history;
                 std::unordered_map<QString, QMessageBox *>  messageList;
-                std::vector<QString> onDisplay;
+
 
 	signals:
                 void valueChanged(int newValue);

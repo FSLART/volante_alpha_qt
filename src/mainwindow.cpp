@@ -80,6 +80,10 @@ inline void MainWindow::setStyleSheets(){
     QProgressBar* Soc_Bar= this->findChild<QProgressBar*>("SOCLimitBar");
     QProgressBar* Apps_bar = this->findChild<QProgressBar*>("AppsBar");
     QProgressBar* Power_Consumed = this->findChild<QProgressBar*>("ConsumedPowerBar");
+    QString k =QString("QProgressBar{color: %1; background-color: %2;}").arg(this->palette().background().color().name(), this->palette().foreground().color().name());
+    Apps_bar->setStyleSheet(k);
+    Soc_Bar->setStyleSheet(k);
+
 
 }
 /**

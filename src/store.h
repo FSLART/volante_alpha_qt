@@ -46,13 +46,11 @@
     #ifdef _WIN32
 		#define DEFAULT_DEVICE "COM3"
     #elif defined __linux__
-		#ifdef __LART_DEPLOY__
-			#define DEFAULT_DEVICE "/dev/ttyS3"
-		#else
-            //#define DEFAULT_DEVICE "/dev/ttyUSB0"
-            #define DEFAULT_DEVICE "/dev/ttyS3"
-            //#define DEFAULT_DEVICE "/dev/ttyACM0"
-		#endif
+                #ifdef __SSE__
+                    #define DEFAULT_DEVICE "/dev/ttyACM0"
+                #else
+                    #define DEFAULT_DEVICE "/dev/ttyS3"
+                #endif
 	#endif
 #else
     #define DEFAULT_DEVICE "/dev/ttyS3"

@@ -198,7 +198,7 @@ class store: public QObject{
 		void stopGeneralErrorLog();
                 int setupSerial();
 		int closeSerial();
-                std::unordered_map<QString, QMessageBox *> messageList;
+                std::unordered_map<QString, QMessageBox *>  messageList;
                 std::vector<QString> onDisplay;
 
 	signals:

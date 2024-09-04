@@ -382,7 +382,7 @@
            </font>
           </property>
           <property name="text">
-           <string>___</string>
+           <string>__</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -399,7 +399,7 @@
            </font>
           </property>
           <property name="text">
-           <string>%</string>
+           <string> %</string>
           </property>
          </widget>
         </item>
@@ -426,39 +426,27 @@
     <item row="0" column="1">
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
+       <widget class="QProgressBar" name="progressBar">
+        <property name="minimumSize">
+         <size>
+          <width>100</width>
+          <height>64</height>
+         </size>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+        <property name="format">
+         <string>%p</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0">
         <item>
          <layout class="QGridLayout" name="lap_layout">
-          <item row="1" column="0">
-           <widget class="QLabel" name="IgnitionTime_label">
-            <property name="font">
-             <font>
-              <family>Fira Mono</family>
-              <pointsize>22</pointsize>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>__</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="FLabel" name="LapCount_label">
-            <property name="font">
-             <font>
-              <family>Fira Mono</family>
-              <pointsize>22</pointsize>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>__</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1">
-           <widget class="QLabel" name="DiffBestLap_label">
+           <widget class="QLabel" name="TempMotor_label">
             <property name="font">
              <font>
               <family>Fira Mono</family>
@@ -472,7 +460,13 @@
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="AbsoluteTime_Label">
+           <widget class="QLabel" name="TempAcc_Label">
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>64</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <family>Fira Mono</family>

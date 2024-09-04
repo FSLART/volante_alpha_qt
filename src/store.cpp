@@ -75,19 +75,19 @@ int store::startGeneralErrorLog(uint depth){
     }
 	try {
         if(!errorLog.isOpen()){
-			scribeError("Apparently the error log was closed, yet the pointer was not set to nullptr.", error_severity::MAJOR);
+			scribeError(__LART_STORE_ERROR_TITLE_SCRIBE, error_severity::MAJOR, "Apparently the error log was closed, yet the pointer was not set to nullptr.");
 			if(depth>0){
 				//... Qcreator kept saying me this was possible...
-				scribeError("Something is really wrong, the depth is too big, and memory seems insane", error_severity::CRITICAL);
+				scribeError(__LART_STORE_ERROR_TITLE_SCRIBE, error_severity::MAJOR, "Something is really wrong, the depth is too big, and memory seems insane");
 			}
 			return startGeneralErrorLog(++depth);
 		}else{
-			scribeError("A request to open error log was made yet the file was already opened, Avoid multiple calls to startGeneralErrorLog", error_severity::WARNING);
+			scribeError(__LART_STORE_ERROR_TITLE_SCRIBE, error_severity::INFO, "A request to open error log was made yet the file was already opened, Avoid multiple calls to startGeneralErrorLog");
 		
 		}
 	} catch (...) {
 		//TODO handle exception graphically
-		qDebug() << "An exception occurred while trying to open the error log";
+		scribeError(__LART_STORE_ERROR_TITLE_SCRIBE, error_severity::INFO,"An exception occurred while trying to open the error log, warnings functionality might be degraded");
 		return 1; //TODO return a more meaningful error code
 	}
     return 0;
@@ -642,7 +642,7 @@ void store::setVehicleSpeed(int vehicleVelocity){
 	int oldVehicleVelocity = this->m_vehicleVelocity;
 	this->m_vehicleVelocity=vehicleVelocity;
 	emit vehicleSpeedChanged(this->m_vehicleVelocity, oldVehicleVelocity);
-    qDebug() << "Emitindo vehicleSpeedChanged com velocidade:" << m_vehicleVelocity;
+
 }
 
 

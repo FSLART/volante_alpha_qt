@@ -108,7 +108,7 @@ release_armv7Cortex{
 	
 	QMAKE_CC = $$CROSS_COMPILER_NAME-gcc
 	QMAKE_CXX = $$CROSS_COMPILER_NAME-g++
-	
+
 	QMAKE_LINK = $$CROSS_COMPILER_NAME-ld.gold
 	QMAKE_LINK_SHLIB = $$CROSS_COMPILER_NAME-ld.gold
 	QMAKE_LIBS_EGL = -lEGL -lGLESv2
@@ -123,7 +123,7 @@ release_armv7Cortex{
 	QT_ARMV7_SO_LOCATION = /usr/lib/gcc/$$CROSS_COMPILER_NAME/$$QT_ARMV7_COMPILER_VERSION/qt
 	DEFINES += QT_ARMV7_SO_LOCATION=$$QT_ARMV7_SO_LOCATION
 	# TODO: This is strange... check if theres something more adequate
-	QMAKE_CXXFLAGS *= -I/usr/include/nlohmann -I$$QT_ARMV7_SO_LOCATION
+        QMAKE_CXXFLAGS *= -I/usr/include/nlohmann -I$$QT_ARMV7_SO_LOCATION
                 QMAKE_CXXFLAGS *= -mfloat-abi=hard -mfpu=neon -mthumb -mthumb-interwork -mcpu=cortex-a7 -mtune=cortex-a7 -mabi=aapcs-linux -mhard-float -mno-unaligned-access -fPIC -reduce-relocations -ltcg
 	QMAKE_LFLAGS_RELEASE *= -shared -mfloat-abi=hard -mfpu=neon -mthumb -mthumb-interwork -mcpu=cortex-a7 -mtune=cortex-a7 -mabi=aapcs-linux -mhard-float -mno-unaligned-access -O2 -flto=4 -fno-fat-lto-objects -fuse-linker-plugin -fuse-ld=bfd
 	QMAKE_LFLAGS_RELEASE -= -Wl,-O1 

@@ -126,6 +126,11 @@ void store::stopGeneralErrorLog(){
 		qDebug() << "An exception occurred while trying to close the error log";
     }
 }
+void store::closeLastNotification(){
+    //messageList.begin()->hide() ;
+    auto k = messageList.find(onDisplay.front());
+    //messageList.erase();
+}
 /**
 * @brief Writes an error to the error log
 * @param error The
@@ -155,7 +160,8 @@ qint64 store::scribeError(QString error, error_severity severity, QString errorD
                 QMessageBox *msgBox = new QMessageBox(QMessageBox::Warning, error,errorDesc, QMessageBox::NoButton);
                 msgBox->setStandardButtons(QMessageBox::NoButton);
                 msgBox->show();
-                messageList.push_back(msgBox);
+
+                messageList.insert({error, msgBox});
 		if (severity>=error_severity::CRITICAL){
 			//TODO handle exception graphically
 			
@@ -319,8 +325,10 @@ void store::handleError(QSerialPort::SerialPortError serialPortError)
 void store::parseBson(std::vector<std::uint8_t> v){
 	try {
         json j = json::from_bson(v);
-		//TODO this is ugly 
-		
+        //TODO this is ugly
+        if(j.contains(BSON_POP_UP_ENABLE)){
+            this->closeLastNotification();
+        }
         if(j.contains(BSON_RPM)){
 			this->setRpm(j[BSON_RPM]);
 		}
@@ -407,47 +415,26 @@ void store::parseBson(std::vector<std::uint8_t> v){
                 EncodingUnion t;
                 t.encoded=j[BSON_SOC];
                 this->setSoc(t.decoded);
-                if(t.decoded<= HV_SOC_WARNING && error_map.find("SOC warning") != error_map.end()){
-                    error_map["SOC warning"] = t.decoded;
-                    scribeError("SOC warning",WARNING);
+                if(t.decoded<= HV_SOC_WARNING){
+                    scribeError(__LART_STORE_ERROR_TITLE_SOC,WARNING, "Low SOC on Traction Accumulator Slow Down!!!");
                 }
-            }
-                else{
-                    if(error_map.find("SOC warning") == error_map.end()){
-                        error_map.erase("SOC warning");
-                    }
             }
             if(j.contains(BSON_LV_SOC)){
                 EncodingUnion t;
                 t.encoded=j[BSON_LV_SOC];
                 this->setLV_Soc(t.decoded);
-                if(t.decoded<= LV_SOC_WARNING && error_map.find("Low voltage SOC warning") != error_map.end()){
-                    error_map["Low voltage SOC warning"] = t.decoded;
-                    scribeError("Low voltage SOC warning",WARNING);
+                if(t.decoded<= LV_SOC_WARNING){
+                    scribeError(__LART_STORE_ERROR_TITLE_LV_SOC,WARNING, "Low SOC On LV battery Hurry Up!!!");
+
                 }
-                else{
-                    if(error_map.find("Low voltage SOC warning") == error_map.end()){
-                        error_map.erase("Low voltage SOC warning");
-                    }
-
-
-
             }
             if(j.contains(BSON_MOTORTEMPERATURE)){
                 this->setmotorTemperature(j[BSON_MOTORTEMPERATURE]);
-                if(j[BSON_MOTORTEMPERATURE]>= MOTOR_TEMPERATURE_WARNING && error_map.find("Motor temperature warning") != error_map.end()){
-                    error_map["Motor temperature warning"] = j[BSON_MOTORTEMPERATURE];
-                    scribeError("Motor temperature warning",WARNING);
+                if(j[BSON_MOTORTEMPERATURE]>= MOTOR_TEMPERATURE_WARNING){
+                    scribeError(__LART_STORE_ERROR_TITLE_MOTOR,error_severity::WARNING, "Motor Temperature is exceeding its nominal limits");
                 }
             }
-                else{
-                    if(error_map.find("Motor temperature warning") == error_map.end()){
-                        error_map.erase("Motor temperature warning");
-                    }
 
-                }
-
-            }
             if(j.contains(BSON_MAX_CELL_TEMP)){
                // EncodingUnion t;
                // t.encoded=j[BSON_MOTORTEMPERATURE];
@@ -468,47 +455,37 @@ void store::parseBson(std::vector<std::uint8_t> v){
                 EncodingUnion t;
                 t.encoded=j[BSON_POWER_LIMIT];
                 this->setPowerLimit(t.decoded);
-                qDebug()<< t.decoded;
             }
-			
-			if(j.contains(BSON_BATTERYTEMPERATURE)){
-				EncodingUnion t;
-				t.encoded=j[BSON_BATTERYTEMPERATURE];
-				this->setBatteryTemperature(t.decoded);
-			}
-			if(j.contains(BSON_INVERTERTEMPERATURE)){
+            if(j.contains(BSON_BATTERYTEMPERATURE)){
+                EncodingUnion t;
+                t.encoded=j[BSON_BATTERYTEMPERATURE];
+                this->setBatteryTemperature(t.decoded);
+            }
+            if(j.contains(BSON_INVERTERTEMPERATURE)){
                 int temp = j[BSON_INVERTERTEMPERATURE];
                 this->setInverterTemperature(temp);
-                if(temp<= INVERTER_TEMPERATURE_WARNING && error_map.find("Inverter temperature warning") != error_map.end()){
-                    error_map["Inverter temperature warning"] = temp;
-                    scribeError("Inverter temperature warning",WARNING);
+                if(temp<= INVERTER_TEMPERATURE_WARNING){
+                    scribeError(__LART_STORE_ERROR_TITLE_INVERTER,WARNING, "Inverter Temperature Warning, avoid running throthle continuously");
                 }
-                else{
-                    if(error_map.find("Inverter temperature warning") == error_map.end()){
-                        error_map.erase("Inverter temperature warning");
-                    }
-			}
-                         if(j.contains(BSON_POWER)){
-                                short temp =  j[BSON_POWER];
-                                this->setPower(temp);
-			}
-			if(j.contains(BSON_LAPTIME)){
-				this->setLapTime(j[BSON_LAPTIME]);
             }
-                        if(j.contains(BSON_LAPCOUNT)){
-                            this->setLapCount(j[BSON_LAPCOUNT]);
-
-			}
-                        if(j.contains(BSON_HV)){
-                                short temp = j[BSON_HV];
-                            this->setHV(temp); ;
-
-                        }
-                        if(j.contains(BSON_HV_BATTERYVOLTAGE)){
-                                short temp = j[BSON_HV_BATTERYVOLTAGE];
-                            this->setBatteryVoltage(temp); ;
-
-                        }
+            if(j.contains(BSON_POWER)){
+                short temp =  j[BSON_POWER];
+                this->setPower(temp);
+            }
+            if(j.contains(BSON_LAPTIME)){
+                this->setLapTime(j[BSON_LAPTIME]);
+            }
+            if(j.contains(BSON_LAPCOUNT)){
+                this->setLapCount(j[BSON_LAPCOUNT]);
+            }
+            /**if(j.contains(BSON_HV)){
+                short temp = j[BSON_HV];
+                this->setHV(temp);
+            }**/
+            if(j.contains(BSON_HV_BATTERYVOLTAGE)){
+                short temp = j[BSON_HV_BATTERYVOLTAGE];
+                this->setBatteryVoltage(temp);
+            }
 			//if(j.contains(BSON_TYRETEMPERATURE)){
 			//	this->setTyreTemperature(j[BSON_TYRETEMPERATURE]);
 			//}
@@ -521,7 +498,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
 
 
 		#endif
-}
+
 	} catch (json::parse_error& e) {
 		scribeError("An error occurred while parsing the BSON data, error: " + QString::fromStdString(e.what()), error_severity::MINOR);
         //TODO study if bellow is better or worse.

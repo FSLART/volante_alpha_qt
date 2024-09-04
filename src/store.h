@@ -108,7 +108,7 @@ class store: public QObject{
 		void parseBson(std::vector<std::uint8_t> v);
                 void bsonMining();
                 int requestSlotAttachment();
-
+                void  closeLastNotification();
                 qint64 scribeError(QString error, error_severity severity=error_severity::INFO, QString errorDesc="");
                 explicit store(QString dev="", QSerialPort::BaudRate baud = QSerialPort::Baud115200, QObject *parent = nullptr);
 		~store();
@@ -197,10 +197,9 @@ class store: public QObject{
                 int startGeneralErrorLog(uint depth=0);
 		void stopGeneralErrorLog();
                 int setupSerial();
-        //        bool setSlots=false;
-        //        int setupSlots();
 		int closeSerial();
-                std::vector<QMessageBox *> messageList;
+                std::unordered_map<QString, QMessageBox *> messageList;
+                std::vector<QString> onDisplay;
 
 	signals:
                 void valueChanged(int newValue);
@@ -275,8 +274,7 @@ class store: public QObject{
             int m_battery_voltage = 0;
             int m_min_cell_voltage = 0;
             int m_max_cell_voltage = 0;
-			//int m_tyreTemperature=0;
-            std::unordered_map<std::string, int> error_map;
+            //int m_tyreTemperature=0;
 
 		#endif
 
@@ -287,6 +285,12 @@ class store: public QObject{
         
 
 };
+#define __LART_STORE_ERROR_TITLE_SCRIBE "scribing_error"
+#define __LART_STORE_ERROR_TITLE_VCU "vcu_error"
+#define __LART_STORE_ERROR_TITLE_MOTOR "motor_error"
+#define __LART_STORE_ERROR_TITLE_INVERTER "inverter_error"
+#define __LART_STORE_ERROR_TITLE_SOC "soc_error"
+#define __LART_STORE_ERROR_TITLE_LV_SOC "lvsoc_error"
 
 // Logging Macros
 #define __LART_STORE_SETRPM_ERROR__ "store::setRpm(int rpm)->Rpm is negative"

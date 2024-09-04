@@ -120,6 +120,7 @@ class store: public QObject{
 		//getters wire variables
                 int getRpm() const;
                 int getMenu() const;
+                int getApps() const;
 		int getEngineTemperature() const;
 		float getBatteryVoltage() const;
 		int getVehicleSpeed() const;
@@ -181,6 +182,7 @@ class store: public QObject{
             void setLapCount(short lapCount);
             void setHV(short hv);
             void setbatv(short hv);
+            void setApps(int apps);
             void setmax_cell_temp(int temp);
             void setmin_cell_temp(int temp);
             void setmax_cell_voltage(int voltage);
@@ -225,10 +227,12 @@ class store: public QObject{
 			void batteryTemperatureChanged(float newBatteryTemperature, float oldBatteryTemperature);
                         void inverterTemperatureChanged(int newInverterTemperature, int oldInverterTemperature);
                         void motorTemperatureChanged(int newmotorTemperature, int oldmotorTemperature);
-            void powerChanged(short newPower, short oldPower);
+                        void powerChanged(short newPower, short oldPower);
                         void diffLastLapTimeChanged(QTime newDiffLastLapTime, QTime oldDiffLastLapTime);
                         void diffBestLapTimeChanged(QTime newdiffBestLapTime, QTime olddiffBestLapTime);
-                        void lapTimeChanged(QTime newTimeChanged, QTime old);
+
+                        void lapTimeChanged(QTime newTimeChanged, QTime oldTimeChanged);
+                        void appsChanged(int newApps, int oldApps);
                         void lapCountChanged(short newLapCount, short oldLapCount);
                         void hvChanged(short newHV, short oldHV );
                         void bat_voltageChanged(short newhv, short oldhv);

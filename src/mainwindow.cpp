@@ -36,26 +36,30 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
 		**/
 	
 		#ifdef __LART_T24__
-            QProgressBar* Soc_Label = this->findChild<QProgressBar*>("SOCLimitBar");
+            QProgressBar* Soc_Bar= this->findChild<QProgressBar*>("SOCLimitBar");
+            QProgressBar* Apps_bar = this->findChild<QProgressBar*>("AppsBar");
             QProgressBar* Power_Consumed = this->findChild<QProgressBar*>("ConsumedPowerBar");
-
+            setStyleSheets();
             FLabel* PowerLimit_Label = this->findChild<FLabel*>("PowerLimit_Label");
 			//TODO change representation of laptime
                 FLabel* LapTime_Label = this->findChild<FLabel*>("AbsoluteTime_Label");
                 FLabel* HV_voltage_label = this->findChild<FLabel*>("HV_voltage_label");
                 FLabel* SOC_label = this->findChild<FLabel*>("SOC_label");
-                FLabel* DiffBestLap_label = this->findChild<FLabel*>("DiffBestLap_label");
-                FLabel* DiffLastLap_label = this->findChild<FLabel*>("DiffLastLap_label");
-                FLabel* LapCount_label = this->findChild<FLabel*>("LapCount_label");
+                FLabel* TempAcc_Label = this->findChild<FLabel*>("TempAcc_Label");
+                FLabel* TempMotor_Label = this->findChild<FLabel*>("TempMotor_Label");
+
                 FLabel* POWER_label = this->findChild<FLabel*>("POWER_label");
+
 			//FLabel* TyreTemperature_Label = this->findChild<FLabel*>("TyreTemperature_Label");
-            connect(store_ref,&store::socChanged,[Soc_Label](int soc){
-               Soc_Label->setValue(soc);
+            connect(store_ref,&store::socChanged,[Soc_Bar](int soc){
+               Soc_Bar->setValue(soc);
             });
             connect(store_ref,&store::powerChanged,[Power_Consumed](short power){
                Power_Consumed->setValue(power);
             });
-
+            connect(store_ref,&store::appsChanged,[Apps_bar](int appsChanged){
+                Apps_bar->setValue(appsChanged);
+            });
             connect(store_ref, &store::vehicleSpeedChanged, VehicleSpeed_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
             connect(store_ref, &store::socChanged, SOC_label, (void (FLabel::*)(int, int))&FLabel::setVisual);
             connect(store_ref,&store::hvChanged,HV_voltage_label,(void (FLabel::*)(int,int))&FLabel::setVisual);
@@ -72,7 +76,12 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
         //connect(store_ref, &store::engineTemperatureChanged,EngineTemperature_Label,(void(FLabel::*)(int,int))&FLabel::setVisual);
 }
 
+inline void MainWindow::setStyleSheets(){
+    QProgressBar* Soc_Bar= this->findChild<QProgressBar*>("SOCLimitBar");
+    QProgressBar* Apps_bar = this->findChild<QProgressBar*>("AppsBar");
+    QProgressBar* Power_Consumed = this->findChild<QProgressBar*>("ConsumedPowerBar");
 
+}
 /**
 * @brief A getter for a store pointer. <b> use with caution, </b>
 * 		 <em> with great power comes great *frickery... This function is by reference and should be used for startup stuff</em> 

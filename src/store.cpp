@@ -163,16 +163,13 @@ qint64 store::scribeError(QString error, error_severity severity, QString errorD
 
                 messageList.insert({error, msgBox});
 		if (severity>=error_severity::CRITICAL){
-			//TODO handle exception graphically
-			
 			//freeze the program for 3 secs
                         this->thread()->msleep(3000);
-			
 			//its pretty much garanteed but just in case
 			assert(severity>=error_severity::CRITICAL);
 		}
 	}catch(...){
-		//TODO handle exception graphically
+
 		qDebug() << "An exception occurred while trying to write to the error log";
                 QMessageBox *msgBox = new QMessageBox(QMessageBox::Warning, "Messaging system has failed", error, QMessageBox::NoButton);
                 msgBox->setStandardButtons(QMessageBox::NoButton);
@@ -311,7 +308,7 @@ store::~store(){
 void store::handleError(QSerialPort::SerialPortError serialPortError)
 {
     if (serialPortError == QSerialPort::ReadError) {
-        scribeError("An I/O error occurred while reading the data from port " + this->dev + " error code: " + QString::number(serialPortError), error_severity::CRITICAL);
+        scribeError(__LART_STORE_ERROR_TITLE_SCRIBE,error_severity::CRITICAL, "An I/O error occurred while reading the data from port " + this->dev + " error code: " + QString::number(serialPortError));
         QCoreApplication::exit(1);
     }
 }

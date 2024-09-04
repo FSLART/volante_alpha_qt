@@ -16,6 +16,7 @@ public:
     MainWindow(QWidget *parent = nullptr, QString serialDev=nullptr);
     store* getStore();
     ~MainWindow();
+    inline void setStyleSheets();
 
 private:
 

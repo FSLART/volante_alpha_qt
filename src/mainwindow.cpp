@@ -66,6 +66,8 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
             connect(store_ref, &store::power_limitChanged, PowerLimit_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
             connect(store_ref, &store::powerChanged, POWER_label, (void (FLabel::*)(int, int))&FLabel::setVisual);
             connect(store_ref, &store::lapTimeChanged, LapTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);
+            connect(store_ref, &store::motorTemperatureChanged,TempMotor_Label,(void (FLabel::*)(int,int))&FLabel::setVisual);
+            connect(store_ref, &store::batteryTemperatureChanged,TempAcc_Label,(void(FLabel::*)(int,int))&FLabel::setVisual);
             //
             //connect(store_ref, &store::diffLapTimeChanged, DiffTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);
             //connect(store_ref, &store::absoluteTimeChanged, AbsoluteTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);

@@ -471,7 +471,7 @@
    <string>LukHudX</string>
   </property>
   <property name="layoutDirection">
-   <enum>Qt::LayoutDirection::LeftToRight</enum>
+   <enum>Qt::LeftToRight</enum>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
@@ -491,7 +491,7 @@
         <item>
          <layout class="QGridLayout" name="LeftGridLayout">
           <property name="sizeConstraint">
-           <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+           <enum>QLayout::SetDefaultConstraint</enum>
           </property>
           <item row="7" column="0">
            <layout class="QGridLayout" name="gridLayout_7">
@@ -685,7 +685,7 @@
       <item>
        <layout class="QVBoxLayout" name="RigthVerticalLayout">
         <property name="sizeConstraint">
-         <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+         <enum>QLayout::SetDefaultConstraint</enum>
         </property>
         <property name="leftMargin">
          <number>10</number>
@@ -833,6 +833,7 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
+              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -891,6 +892,7 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
+              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -911,6 +913,7 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
+              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -931,6 +934,7 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
+              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -951,6 +955,7 @@
              <font>
               <family>Source Code Pro</family>
               <pointsize>11</pointsize>
+              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -1037,7 +1042,7 @@
           </property>
           <item>
            <layout class="QGridLayout" name="gridLayout_4">
-            <item row="2" column="0">
+            <item row="3" column="0">
              <widget class="ContaRotacoes" name="contaRotacoes" native="true">
               <property name="minimumSize">
                <size>
@@ -1052,11 +1057,8 @@
             </item>
             <item row="0" column="0">
              <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Orientation::Horizontal</enum>
-              </property>
               <property name="sizeType">
-               <enum>QSizePolicy::Policy::Fixed</enum>
+               <enum>QSizePolicy::Fixed</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -1065,6 +1067,9 @@
                </size>
               </property>
              </spacer>
+            </item>
+            <item row="1" column="0">
+             <widget class="QGraphicsView" name="graphicsView"/>
             </item>
            </layout>
           </item>

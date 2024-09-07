@@ -341,12 +341,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			this->setEngineTemperature(j[BSON_ENGINETEMPERATURE]);
         }*/
 		
-        if(j.contains(BSON_HV_BATTERYVOLTAGE)){
-			EncodingUnion t;
-             t.encoded=j[BSON_HV_BATTERYVOLTAGE];
-			this->setBatteryVoltage(t.decoded);
 
-    }
 		if(j.contains(BSON_VEHICLESPEED)){
 			this->setVehicleSpeed(j[BSON_VEHICLESPEED]);
 		}
@@ -453,14 +448,14 @@ void store::parseBson(std::vector<std::uint8_t> v){
             if(j.contains(BSON_LAPCOUNT)){
                 this->setLapCount(j[BSON_LAPCOUNT]);
             }
-            /**if(j.contains(BSON_HV)){
+            if(j.contains(BSON_HV)){
                 short temp = j[BSON_HV];
                 this->setHV(temp);
-            }**/
-            if(j.contains(BSON_HV_BATTERYVOLTAGE)){
+            }
+            /**if(j.contains(BSON_HV_BATTERYVOLTAGE)){
                 short temp = j[BSON_HV_BATTERYVOLTAGE];
                 this->setBatteryVoltage(temp);
-            }
+            }**/
 			//if(j.contains(BSON_TYRETEMPERATURE)){
 			//	this->setTyreTemperature(j[BSON_TYRETEMPERATURE]);
 			//}

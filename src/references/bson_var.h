@@ -42,7 +42,7 @@
 #define BSON_LAPCOUNT "lap_c"
 #define BSON_LAPTIME "lap_t"
 #define BSON_INVERTERVoltage "inv_v"
-#define BSON_HV_BATTERYVOLTAGE "hv_bat"
+#define BSON_HV "hv_bat"
 #define BSON_MAX_CELL_TEMP "max_cell_temp"
 #define BSON_PAGE "page"
 #define BSON_POWER_LIMIT "power_available"

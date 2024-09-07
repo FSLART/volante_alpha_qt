@@ -62,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
             });
             connect(store_ref, &store::vehicleSpeedChanged, VehicleSpeed_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
             connect(store_ref, &store::socChanged, SOC_label, (void (FLabel::*)(int, int))&FLabel::setVisual);
-            connect(store_ref,&store::bat_voltageChanged,HV_voltage_label,(void (FLabel::*)(int,int))&FLabel::setVisual);
+            connect(store_ref,&store::bat_voltageChanged,HV_voltage_label,(void (FLabel::*)(short,short))&FLabel::setVisual);
             connect(store_ref, &store::power_limitChanged, PowerLimit_Label, (void (FLabel::*)(int, int))&FLabel::setVisual);
             connect(store_ref, &store::powerChanged, POWER_label, (void (FLabel::*)(short, short))&FLabel::setVisual);
             connect(store_ref, &store::lapTimeChanged, LapTime_Label, (void (FLabel::*)(QTime, QTime))&FLabel::setVisual);

@@ -601,6 +601,7 @@ float store::getBatteryVoltage() const{
 * @brief setter for the battery voltage variable
 * @param batteryVoltage The new value for the battery voltage variable
 **/
+
 void store::setBatteryVoltage(float batteryVoltage){
     float oldBatteryVoltage = this->m_battery_voltage;
     this->m_battery_voltage=batteryVoltage;
@@ -994,7 +995,7 @@ void store::setLapCount(short lapCount){
 void store::setHV(short hv){
     short oldHV = this->m_highVoltage;
     this->m_highVoltage=hv;
-    emit hvChanged(this->m_highVoltage, oldHV);
+    emit bat_voltageChanged(this->m_highVoltage, oldHV);
 }
 
 

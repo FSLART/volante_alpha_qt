@@ -156,7 +156,7 @@ class store: public QObject{
             float getSoc() const;
             float getLV_Soc() const;
             float getPowerLimit() const;
-			float getBatteryTemperature() const;
+        float getBatteryTemperature() const;
             int getInverterTemperature() const;
             int getmotorTemperature() const;
             short getPower() const;

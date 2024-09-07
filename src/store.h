@@ -277,6 +277,7 @@ class store: public QObject{
             int m_battery_voltage = 0;
             int m_min_cell_voltage = 0;
             int m_max_cell_voltage = 0;
+            int m_apps= 0;
             //int m_tyreTemperature=0;
 
 		#endif

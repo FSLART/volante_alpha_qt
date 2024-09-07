@@ -28,15 +28,9 @@ RCC_DIR = build
 HEADERS += \
 	#Constants Macros Aux stuff
     src/mainwindow.h \
-    src/pilot.h \
 		src/references/bson_var.h \
 	#UI and other non operational stuff
 		src/flabel.h \
-		src/contarotacoes.h \
-		src/contamudancas.h \
-		src/tfortwindow.h\
-                src/voidsterdebugwindow.h \
-                src/voidsterdebugwindow2.h \
 	#Biz Logic
                 src/store.h
     
@@ -46,23 +40,13 @@ SOURCES += \
 	#Constants Macros Aux stuff
 	#UI and other non operational stuff
 		src/flabel.cpp \
-		src/contarotacoes.cpp \
-		src/contamudancas.cpp \
 		src/main.cpp \
 	#Biz Logic
     src/mainwindow.cpp \
-    src/pilot.cpp \
-		src/store.cpp \
-    	src/tfortwindow.cpp \
-		src/voidsterdebugwindow.cpp \
-    src/voidsterdebugwindow2.cpp
+		src/store.cpp
 
 FORMS += \
-    src/mainwindow.ui \
-    src/pilot.ui \
-    src/tfortwindow.ui \
-	src/voidsterdebugwindow.ui \
-    src/voidsterdebugwindow2.ui
+    src/mainwindow.ui
 
 TRANSLATIONS += src/LukHudX_1_en_US.ts
 

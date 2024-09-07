@@ -65,6 +65,7 @@
 #define BSON_POP_UP_COUNT "pop_up_count"
 #define BSON_POP_UP_HISTORY "pop_up_hist"
 #define BSON_POP_UP_ENABLE "pop_up_en"
+#define BSON_APPS "apps"
 /*
     **********************************
     *******	Valores Calibração *******

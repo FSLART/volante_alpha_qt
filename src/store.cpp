@@ -11,8 +11,6 @@
 #include "mainwindow.h"
 #include "references/bson_var.h"
 #include "flabel.h"
-#include "pilot.h"
-#include "voidsterdebugwindow.h"
 #include "qdebug.h"
 
 //VoidsterdebugWindow debugWindow;
@@ -347,6 +345,7 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			EncodingUnion t;
              t.encoded=j[BSON_HV_BATTERYVOLTAGE];
 			this->setBatteryVoltage(t.decoded);
+
     }
 		if(j.contains(BSON_VEHICLESPEED)){
 			this->setVehicleSpeed(j[BSON_VEHICLESPEED]);
@@ -383,40 +382,10 @@ void store::parseBson(std::vector<std::uint8_t> v){
 			}
 		#endif
         #ifdef __LART_T24__
-            if(j.contains(BSON_MENU))
-            {
-                int t;
-                t =j[BSON_MENU];
-                this->setMenu(t);
-                if(m_menu != t)
-                {
-                    store::closeSerial();	
-					
-                   // VoidsterdebugWindow debugWindow = new VoidsterdebugWindow();
-                    //PilotWindow pl = new PilotWindow();
-                    switch(t)
-                    {
-                    case 0:
-
-
-                    case 1:
-                        QMainWindow* temp_ref;
-						if(ref_windows[1] == nullptr){
-							VoidsterdebugWindow temp;
-                            temp_ref = &temp;
-                            ref_windows[1] = temp_ref;
-						}else{
-							temp_ref = ref_windows[1];
-						}
-						temp_ref->show();
-
-                        
-                        break;
-                    default:
-                        break;
-                    }
-                }
+            if(j.contains(BSON_APPS)){
+                this->setApps(j[BSON_APPS]);
             }
+
             if(j.contains(BSON_SOC)){
                 EncodingUnion t;
                 t.encoded=j[BSON_SOC];
@@ -596,7 +565,11 @@ void store::setMenu(int menu){
         this->scribeError(__LART_STORE_SETRPM_ERROR__, store::error_severity::MINOR);
     }
 }
-
+void store::setApps(int apps){
+    int old_apps = this->m_apps;
+    this->m_apps=apps;
+    emit appsChanged(this->m_apps, old_apps);
+}
 
 
 /**

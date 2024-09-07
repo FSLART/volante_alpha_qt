@@ -8,11 +8,10 @@
 #ifdef __LART_T14__
 #include "src/tfortwindow.h"
 #endif
-#include "pilot.h"
+
 #ifdef __LART_T24__
 #ifdef __LART_DEBUG__
-#include "voidsterdebugwindow.h"
-#include "voidsterdebugwindow2.h"
+
 #include "mainwindow.h"
 #else
 #include "mainwindow.h"

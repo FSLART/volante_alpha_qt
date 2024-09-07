@@ -282,7 +282,7 @@
    <string>LukHudX</string>
   </property>
   <property name="layoutDirection">
-   <enum>Qt::LeftToRight</enum>
+   <enum>Qt::LayoutDirection::LeftToRight</enum>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
@@ -308,6 +308,9 @@
       </property>
       <item>
        <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
         <property name="sizeHint" stdset="0">
          <size>
           <width>40</width>
@@ -342,7 +345,6 @@
            <font>
             <family>Fira Mono</family>
             <pointsize>24</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -379,7 +381,6 @@
            <font>
             <family>Fira Mono</family>
             <pointsize>20</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -387,7 +388,7 @@
            <string>__</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
           </property>
          </widget>
         </item>
@@ -397,7 +398,6 @@
            <font>
             <family>Fira Mono</family>
             <pointsize>20</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -410,8 +410,11 @@
       </item>
       <item>
        <spacer name="vs_1">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
         <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
+         <enum>QSizePolicy::Policy::Fixed</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -437,7 +440,6 @@
          <font>
           <family>Fira Mono</family>
           <pointsize>22</pointsize>
-          <weight>75</weight>
           <italic>false</italic>
           <bold>true</bold>
          </font>
@@ -472,7 +474,6 @@
              <font>
               <family>Fira Mono</family>
               <pointsize>22</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -480,17 +481,16 @@
              <string>__</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLabel" name="TempMotor_label">
+           <widget class="QLabel" name="TempMotor_Label">
             <property name="font">
              <font>
               <family>Fira Mono</family>
               <pointsize>22</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -498,7 +498,7 @@
              <string>__</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignmentFlag::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -528,7 +528,6 @@
                  <font>
                   <family>Fira Mono</family>
                   <pointsize>48</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -549,7 +548,6 @@
                  <font>
                   <family>Fira Mono</family>
                   <pointsize>48</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -582,7 +580,6 @@
                  <font>
                   <family>Fira Mono</family>
                   <pointsize>48</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -609,7 +606,6 @@
                  <font>
                   <family>Fira Mono</family>
                   <pointsize>48</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -624,7 +620,6 @@
                  <font>
                   <family>Fira Mono</family>
                   <pointsize>48</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -639,7 +634,6 @@
                  <font>
                   <family>Fira Mono</family>
                   <pointsize>48</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -679,6 +673,9 @@
       </property>
       <item>
        <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
         <property name="sizeHint" stdset="0">
          <size>
           <width>40</width>
@@ -713,7 +710,6 @@
            <font>
             <family>Fira Mono</family>
             <pointsize>28</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -741,7 +737,6 @@
            <font>
             <family>Fira Mono</family>
             <pointsize>20</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -752,7 +747,7 @@
            <string>__</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
           </property>
          </widget>
         </item>
@@ -762,7 +757,6 @@
            <font>
             <family>Fira Mono</family>
             <pointsize>20</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -775,8 +769,11 @@
       </item>
       <item>
        <spacer name="vs_3">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
         <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
+         <enum>QSizePolicy::Policy::Fixed</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>

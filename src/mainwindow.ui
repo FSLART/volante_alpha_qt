@@ -282,7 +282,7 @@
    <string>LukHudX</string>
   </property>
   <property name="layoutDirection">
-   <enum>Qt::LayoutDirection::LeftToRight</enum>
+   <enum>Qt::LeftToRight</enum>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
@@ -308,9 +308,6 @@
       </property>
       <item>
        <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Orientation::Vertical</enum>
-        </property>
         <property name="sizeHint" stdset="0">
          <size>
           <width>40</width>
@@ -345,6 +342,7 @@
            <font>
             <family>Fira Mono</family>
             <pointsize>24</pointsize>
+            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -356,6 +354,9 @@
           </property>
           <property name="textVisible">
            <bool>false</bool>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
           <property name="invertedAppearance">
            <bool>false</bool>
@@ -370,7 +371,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QLabel" name="SOC_label">
+         <widget class="FLabel" name="SOC_label">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -381,6 +382,7 @@
            <font>
             <family>Fira Mono</family>
             <pointsize>20</pointsize>
+            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -388,7 +390,7 @@
            <string>__</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -398,6 +400,7 @@
            <font>
             <family>Fira Mono</family>
             <pointsize>20</pointsize>
+            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -410,11 +413,8 @@
       </item>
       <item>
        <spacer name="vs_1">
-        <property name="orientation">
-         <enum>Qt::Orientation::Vertical</enum>
-        </property>
         <property name="sizeType">
-         <enum>QSizePolicy::Policy::Fixed</enum>
+         <enum>QSizePolicy::Fixed</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -440,6 +440,7 @@
          <font>
           <family>Fira Mono</family>
           <pointsize>22</pointsize>
+          <weight>75</weight>
           <italic>false</italic>
           <bold>true</bold>
          </font>
@@ -463,7 +464,7 @@
         <item>
          <layout class="QGridLayout" name="lap_layout">
           <item row="1" column="0">
-           <widget class="QLabel" name="TempAcc_Label">
+           <widget class="FLabel" name="TempAcc_Label">
             <property name="minimumSize">
              <size>
               <width>100</width>
@@ -474,6 +475,7 @@
              <font>
               <family>Fira Mono</family>
               <pointsize>22</pointsize>
+              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -481,16 +483,17 @@
              <string>__</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLabel" name="TempMotor_Label">
+           <widget class="FLabel" name="TempMotor_Label">
             <property name="font">
              <font>
               <family>Fira Mono</family>
               <pointsize>22</pointsize>
+              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -498,7 +501,7 @@
              <string>__</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignmentFlag::AlignCenter</set>
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -528,11 +531,15 @@
                  <font>
                   <family>Fira Mono</family>
                   <pointsize>48</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
                 <property name="text">
                  <string>__</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -548,6 +555,7 @@
                  <font>
                   <family>Fira Mono</family>
                   <pointsize>48</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -580,11 +588,15 @@
                  <font>
                   <family>Fira Mono</family>
                   <pointsize>48</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
                 <property name="text">
                  <string>__</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -606,25 +618,42 @@
                  <font>
                   <family>Fira Mono</family>
                   <pointsize>48</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
                 <property name="text">
-                 <string>kWh</string>
+                 <string>kW</string>
                 </property>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QLabel" name="HV_voltage_label">
+               <widget class="FLabel" name="HV_voltage_label">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>266</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
                 <property name="font">
                  <font>
                   <family>Fira Mono</family>
                   <pointsize>48</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
                 <property name="text">
                  <string>__</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
@@ -634,6 +663,7 @@
                  <font>
                   <family>Fira Mono</family>
                   <pointsize>48</pointsize>
+                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -673,9 +703,6 @@
       </property>
       <item>
        <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Orientation::Vertical</enum>
-        </property>
         <property name="sizeHint" stdset="0">
          <size>
           <width>40</width>
@@ -710,6 +737,7 @@
            <font>
             <family>Fira Mono</family>
             <pointsize>28</pointsize>
+            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -718,6 +746,9 @@
           </property>
           <property name="textVisible">
            <bool>false</bool>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
           </property>
           <property name="invertedAppearance">
            <bool>false</bool>
@@ -732,11 +763,12 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
-         <widget class="QLabel" name="POWER_label">
+         <widget class="FLabel" name="POWER_label">
           <property name="font">
            <font>
             <family>Fira Mono</family>
             <pointsize>20</pointsize>
+            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -747,7 +779,7 @@
            <string>__</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -757,11 +789,12 @@
            <font>
             <family>Fira Mono</family>
             <pointsize>20</pointsize>
+            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
           <property name="text">
-           <string>kWh</string>
+           <string>kW</string>
           </property>
          </widget>
         </item>
@@ -769,11 +802,8 @@
       </item>
       <item>
        <spacer name="vs_3">
-        <property name="orientation">
-         <enum>Qt::Orientation::Vertical</enum>
-        </property>
         <property name="sizeType">
-         <enum>QSizePolicy::Policy::Fixed</enum>
+         <enum>QSizePolicy::Fixed</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>

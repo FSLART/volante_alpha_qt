@@ -48,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent, QString serialDev)
                 FLabel* TempAcc_Label = this->findChild<FLabel*>("TempAcc_Label");
                 FLabel* TempMotor_Label = this->findChild<FLabel*>("TempMotor_Label");
 
+
                 FLabel* POWER_label = this->findChild<FLabel*>("POWER_label");
 
 			//FLabel* TyreTemperature_Label = this->findChild<FLabel*>("TyreTemperature_Label");
